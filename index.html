@@ -4,116 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nadim Telecom - নাদিম টেলিকম</title>
+  <title>Nadim Telecom - হোম</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
-
-    body {
-      background-color: #f3f4f6;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .card {
-      background: #ffffff;
-      width: 100%;
-      max-width: 420px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-    }
-
-    .header {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: #ffffff;
-      padding: 30px 20px;
-      text-align: center;
-    }
-
-    .header h1 {
-      font-size: 26px;
-      margin-bottom: 5px;
-      letter-spacing: 0.5px;
-      color: #38bdf8;
-    }
-
-    .header p {
-      font-size: 14px;
-      color: #94a3b8;
-    }
-
-    .content {
-      padding: 25px 20px;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      color: #1e293b;
-      border-left: 4px solid #38bdf8;
-      padding-left: 10px;
-    }
-
-    .services {
-      list-style: none;
-    }
-
-    .services li {
-      background-color: #f8fafc;
-      margin-bottom: 10px;
-      padding: 12px 15px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      font-size: 15px;
-      font-weight: 500;
-      border: 1px solid #edf2f7;
-    }
-
-    .services li span {
-      margin-right: 12px;
-      font-size: 18px;
-    }
-
-    .bkash-tag {
-      color: #e2136e;
-      font-weight: bold;
-    }
-
-    .footer {
-      background-color: #f8fafc;
-      padding: 15px 20px;
-      text-align: center;
-      border-top: 1px solid #edf2f7;
-    }
-
-    .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 12px;
-      background-color: #25d366;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      text-align: center;
-      transition: background 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #1eb954;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background-color: #f3f4f6; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    .card { background: #ffffff; width: 100%; max-width: 420px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #e5e7eb; }
+    .header { background: linear-gradient(135deg, #0f172a, #1e293b); color: #ffffff; padding: 30px 20px; text-align: center; }
+    .header h1 { font-size: 26px; margin-bottom: 5px; color: #38bdf8; }
+    .header p { font-size: 14px; color: #94a3b8; }
+    .content { padding: 25px 20px; }
+    .section-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #1e293b; border-left: 4px solid #38bdf8; padding-left: 10px; }
+    .services { list-style: none; }
+    .services li { background-color: #f8fafc; margin-bottom: 10px; padding: 12px 15px; border-radius: 8px; border: 1px solid #edf2f7; }
+    .services a { text-decoration: none; color: #333; display: flex; align-items: center; justify-content: space-between; font-weight: 500; }
+    .services span { font-size: 18px; margin-right: 8px; }
+    .arrow { color: #38bdf8; font-weight: bold; }
+    .bkash-item { display: flex; align-items: center; font-weight: 500; color: #333; }
+    .bkash-tag { color: #e2136e; font-weight: bold; margin-right: 12px; font-size: 18px; }
+    .footer { background-color: #f8fafc; padding: 15px 20px; text-align: center; border-top: 1px solid #edf2f7; }
+    .btn { display: inline-block; width: 100%; padding: 12px; background-color: #25d366; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; text-align: center; }
   </style>
 </head>
 <body>
@@ -125,12 +34,26 @@
     </div>
 
     <div class="content">
-      <div class="section-title">আমাদের সেবাসমূহ</div>
+      <div class="section-title">আমাদের সেবাসমূহ (বিস্তারিত দেখতে ক্লিক করুন)</div>
       
       <ul class="services">
-        <li><span>🛠️</span> মোবাইল রিপেয়ারিং (Hardware & Software)</li>
-        <li><span>🎧</span> মোবাইল এক্সেসরিজ (চার্জার, হেডফোন, গ্লাস ইত্যাদি)</li>
-        <li><span class="bkash-tag">৳</span> বিকাশ সেবা (ক্যাশ ইন, ক্যাশ আউট, সেন্ড মানি)</li>
+        <li>
+          <a href="repairing.html">
+            <div><span>🛠️</span> মোবাইল রিপেয়ারিং সার্ভিস</div>
+            <div class="arrow">➔</div>
+          </a>
+        </li>
+        <li>
+          <a href="accessories.html">
+            <div><span>🎧</span> মোবাইল এক্সেসরিজ কালেকশন</div>
+            <div class="arrow">➔</div>
+          </a>
+        </li>
+        <li>
+          <div class="bkash-item">
+            <span class="bkash-tag">৳</span> বিকাশ সেবা (ক্যাশ ইন, আউট, সেন্ড মানি)
+          </div>
+        </li>
       </ul>
     </div>
 
