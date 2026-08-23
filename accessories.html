@@ -1,3 +1,45 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মোবাইল এক্সেসরিজ</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 15px; border-radius: 8px; }
+        .header { background-color: #0d1b2a; color: white; text-align: center; padding: 10px; border-radius: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
+        .card { background: #f9f9f9; border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .card:hover { background: #e0e0e0; }
+        .btn-back { background: #0d1b2a; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; margin-top: 15px; }
+        .product-list { margin-top: 20px; }
+        .product-card { border: 1px solid #eee; padding: 10px; margin-top: 10px; display: flex; gap: 10px; align-items: center; border-radius: 5px; }
+        .product-card img { width: 60px; height: 60px; object-fit: cover; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>🎧 মোবাইল এক্সেসরিজ</h2>
+    </div>
+
+    <!-- ক্যাটাগরি গ্রিড -->
+    <div id="category-section" class="grid">
+        <div class="card" onclick="showProducts('charger')">🔌<br>চার্জার</div>
+        <div class="card" onclick="showProducts('headphone')">🎧<br>হেডফোন</div>
+        <div class="card" onclick="showProducts('glass')">🛡️<br>গ্লাস প্রটেক্টর</div>
+        <div class="card" onclick="showProducts('cover')">📱<br>ব্যাক কভার</div>
+    </div>
+
+    <!-- প্রোডাক্ট শো করার সেকশন -->
+    <div id="product-section" style="display: none;">
+        <h3 id="category-title"></h3>
+        <div id="product-list" class="product-list"></div>
+        <button class="btn-back" onclick="showCategories()">← ক্যাটাগরিতে ফিরুন</button>
+    </div>
+</div>
+
 <script>
   // প্রোডাক্টের তথ্য
   const products = {
