@@ -1,66 +1,844 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nadim Telecom - হোম</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
-    body { background-color: #f3f4f6; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-    .card { background: #ffffff; width: 100%; max-width: 420px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #e5e7eb; }
-    .header { background: linear-gradient(135deg, #0f172a, #1e293b); color: #ffffff; padding: 30px 20px; text-align: center; }
-    .header h1 { font-size: 26px; margin-bottom: 5px; color: #38bdf8; }
-    .header p { font-size: 14px; color: #94a3b8; }
-    .content { padding: 25px 20px; }
-    .section-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: #1e293b; border-left: 4px solid #38bdf8; padding-left: 10px; }
-    .services { list-style: none; }
-    .services li { background-color: #f8fafc; margin-bottom: 10px; padding: 12px 15px; border-radius: 8px; border: 1px solid #edf2f7; }
-    .services a { text-decoration: none; color: #333; display: flex; align-items: center; justify-content: space-between; font-weight: 500; }
-    .services span { font-size: 18px; margin-right: 8px; }
-    .arrow { color: #38bdf8; font-weight: bold; }
-    .bkash-item { display: flex; align-items: center; font-weight: 500; color: #333; }
-    .bkash-tag { color: #e2136e; font-weight: bold; margin-right: 12px; font-size: 18px; }
-    .footer { background-color: #f8fafc; padding: 15px 20px; text-align: center; border-top: 1px solid #edf2f7; }
-    .btn { display: inline-block; width: 100%; padding: 12px; background-color: #25d366; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; text-align: center; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nadim Telecom</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f3f6fb;
+  color:#222;
+}
+
+.container{
+  max-width:600px;
+  margin:auto;
+  background:white;
+  min-height:100vh;
+}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#0757c9,#00a8ff);
+  color:white;
+  text-align:center;
+  padding:28px 15px;
+}
+
+.header h1{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.header p{
+  font-size:15px;
+}
+
+/* WELCOME */
+.welcome{
+  text-align:center;
+  padding:22px 15px;
+}
+
+.welcome h2{
+  color:#0757c9;
+  margin-bottom:8px;
+}
+
+.welcome p{
+  color:#666;
+  line-height:1.6;
+}
+
+/* SEARCH */
+.search{
+  padding:0 15px 20px;
+}
+
+.search input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:16px;
+  outline:none;
+}
+
+/* TITLE */
+.section-title{
+  text-align:center;
+  color:#0757c9;
+  margin:5px 0 18px;
+}
+
+/* CATEGORIES */
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:0 15px;
+}
+
+.category{
+  background:#f1f6ff;
+  border:1px solid #dce9ff;
+  border-radius:15px;
+  padding:20px 10px;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.category:hover{
+  transform:translateY(-4px);
+  background:#e5f0ff;
+}
+
+.category .icon{
+  font-size:38px;
+  margin-bottom:8px;
+}
+
+.category h3{
+  color:#0757c9;
+  font-size:16px;
+}
+
+/* PRODUCT */
+#product-section{
+  display:none;
+  padding:20px 15px;
+}
+
+#category-title{
+  text-align:center;
+  color:#0757c9;
+  margin-bottom:15px;
+}
+
+.btn-back{
+  width:100%;
+  border:0;
+  background:#0757c9;
+  color:white;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:15px;
+  font-size:16px;
+}
+
+.product-card{
+  background:white;
+  border:1px solid #ddd;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+.product-card img{
+  width:100%;
+  height:210px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#f7f7f7;
+}
+
+.product-card h3{
+  margin-top:12px;
+}
+
+.price{
+  color:#e63946;
+  font-size:18px;
+  font-weight:bold;
+  margin:8px 0;
+}
+
+.order-btn{
+  display:inline-block;
+  background:#198754;
+  color:white;
+  padding:11px 16px;
+  border-radius:8px;
+  text-decoration:none;
+  margin-top:5px;
+}
+
+/* OFFER */
+.offer{
+  margin:22px 15px;
+  padding:22px;
+  border-radius:15px;
+  background:#fff3cd;
+  border:1px solid #ffe69c;
+  text-align:center;
+}
+
+.offer h2{
+  color:#d97706;
+  margin-bottom:8px;
+}
+
+/* ACTION */
+.action-buttons{
+  display:flex;
+  gap:10px;
+  padding:0 15px;
+  margin:20px 0;
+}
+
+.action-buttons a{
+  flex:1;
+  text-align:center;
+  color:white;
+  padding:14px 5px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.call-btn{
+  background:#0757c9;
+}
+
+.whatsapp-btn{
+  background:#198754;
+}
+
+/* REPAIR */
+.repair-box{
+  margin:20px 15px;
+  padding:20px;
+  background:#f1f6ff;
+  border-radius:15px;
+  text-align:center;
+}
+
+.repair-box h2{
+  color:#0757c9;
+  margin-bottom:12px;
+}
+
+.repair-box p{
+  line-height:1.8;
+}
+
+/* CONTACT */
+.contact{
+  margin:20px 15px;
+  padding:20px;
+  border-radius:15px;
+  background:#f1f6ff;
+  text-align:center;
+}
+
+.contact h2{
+  color:#0757c9;
+  margin-bottom:12px;
+}
+
+.contact p{
+  margin:8px 0;
+  line-height:1.5;
+}
+
+.contact a{
+  color:#0757c9;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+/* FOOTER */
+footer{
+  background:#0757c9;
+  color:white;
+  text-align:center;
+  padding:22px 10px;
+  margin-top:25px;
+  line-height:1.7;
+}
+
+/* FLOATING WHATSAPP */
+.floating-whatsapp{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:58px;
+  height:58px;
+  background:#25D366;
+  color:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  text-decoration:none;
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+  z-index:999;
+}
+</style>
 </head>
+
 <body>
 
-  <div class="card">
-    <div class="header">
-      <h1>Nadim Telecom</h1>
-      <p>নাদিম টেলিকম — আপনার বিশ্বস্ত মোবাইল সেবাকেন্দ্র</p>
-    </div>
+<div class="container">
 
-    <div class="content">
-      <div class="section-title">আমাদের সেবাসমূহ (বিস্তারিত দেখতে ক্লিক করুন)</div>
-      
-      <ul class="services">
-        <li>
-          <a href="repairing.html">
-            <div><span>🛠️</span> মোবাইল রিপেয়ারিং সার্ভিস</div>
-            <div class="arrow">➔</div>
-          </a>
-        </li>
-        <li>
-          <a href="accessories.html">
-            <div><span>🎧</span> মোবাইল এক্সেসরিজ কালেকশন</div>
-            <div class="arrow">➔</div>
-          </a>
-        </li>
-        <li>
-          <div class="bkash-item">
-            <span class="bkash-tag">৳</span> বিকাশ সেবা (ক্যাশ ইন, আউট, সেন্ড মানি)
-          </div>
-        </li>
-      </ul>
-    </div>
+<!-- HEADER -->
+<div class="header">
+  <h1>📱 Nadim Telecom</h1>
+  <p>মোবাইল রিপেয়ারিং • বিকাশ সেবা • মোবাইল এক্সেসরিজ</p>
+</div>
 
-    <div class="footer">
-      <a href="tel:01716390762" class="btn">📞 যোগাযোগ করুন</a>
-    </div>
+<!-- WELCOME -->
+<div class="welcome">
+  <h2>নাদিম টেলিকমে আপনাকে স্বাগতম ❤️</h2>
+  <p>
+    মোবাইল রিপেয়ারিং, মোবাইল এক্সেসরিজ ও
+    প্রয়োজনীয় সেবার বিশ্বস্ত ঠিকানা।
+  </p>
+</div>
+
+<!-- SEARCH -->
+<div class="search">
+  <input
+    type="text"
+    id="searchBox"
+    placeholder="🔍 পণ্য খুঁজুন..."
+    onkeyup="searchProducts()"
+  >
+</div>
+
+<!-- CATEGORY -->
+<h2 class="section-title">🛍️ আমাদের সেবা</h2>
+
+<div id="category-section" class="category-grid">
+
+  <div class="category" onclick="showProducts('charger')">
+    <div class="icon">🔌</div>
+    <h3>চার্জার</h3>
   </div>
+
+  <div class="category" onclick="showProducts('headphone')">
+    <div class="icon">🎧</div>
+    <h3>হেডফোন</h3>
+  </div>
+
+  <div class="category" onclick="showProducts('accessories')">
+    <div class="icon">📱</div>
+    <h3>মোবাইল এক্সেসরিজ</h3>
+  </div>
+
+  <div class="category" onclick="showRepair()">
+    <div class="icon">🔧</div>
+    <h3>মোবাইল রিপেয়ারিং</h3>
+  </div>
+
+  <div class="category" onclick="showBkash()">
+    <div class="icon">💰</div>
+    <h3>বিকাশ সেবা</h3>
+  </div>
+
+</div>
+
+
+<!-- PRODUCT SECTION -->
+<div id="product-section">
+
+  <button class="btn-back" onclick="showCategories()">
+    ← আগের পেজে ফিরে যান
+  </button>
+
+  <h2 id="category-title"></h2>
+
+  <div id="product-list"></div>
+
+</div>
+
+
+<!-- OFFER -->
+<div class="offer">
+  <h2>🔥 আজকের অফার</h2>
+  <p>নির্বাচিত মোবাইল এক্সেসরিজে বিশেষ মূল্য!</p>
+  <p style="margin-top:8px;">
+    📞 অফার জানতে এখনই কল করুন
+  </p>
+</div>
+
+
+<!-- CALL / WHATSAPP -->
+<div class="action-buttons">
+
+  <a
+    class="call-btn"
+    href="tel:01716390762">
+    📞 এখনই কল করুন
+  </a>
+
+  <a
+    class="whatsapp-btn"
+    href="https://wa.me/8801716390762"
+    target="_blank">
+    💬 WhatsApp
+  </a>
+
+</div>
+
+
+<!-- REPAIR INFO -->
+<div class="repair-box">
+
+  <h2>🔧 মোবাইল রিপেয়ারিং</h2>
+
+  <p>
+    ✅ ডিসপ্লে পরিবর্তন<br>
+    ✅ ব্যাটারি পরিবর্তন<br>
+    ✅ চার্জিং সমস্যা<br>
+    ✅ সফটওয়্যার সমস্যা<br>
+    ✅ স্পিকার / মাইক্রোফোন সমস্যা<br>
+    ✅ অন্যান্য মোবাইল সার্ভিস
+  </p>
+
+  <br>
+
+  <a
+    class="order-btn"
+    href="tel:01716390762">
+    📞 রিপেয়ারের জন্য কল করুন
+  </a>
+
+</div>
+
+
+<!-- CONTACT -->
+<div class="contact">
+
+  <h2>📍 আমাদের ঠিকানা</h2>
+
+  <p>
+    <strong>Nadim Telecom</strong>
+  </p>
+
+  <p>
+    Labour Colony,<br>
+    New Mooring Road,<br>
+    Chattogram
+  </p>
+
+  <p>
+    📞
+    <a href="tel:01716390762">
+      01716390762
+    </a>
+  </p>
+
+  <p>
+    💬
+    <a
+      href="https://wa.me/8801716390762"
+      target="_blank">
+      WhatsApp-এ যোগাযোগ করুন
+    </a>
+  </p>
+
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+
+  <p>
+    <strong>📱 Nadim Telecom</strong>
+  </p>
+
+  <p>
+    আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার
+  </p>
+
+  <p>
+    © 2026 Nadim Telecom
+  </p>
+
+</footer>
+
+</div>
+
+
+<!-- FLOATING WHATSAPP -->
+<a
+  class="floating-whatsapp"
+  href="https://wa.me/8801716390762"
+  target="_blank">
+  💬
+</a>
+
+
+<script>
+
+/* =========================
+   PRODUCT DATABASE
+========================= */
+
+const products = {
+
+  charger: [
+
+    {
+      name:"67W Fast Charger",
+      price:"৳850",
+      img:"https://via.placeholder.com/500x300?text=67W+Charger"
+    },
+
+    {
+      name:"25W Fast Charger",
+      price:"৳550",
+      img:"https://via.placeholder.com/500x300?text=25W+Charger"
+    },
+
+    {
+      name:"20W Fast Charger",
+      price:"৳450",
+      img:"https://via.placeholder.com/500x300?text=20W+Charger"
+    }
+
+  ],
+
+
+  headphone: [
+
+    {
+      name:"TWS Earbuds",
+      price:"৳800",
+      img:"https://via.placeholder.com/500x300?text=TWS+Earbuds"
+    },
+
+    {
+      name:"Bluetooth Headphone",
+      price:"৳1,200",
+      img:"https://via.placeholder.com/500x300?text=Bluetooth+Headphone"
+    }
+
+  ],
+
+
+  accessories: [
+
+    {
+      name:"Mobile Cover",
+      price:"৳250",
+      img:"https://via.placeholder.com/500x300?text=Mobile+Cover"
+    },
+
+    {
+      name:"USB Cable",
+      price:"৳200",
+      img:"https://via.placeholder.com/500x300?text=USB+Cable"
+    },
+
+    {
+      name:"Tempered Glass",
+      price:"৳150",
+      img:"https://via.placeholder.com/500x300?text=Tempered+Glass"
+    }
+
+  ]
+
+};
+
+
+/* =========================
+   SHOW PRODUCTS
+========================= */
+
+function showProducts(catKey){
+
+  document.getElementById("category-section")
+  .style.display="none";
+
+  document.getElementById("product-section")
+  .style.display="block";
+
+  document.getElementById("searchBox")
+  .style.display="none";
+
+  const title =
+  document.getElementById("category-title");
+
+  const list =
+  document.getElementById("product-list");
+
+  list.innerHTML="";
+
+  const titles={
+    charger:"🔌 চার্জার",
+    headphone:"🎧 হেডফোন",
+    accessories:"📱 মোবাইল এক্সেসরিজ"
+  };
+
+  title.innerText=titles[catKey];
+
+  const items=products[catKey] || [];
+
+  items.forEach(item=>{
+
+    list.innerHTML += `
+
+      <div class="product-card">
+
+        <img
+          src="${item.img}"
+          alt="${item.name}"
+        >
+
+        <h3>${item.name}</h3>
+
+        <div class="price">
+          দাম: ${item.price}
+        </div>
+
+        <a
+          class="order-btn"
+          href="https://wa.me/8801716390762?text=আমি%20${encodeURIComponent(item.name)}%20সম্পর্কে%20জানতে%20চাই"
+          target="_blank">
+
+          💬 অর্ডার / জানতে চাই
+
+        </a>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+/* =========================
+   BACK TO CATEGORIES
+========================= */
+
+function showCategories(){
+
+  document.getElementById("product-section")
+  .style.display="none";
+
+  document.getElementById("category-section")
+  .style.display="grid";
+
+  document.getElementById("searchBox")
+  .style.display="block";
+
+}
+
+
+/* =========================
+   REPAIRING
+========================= */
+
+function showRepair(){
+
+  document.getElementById("category-section")
+  .style.display="none";
+
+  document.getElementById("product-section")
+  .style.display="block";
+
+  document.getElementById("searchBox")
+  .style.display="none";
+
+  document.getElementById("category-title")
+  .innerText="🔧 মোবাইল রিপেয়ারিং";
+
+  document.getElementById("product-list")
+  .innerHTML=`
+
+    <div class="product-card">
+
+      <h3>📱 মোবাইল রিপেয়ারিং সার্ভিস</h3>
+
+      <p style="line-height:1.8;margin-top:10px;">
+
+        ডিসপ্লে পরিবর্তন<br>
+        ব্যাটারি পরিবর্তন<br>
+        চার্জিং সমস্যা<br>
+        সফটওয়্যার সমস্যা<br>
+        স্পিকার / মাইক্রোফোন সমস্যা<br>
+        অন্যান্য মোবাইল সার্ভিস
+
+      </p>
+
+      <br>
+
+      <a
+        class="order-btn"
+        href="tel:01716390762">
+
+        📞 এখনই কল করুন
+
+      </a>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   BKASH
+========================= */
+
+function showBkash(){
+
+  document.getElementById("category-section")
+  .style.display="none";
+
+  document.getElementById("product-section")
+  .style.display="block";
+
+  document.getElementById("searchBox")
+  .style.display="none";
+
+  document.getElementById("category-title")
+  .innerText="💰 বিকাশ সেবা";
+
+  document.getElementById("product-list")
+  .innerHTML=`
+
+    <div class="product-card">
+
+      <h3>💰 বিকাশ সেবা</h3>
+
+      <p style="line-height:1.8;margin-top:10px;">
+
+        বিকাশ ক্যাশ ইন<br>
+        বিকাশ ক্যাশ আউট<br>
+        মোবাইল রিচার্জ<br>
+        বিল পেমেন্ট
+
+      </p>
+
+      <br>
+
+      <a
+        class="order-btn"
+        href="tel:01716390762">
+
+        📞 বিস্তারিত জানতে কল করুন
+
+      </a>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchProducts(){
+
+  const text =
+  document.getElementById("searchBox")
+  .value
+  .toLowerCase();
+
+  if(text===""){
+    return;
+  }
+
+  let results=[];
+
+  Object.values(products).forEach(category=>{
+
+    category.forEach(item=>{
+
+      if(
+        item.name
+        .toLowerCase()
+        .includes(text)
+      ){
+
+        results.push(item);
+
+      }
+
+    });
+
+  });
+
+
+  document.getElementById("category-section")
+  .style.display="none";
+
+  document.getElementById("product-section")
+  .style.display="block";
+
+  document.getElementById("category-title")
+  .innerText="🔍 সার্চ রেজাল্ট";
+
+  const list =
+  document.getElementById("product-list");
+
+  list.innerHTML="";
+
+  if(results.length===0){
+
+    list.innerHTML=
+    "<p style='text-align:center;padding:20px;'>কোনো পণ্য পাওয়া যায়নি।</p>";
+
+    return;
+  }
+
+
+  results.forEach(item=>{
+
+    list.innerHTML += `
+
+      <div class="product-card">
+
+        <img
+          src="${item.img}"
+          alt="${item.name}"
+        >
+
+        <h3>${item.name}</h3>
+
+        <div class="price">
+          দাম: ${item.price}
+        </div>
+
+        <a
+          class="order-btn"
+          href="https://wa.me/8801716390762?text=আমি%20${encodeURIComponent(item.name)}%20সম্পর্কে%20জানতে%20চাই"
+          target="_blank">
+
+          💬 জানতে চাই
+
+        </a>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+</script>
 
 </body>
 </html>
