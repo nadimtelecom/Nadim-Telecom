@@ -36,7 +36,26 @@
 
         footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
     </style>
-</head>
+</head>    /* Stock Badge Styles */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 4px;
+      width: fit-content;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; }
+    .in-stock { background-color: #e6f4ea; color: #137333; border: 1px solid #ceebd6; }
+    .in-stock .dot { background-color: #137333; }
+    .out-of-stock { background-color: #fce8e6; color: #c5221f; border: 1px solid #fad2cf; }
+    .out-of-stock .dot { background-color: #c5221f; }
+    .upcoming { background-color: #e8f0fe; color: #1a73e8; border: 1px solid #d2e3fc; }
+    .upcoming .dot { background-color: #1a73e8; }
+
 <body>
 
     <header>
@@ -46,7 +65,10 @@
 
     <div class="container">
 
-        <!-- Special Offer Section -->
+        <!-- Special Offer Section --><div class="badge in-stock"><span class="dot"></span> In Stock</div>
+<div class="badge out-of-stock"><span class="dot"></span> Out of Stock</div>
+<div class="badge out-of-stock"><span class="dot"></span> Out of Stock</div>
+
         <div class="offer-box">
             <div class="offer-title">🔥 আজকের বিশেষ অফার!</div>
             <p style="margin: 5px 0 10px 0; font-size: 0.9rem;">যেকোনো ডিসপ্লে পরিবর্তনে ফ্রি ডিসপ্লে প্রোটেক্টর!</p>
