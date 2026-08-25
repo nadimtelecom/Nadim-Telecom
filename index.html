@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nadim Telecom</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
-        header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 20px 10px; }
-        .container { max-width: 500px; margin: 0 auto; padding: 15px; }
-        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        
-        /* Product Cards */
-        .product-card { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-        .product-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .product-img { width: 90px; height: 90px; border-radius: 8px; object-fit: cover; background-color: #eee; }
-        .product-info { flex: 1; }
-        .product-title { font-size: 1rem; font-weight: bold; margin: 0 0 5px 0; }
-        .product-price { color: #d9534f; font-weight: bold; margin-bottom: 8px; }
-        
-        /* Buttons */
-        .btn { display: inline-flex; align-items: justify; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: none; cursor: pointer; }
-        .btn-whatsapp { background-color: #25D366; color: white; }
-        .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; padding: 12px; }
-        .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; padding: 10px; }
-        
-        /* Services List */
-        .service-list { list-style: none; padding: 0; margin: 0 0 15px 0; }
-        .service-list li { padding: 8px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; }
-        .service-list li::before { content: "✔ "; color: #198754; font-weight: bold; }
-        
-        /* Offer Box */
-        .offer-box { background-color: #fff9e6; border: 1px solid #ffeba8; border-radius: 10px; padding: 15px; text-align: center; margin-bottom: 20px; }
-        .offer-title { color: #d9534f; font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nadim Telecom</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
+    header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 20px 10px; }
+    .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+    .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 
-        footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
-    </style>
-</head>    /* Stock Badge Styles */
+    /* Product Cards */
+    .product-card { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+    .product-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .product-img { width: 90px; height: 90px; border-radius: 8px; object-fit: cover; background-color: #eee; }
+    .product-info { flex: 1; }
+    .product-title { font-size: 1rem; font-weight: bold; margin: 0 0 5px 0; }
+    .product-price { color: #d9534f; font-weight: bold; margin-bottom: 5px; }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 8px; }
+    .btn-whatsapp { background-color: #25D366; color: white; }
+    .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
+    .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
+
+    /* Services List */
+    .service-list { list-style: none; padding: 0; margin: 0 0 15px 0; }
+    .service-list li { padding: 8px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; }
+    .service-list li::before { content: "✔"; color: #198754; font-weight: bold; margin-right: 8px; }
+
+    /* Offer Box */
+    .offer-box { background-color: #fff9e6; border: 1px solid #ffe8a8; border-radius: 10px; padding: 15px; text-align: center; margin-bottom: 20px; }
+    .offer-title { color: #d9534f; font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+
+    /* Stock Badge Styles */
     .badge {
       display: inline-flex;
       align-items: center;
@@ -56,82 +54,89 @@
     .upcoming { background-color: #e8f0fe; color: #1a73e8; border: 1px solid #d2e3fc; }
     .upcoming .dot { background-color: #1a73e8; }
 
+    footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
+  </style>
+</head>
 <body>
 
-    <header>
-        <h1 style="margin:0; font-size: 1.6rem;">📱 Nadim Telecom</h1>
-        <p style="margin:5px 0 0 0; font-size:0.9rem;">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
-    </header>
+  <header>
+    <h1 style="margin:0; font-size: 1.6rem;">📱 Nadim Telecom</h1>
+    <p style="margin:5px 0 0 0; font-size:0.9rem;">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
+  </header>
 
-    <div class="container">
+  <div class="container">
 
-        <!-- Special Offer Section --><div class="badge in-stock"><span class="dot"></span> In Stock</div>
-<div class="badge out-of-stock"><span class="dot"></span> Out of Stock</div>
-<div class="badge out-of-stock"><span class="dot"></span> Out of Stock</div>
+    <!-- Special Offer Section -->
+    <div class="offer-box">
+      <div class="offer-title">🔥 ধামাকা অফার চলছে!</div>
+      <p style="margin: 5px 0 10px 0; font-size: 0.9rem;">পুরোনো ডিসপ্লে পরিবর্তনের ফি ডিসকাউন্ট প্রোমোদে!</p>
+      <a href="tel:01716390762" class="btn btn-call" style="background-color: #d9534f;">অফার নিতে কল করুন</a>
+    </div>
 
-        <div class="offer-box">
-            <div class="offer-title">🔥 আজকের বিশেষ অফার!</div>
-            <p style="margin: 5px 0 10px 0; font-size: 0.9rem;">যেকোনো ডিসপ্লে পরিবর্তনে ফ্রি ডিসপ্লে প্রোটেক্টর!</p>
-            <a href="tel:01716390762" class="btn btn-call" style="background-color: #d9534f;">অফার নিতে কল করুন</a>
+    <!-- Products Section -->
+    <div class="card">
+      <div class="section-title">📱 মোবাইল অ্যাক্সেসরিজ</div>
+
+      <!-- Product 1 -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/90" alt="Mobile Cover" class="product-img">
+        <div class="product-info">
+          <div class="product-title">প্রিমিয়াম মোবাইল কভার</div>
+          <div class="product-price">দাম: ৩৫০৳</div>
+          <div class="badge in-stock"><span class="dot"></span> In Stock</div>
+          <br>
+          <a href="https://wa.me/8801716390762?text=আমি%20মোবাইল%20কভার%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp">WhatsApp-এ অর্ডার করুন</a>
         </div>
+      </div>
 
-        <!-- Products Section -->
-        <div class="card">
-            <div class="section-title">📱 মোবাইল অ্যাক্সেসরিজ</div>
-            
-            <div class="product-card">
-                <img src="https://via.placeholder.com/90" alt="Mobile Cover" class="product-img">
-                <div class="product-info">
-                    <div class="product-title">প্রিমিয়াম মোবাইল কভার</div>
-                    <div class="product-price">দাম: ৳২৫০</div>
-                    <a href="https://wa.me/8801716390762?text=আমি%20মোবাইল%20কভার%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp">অর্ডার / জানতে চাই</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <img src="https://via.placeholder.com/90" alt="USB Cable" class="product-img">
-                <div class="product-info">
-                    <div class="product-title">ফাস্ট চার্জিং টাইপ-সি ক্যাবল</div>
-                    <div class="product-price">দাম: ৳২০০</div>
-                    <a href="https://wa.me/8801716390762?text=আমি%20টাইপ-সি%20ক্যাবল%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp">অর্ডার / জানতে চাই</a>
-                </div>
-            </div>
+      <!-- Product 2 -->
+      <div class="product-card">
+        <img src="https://via.placeholder.com/90" alt="USB Cable" class="product-img">
+        <div class="product-info">
+          <div class="product-title">ফাস্ট চার্জিং টাইপ-সি ক্যাবল</div>
+          <div class="product-price">দাম: ২৫০৳</div>
+          <div class="badge out-of-stock"><span class="dot"></span> Out of Stock</div>
+          <br>
+          <a href="https://wa.me/8801716390762?text=আমি%20টাইপ-সি%20ক্যাবল%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp">WhatsApp-এ অর্ডার করুন</a>
         </div>
-
-        <!-- Repair Services Section -->
-        <div class="card">
-            <div class="section-title">🛠️ মোবাইল রিপেয়ারিং সার্ভিস</div>
-            <ul class="service-list">
-                <span>ডিসপ্লে পরিবর্তন</span> <strong>৳৮০০ থেকে শুরু</strong>
-                <span>ব্যাটারি পরিবর্তন</span> <strong>৳৫০০ থেকে শুরু</strong>
-                <span>চার্জিং সমস্যা সমাধান</span> <strong>৳২০০ থেকে শুরু</strong>
-                <span>সফটওয়্যার/আনলক সমস্যা</span> <strong>৳৩০০ থেকে শুরু</strong>
-                <span>স্পিকার / মাইক্রোফোন সার্ভিস</span> <strong>৳২৫০ থেকে শুরু</strong>
-            </ul>
-            <p style="font-size: 0.85rem; color: #198754; text-align: center; margin-bottom: 10px;">★ ১০০% অরিজিনাল পার্টস ও ফ্রি ডায়াগনস্টিক!</p>
-            <a href="tel:01716390762" class="btn btn-green">রিপেয়ারের জন্য কল করুন</a>
-        </div>
-
-        <!-- Location Section -->
-        <div class="card">
-            <div class="section-title">📍 আমাদের ঠিকানা ও সময়সূচী</div>
-            <p style="margin: 5px 0;"><strong>Nadim Telecom</strong></p>
-            <p style="margin: 5px 0; color: #555;">লেবার কলোনি, নিউ মুরিং রোড, চট্টগ্রাম</p>
-            <p style="margin: 5px 0; color: #555;">⏰ খোলা: প্রতিদিন সকাল ১০:০০ - রাত ১০:০০</p>
-            <p style="margin: 10px 0;">📞 <a href="tel:01716390762" style="color:#0066cc; font-weight:bold; text-decoration:none;">01716390762</a></p>
-            
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <a href="https://wa.me/8801716390762" class="btn btn-whatsapp" style="flex: 1;">WhatsApp-এ কথা বলুন</a>
-                <a href="https://maps.google.com" target="_blank" class="btn btn-call" style="flex: 1; background-color: #6c757d;">Google Maps</a>
-            </div>
-        </div>
+      </div>
 
     </div>
 
-    <footer>
-        <p style="margin:0;">Nadim Telecom — আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
-        <p style="margin:5px 0 0 0;">© 2026 Nadim Telecom</p>
-    </footer>
+    <!-- Repair Services Section -->
+    <div class="card">
+      <div class="section-title">🛠️ মোবাইল রিপেয়ারিং সার্ভিস</div>
+      <ul class="service-list">
+        <li><span>ডিসপ্লে পরিবর্তন</span> <strong>৮০০ থেকে শুরু</strong></li>
+        <li><span>ব্যাটারি পরিবর্তন</span> <strong>৫০০ থেকে শুরু</strong></li>
+        <li><span>চার্জিং সমস্যা সমাধান</span> <strong>৩০০ থেকে শুরু</strong></li>
+        <li><span>সফটওয়্যার/আনলক সমস্যা</span> <strong>৪০০ থেকে শুরু</strong></li>
+        <li><span>স্পিকার / মাইক্রোফোন সার্ভিস</span> <strong>৩০০ থেকে শুরু</strong></li>
+      </ul>
+      <p style="font-size: 0.85rem; color: #198754; text-align: center; margin-bottom: 10px;">★ ১০০% অরিজিনাল পার্টস ব্যবহার করা হয়</p>
+      <a href="tel:01716390762" class="btn btn-green">রিপেয়ারের জন্য কল করুন</a>
+    </div>
+
+    <!-- Location Section -->
+    <div class="card">
+      <div class="section-title">📍 আমাদের ঠিকানা ও যোগাযোগ</div>
+      <p style="margin: 5px 0;"><strong>Nadim Telecom</strong></p>
+      <p style="margin: 5px 0; color: #555;">সেন্টার কলোনি, নিউ সিবিডি রোড, চট্টগ্রাম</p>
+      <p style="margin: 5px 0; color: #555;">🕒 খোলা: প্রতিদিন সকাল ১০:০০ - রাত ১০:০০</p>
+      <p style="margin: 10px 0;">📞 <a href="tel:01716390762" style="color:#0066cc; font-weight:bold; text-decoration:none;">01716390762</a></p>
+
+      <div style="display: flex; gap: 10px; margin-top: 15px;">
+        <a href="https://wa.me/8801716390762" class="btn btn-whatsapp" style="flex: 1;">WhatsApp-এ কথা বলুন</a>
+        <a href="https://maps.google.com" target="_blank" class="btn btn-call" style="flex: 1; background-color: #6c757d;">গুগল ম্যাপে দেখুন</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p style="margin:0;">Nadim Telecom - আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
+    <p style="margin:5px 0 0 0;">© 2026 Nadim Telecom</p>
+  </footer>
 
 </body>
 </html>
