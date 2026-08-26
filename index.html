@@ -3,13 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="enFUE9G2pbJwvJOqPqd8q-nIOkAh3nsFH4zTGwR_95Y" />
   <title>Nadim Telecom</title>
   <style>
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
-    header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 20px 10px; }
+    header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 25px 10px; }
     .container { max-width: 500px; margin: 0 auto; padding: 15px; }
     .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+
+    /* Search Input */
+    .search-box {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      outline: none;
+      font-size: 0.95rem;
+    }
 
     /* Product Cards */
     .product-card { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
@@ -54,6 +66,20 @@
     .upcoming { background-color: #e8f0fe; color: #1a73e8; border: 1px solid #d2e3fc; }
     .upcoming .dot { background-color: #1a73e8; }
 
+    /* Payment Badges */
+    .payment-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.8rem;
+      margin-right: 5px;
+      margin-top: 5px;
+    }
+    .bkash { background-color: #e2136e; color: white; }
+    .nagad { background-color: #f7931e; color: white; }
+    .cod { background-color: #0066cc; color: white; }
+
     footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
   </style>
 </head>
@@ -66,6 +92,11 @@
 
   <div class="container">
 
+    <!-- Search Section -->
+    <div class="card" style="padding: 10px;">
+      <input type="text" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box">
+    </div>
+
     <!-- Special Offer Section -->
     <div class="offer-box">
       <div class="offer-title">🔥 ধামাকা অফার চলছে!</div>
@@ -77,7 +108,7 @@
     <div class="card">
       <div class="section-title">📱 মোবাইল অ্যাক্সেসরিজ</div>
 
-      <!-- Product 1: AirPods Pro (GitHub-এ থাকা ছবির নাম এখানে দেওয়া হলো) -->
+      <!-- Product 1: AirPods Pro -->
       <div class="product-card">
         <img src="Apple_AirPods_Pro_01.jpg" alt="AirPods Pro" class="product-img">
         <div class="product-info">
@@ -117,17 +148,31 @@
       <a href="tel:01716390762" class="btn btn-green">রিপেয়ারের জন্য কল করুন</a>
     </div>
 
-    <!-- Location Section -->
+    <!-- Payment Options Section -->
+    <div class="card">
+      <div class="section-title">💳 লেনদেন ও পেমেন্ট মাধ্যম</div>
+      <p style="font-size: 0.9rem; margin: 5px 0 10px 0; color: #555;">আমাদের দোকানে কাস্টমারদের সুবিধার্থে সবধরনের পেমেন্ট নেওয়া হয়:</p>
+      <div>
+        <span class="payment-badge bkash">bKash</span>
+        <span class="payment-badge nagad">Nagad</span>
+        <span class="payment-badge cod">Cash on Delivery</span>
+      </div>
+    </div>
+
+    <!-- Location & Contact Section -->
     <div class="card">
       <div class="section-title">📍 আমাদের ঠিকানা ও যোগাযোগ</div>
       <p style="margin: 5px 0;"><strong>Nadim Telecom</strong></p>
       <p style="margin: 5px 0; color: #555;">সেন্টার কলোনি, নিউ সিবিডি রোড, চট্টগ্রাম</p>
-      <p style="margin: 5px 0; color: #555;">🕒 খোলা: প্রতিদিন সকাল ১০:০০ - রাত ১০:০০</p>
+      <p style="margin: 5px 0; color: #555;">
+        🕒 খোলা: প্রতিদিন সকাল ১০:০০ - রাত ১০:০০ 
+        <span style="background-color: #e6f4ea; color: #137333; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; margin-left: 5px;">● এখন খোলা</span>
+      </p>
       <p style="margin: 10px 0;">📞 <a href="tel:01716390762" style="color:#0066cc; font-weight:bold; text-decoration:none;">01716390762</a></p>
 
       <div style="display: flex; gap: 10px; margin-top: 15px;">
         <a href="https://wa.me/8801716390762" class="btn btn-whatsapp" style="flex: 1;">WhatsApp-এ কথা বলুন</a>
-        <a href="https://maps.google.com" target="_blank" class="btn btn-call" style="flex: 1; background-color: #6c757d;">গুগল ম্যাপে দেখুন</a>
+        <a href="https://maps.google.com/?q=Center+Colony+New+CBD+Road+Chattogram" target="_blank" class="btn btn-call" style="flex: 1; background-color: #6c757d;">গুগল ম্যাপে দেখুন</a>
       </div>
     </div>
 
