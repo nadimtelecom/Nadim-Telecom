@@ -12,8 +12,8 @@
     .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 
-    /* Search Input */
-    .search-box {
+    /* Forms & Inputs */
+    .search-box, .form-input, .form-select {
       width: 100%;
       padding: 12px 15px;
       border: 1px solid #ddd;
@@ -21,6 +21,7 @@
       box-sizing: border-box;
       outline: none;
       font-size: 0.95rem;
+      margin-bottom: 10px;
     }
 
     /* Product Cards */
@@ -117,13 +118,43 @@
   <div class="container">
 
     <div class="card" style="padding: 10px;">
-      <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box">
+      <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box" style="margin-bottom:0;">
     </div>
 
     <div class="offer-box">
       <div class="offer-title">🔥 ধামাকা অফার চলছে!</div>
       <p style="margin: 5px 0 10px 0; font-size: 0.9rem;">পুরোনো ডিসপ্লে পরিবর্তনের ফি ডিসকাউন্ট!</p>
       <a href="tel:01716390762" class="btn btn-call" style="background-color: #d9534f;">অফার নিতে কল করুন</a>
+    </div>
+
+    <!-- NEW FEATURE: Image Upload / Problem Preview -->
+    <div class="card">
+      <div class="section-title">📷 আপনার ফোনের সমস্যার ছবি পাঠান</div>
+      <p style="font-size: 0.85rem; color: #555; margin-top: 0;">ফোনের ক্ষতিগ্রস্ত অংশ বা পার্টসের ছবি আপলোড করে প্রিভিউ দেখুন:</p>
+      <input type="file" id="imageUploader" accept="image/*" onchange="previewImage(event)" class="form-input">
+      <div id="imagePreviewContainer" style="display:none; text-align:center; margin-top:10px;">
+        <img id="imagePreview" src="#" alt="Uploaded Image" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid #ddd;">
+        <br>
+        <a href="https://wa.me/8801716390762?text=আমি%20আমার%20ফোনের%20একটি%20ছবি%20পাঠাতে%20চাই" target="_blank" class="btn btn-whatsapp" style="margin-top:10px;">WhatsApp-এ ছবিসহ মেসেজ দিন</a>
+      </div>
+    </div>
+
+    <!-- NEW FEATURE: Quick Online Booking Form -->
+    <div class="card">
+      <div class="section-title">📝 সার্ভিস বুকিং ফর্ম</div>
+      <form onsubmit="sendBooking(event)">
+        <input type="text" id="custName" placeholder="আপনার নাম" class="form-input" required>
+        <input type="tel" id="custPhone" placeholder="মোবাইল নম্বর" class="form-input" required>
+        <select id="serviceType" class="form-select" required>
+          <option value="">সার্ভিস নির্বাচন করুন</option>
+          <option value="ডিসপ্লে পরিবর্তন">ডিসপ্লে পরিবর্তন</option>
+          <option value="ব্যাটারি পরিবর্তন">ব্যাটারি পরিবর্তন</option>
+          <option value="চার্জিং সমস্যা">চার্জিং সমস্যা</option>
+          <option value="সফটওয়্যার সমস্যা">সফটওয়্যার/আনলক সমস্যা</option>
+          <option value="অন্যান্য">অন্যান্য</option>
+        </select>
+        <button type="submit" class="btn btn-green">বুকিং কনফার্ম করুন</button>
+      </form>
     </div>
 
     <div class="card">
@@ -166,6 +197,7 @@
       <a href="tel:01716390762" class="btn btn-green">রিপেয়ারের জন্য কল করুন</a>
     </div>
 
+    <!-- NEW FEATURE: Review Submission -->
     <div class="card">
       <div class="section-title">⭐ গ্রাহকদের মতামত</div>
       <div class="review-item">
@@ -175,6 +207,13 @@
       <div class="review-item">
         <strong>সাকিব হাসান</strong> <span class="stars">★★★★★</span>
         <p style="margin: 3px 0; font-size: 0.85rem; color: #555;">টাইপ-সি ক্যাবলটির কোয়ালিটি অনেক ভালো। ধন্যবাদ নদীম টেলিকম।</p>
+      </div>
+      
+      <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+        <p style="font-size:0.85rem; font-weight:bold; margin-bottom: 5px;">আপনার মতামত দিন:</p>
+        <input type="text" id="revName" placeholder="আপনার নাম" class="form-input">
+        <input type="text" id="revComment" placeholder="আপনার অনুভূতি লিখুন..." class="form-input">
+        <button type="button" onclick="submitReview()" class="btn btn-call" style="background-color:#0066cc;">রিভিউ জমা দিন</button>
       </div>
     </div>
 
@@ -212,6 +251,7 @@
   </footer>
 
   <script>
+    // Search Filter
     function filterItems() {
       let input = document.getElementById('searchInput').value.toLowerCase().trim();
       let items = document.getElementsByClassName('searchable-item');
@@ -223,6 +263,43 @@
         } else {
           items[i].style.display = "none";
         }
+      }
+    }
+
+    // Image Preview Function
+    function previewImage(event) {
+      let reader = new FileReader();
+      reader.onload = function(){
+        let output = document.getElementById('imagePreview');
+        output.src = reader.result;
+        document.getElementById('imagePreviewContainer').style.display = 'block';
+      };
+      if(event.target.files[0]){
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    }
+
+    // Booking Handler (Directs to WhatsApp)
+    function sendBooking(e) {
+      e.preventDefault();
+      let name = document.getElementById('custName').value;
+      let phone = document.getElementById('custPhone').value;
+      let service = document.getElementById('serviceType').value;
+      
+      let msg = `নতুন%20বুকিং:%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
+      window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
+    }
+
+    // Dynamic Review Adder
+    function submitReview() {
+      let name = document.getElementById('revName').value.trim();
+      let comment = document.getElementById('revComment').value.trim();
+      if(name && comment) {
+        alert('আপনার পর্যালোচনার জন্য ধন্যবাদ!');
+        document.getElementById('revName').value = '';
+        document.getElementById('revComment').value = '';
+      } else {
+        alert('অনুগ্রহ করে নাম এবং মতামত লিখুন।');
       }
     }
   </script>
