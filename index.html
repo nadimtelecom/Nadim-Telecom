@@ -8,7 +8,7 @@
   <style>
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
     header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 25px 10px; }
-    .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+    .container { max-width: 500px; margin: 0 auto; padding: 15px; padding-bottom: 70px; }
     .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 
@@ -32,10 +32,29 @@
     .product-price { color: #d9534f; font-weight: bold; margin-bottom: 5px; }
 
     /* Buttons */
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 8px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 8px; border: none; cursor: pointer; }
     .btn-whatsapp { background-color: #25D366; color: white; }
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
+
+    /* Floating WhatsApp Button */
+    .float-wa {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
     /* Services List */
     .service-list { list-style: none; padding: 0; margin: 0 0 15px 0; }
@@ -61,10 +80,6 @@
     .dot { width: 6px; height: 6px; border-radius: 50%; }
     .in-stock { background-color: #e6f4ea; color: #137333; border: 1px solid #ceebd6; }
     .in-stock .dot { background-color: #137333; }
-    .out-of-stock { background-color: #fce8e6; color: #c5221f; border: 1px solid #fad2cf; }
-    .out-of-stock .dot { background-color: #c5221f; }
-    .upcoming { background-color: #e8f0fe; color: #1a73e8; border: 1px solid #d2e3fc; }
-    .upcoming .dot { background-color: #1a73e8; }
 
     /* Payment Badges */
     .payment-badge {
@@ -80,10 +95,19 @@
     .nagad { background-color: #f7931e; color: white; }
     .cod { background-color: #0066cc; color: white; }
 
+    /* Reviews Section */
+    .review-item { border-bottom: 1px dashed #ddd; padding: 8px 0; }
+    .review-item:last-child { border-bottom: none; }
+    .stars { color: #ffc107; font-size: 0.9rem; }
+
     footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
   </style>
 </head>
 <body>
+
+  <a href="https://wa.me/8801716390762" target="_blank" class="float-wa">
+    💬 নক দিন
+  </a>
 
   <header>
     <h1 style="margin:0; font-size: 1.6rem;">📱 Nadim Telecom</h1>
@@ -92,24 +116,20 @@
 
   <div class="container">
 
-    <!-- Search Section -->
     <div class="card" style="padding: 10px;">
-      <input type="text" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box">
+      <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box">
     </div>
 
-    <!-- Special Offer Section -->
     <div class="offer-box">
       <div class="offer-title">🔥 ধামাকা অফার চলছে!</div>
       <p style="margin: 5px 0 10px 0; font-size: 0.9rem;">পুরোনো ডিসপ্লে পরিবর্তনের ফি ডিসকাউন্ট!</p>
       <a href="tel:01716390762" class="btn btn-call" style="background-color: #d9534f;">অফার নিতে কল করুন</a>
     </div>
 
-    <!-- Products Section -->
     <div class="card">
       <div class="section-title">📱 মোবাইল অ্যাক্সেসরিজ</div>
 
-      <!-- Product 1: AirPods Pro -->
-      <div class="product-card">
+      <div class="product-card searchable-item">
         <img src="Apple_AirPods_Pro_01.jpg" alt="AirPods Pro" class="product-img">
         <div class="product-info">
           <div class="product-title">AirPods Pro (High Quality)</div>
@@ -120,8 +140,7 @@
         </div>
       </div>
 
-      <!-- Product 2: Type-C Data Cable -->
-      <div class="product-card">
+      <div class="product-card searchable-item">
         <img src="https://via.placeholder.com/90" alt="Type-C Cable" class="product-img">
         <div class="product-info">
           <div class="product-title">ফাস্ট চার্জিং টাইপ-সি ক্যাবল (3.4A)</div>
@@ -134,21 +153,31 @@
 
     </div>
 
-    <!-- Repair Services Section -->
     <div class="card">
       <div class="section-title">🛠️ মোবাইল রিপেয়ারিং সার্ভিস</div>
       <ul class="service-list">
-        <li><span>ডিসপ্লে পরিবর্তন</span> <strong>৮০০ থেকে শুরু</strong></li>
-        <li><span>ব্যাটারি পরিবর্তন</span> <strong>৫০০ থেকে শুরু</strong></li>
-        <li><span>চার্জিং সমস্যা সমাধান</span> <strong>৩০০ থেকে শুরু</strong></li>
-        <li><span>সফটওয়্যার/আনলক সমস্যা</span> <strong>৪০০ থেকে শুরু</strong></li>
-        <li><span>স্পিকার / মাইক্রোফোন সার্ভিস</span> <strong>৩০০ থেকে শুরু</strong></li>
+        <li class="searchable-item"><span>ডিসপ্লে পরিবর্তন</span> <strong>৮০০ থেকে শুরু</strong></li>
+        <li class="searchable-item"><span>ব্যাটারি পরিবর্তন</span> <strong>৫০০ থেকে শুরু</strong></li>
+        <li class="searchable-item"><span>চার্জিং সমস্যা সমাধান</span> <strong>৩০০ থেকে শুরু</strong></li>
+        <li class="searchable-item"><span>সফটওয়্যার/আনলক সমস্যা</span> <strong>৪০০ থেকে শুরু</strong></li>
+        <li class="searchable-item"><span>স্পিকার / মাইক্রোফোন সার্ভিস</span> <strong>৩০০ থেকে শুরু</strong></li>
       </ul>
       <p style="font-size: 0.85rem; color: #198754; text-align: center; margin-bottom: 10px;">★ ১০০% অরিজিনাল পার্টস ব্যবহার করা হয়</p>
       <a href="tel:01716390762" class="btn btn-green">রিপেয়ারের জন্য কল করুন</a>
     </div>
 
-    <!-- Payment Options Section -->
+    <div class="card">
+      <div class="section-title">⭐ গ্রাহকদের মতামত</div>
+      <div class="review-item">
+        <strong>রনি আহমেদ</strong> <span class="stars">★★★★★</span>
+        <p style="margin: 3px 0; font-size: 0.85rem; color: #555;">খুবই দ্রুত ডিসপ্লে পরিবর্তন করে দিয়েছে। কাজ চমৎকার!</p>
+      </div>
+      <div class="review-item">
+        <strong>সাকিব হাসান</strong> <span class="stars">★★★★★</span>
+        <p style="margin: 3px 0; font-size: 0.85rem; color: #555;">টাইপ-সি ক্যাবলটির কোয়ালিটি অনেক ভালো। ধন্যবাদ নদীম টেলিকম।</p>
+      </div>
+    </div>
+
     <div class="card">
       <div class="section-title">💳 লেনদেন ও পেমেন্ট মাধ্যম</div>
       <p style="font-size: 0.9rem; margin: 5px 0 10px 0; color: #555;">আমাদের দোকানে কাস্টমারদের সুবিধার্থে সবধরনের পেমেন্ট নেওয়া হয়:</p>
@@ -159,11 +188,10 @@
       </div>
     </div>
 
-    <!-- Location & Contact Section -->
     <div class="card">
       <div class="section-title">📍 আমাদের ঠিকানা ও যোগাযোগ</div>
       <p style="margin: 5px 0;"><strong>Nadim Telecom</strong></p>
-      <p style="margin: 5px 0; color: #555;">সেন্টার কলোনি, নিউ সিবিডি রোড, চট্টগ্রাম</p>
+      <p style="margin: 5px 0; color: #555;">Leaber Coloni, Newmoring Road, CEPZ, Chattogram - 4223</p>
       <p style="margin: 5px 0; color: #555;">
         🕒 খোলা: প্রতিদিন সকাল ১০:০০ - রাত ১০:০০ 
         <span style="background-color: #e6f4ea; color: #137333; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; margin-left: 5px;">● এখন খোলা</span>
@@ -172,7 +200,7 @@
 
       <div style="display: flex; gap: 10px; margin-top: 15px;">
         <a href="https://wa.me/8801716390762" class="btn btn-whatsapp" style="flex: 1;">WhatsApp-এ কথা বলুন</a>
-        <a href="https://maps.google.com/?q=Center+Colony+New+CBD+Road+Chattogram" target="_blank" class="btn btn-call" style="flex: 1; background-color: #6c757d;">গুগল ম্যাপে দেখুন</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Leaber+Coloni+Newmoring+Road+CEPZ+Chattogram+4223" target="_blank" class="btn btn-call" style="flex: 1; background-color: #6c757d;">গুগল ম্যাপে দেখুন</a>
       </div>
     </div>
 
@@ -182,6 +210,22 @@
     <p style="margin:0;">Nadim Telecom - আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
     <p style="margin:5px 0 0 0;">© 2026 Nadim Telecom</p>
   </footer>
+
+  <script>
+    function filterItems() {
+      let input = document.getElementById('searchInput').value.toLowerCase().trim();
+      let items = document.getElementsByClassName('searchable-item');
+      
+      for (let i = 0; i < items.length; i++) {
+        let text = items[i].textContent.toLowerCase();
+        if (text.includes(input)) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
+      }
+    }
+  </script>
 
 </body>
 </html>
