@@ -147,22 +147,22 @@
       gap: 8px;
     }
 
-    /* Floating Banyan Tree Logo (Right Corner - Above WhatsApp) */
+    /* Floating Banyan Tree Logo (Top Right Corner - Fixed) */
     .float-logo {
       position: fixed;
-      bottom: 85px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
       background-color: #ffffff;
       color: #198754;
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 1000;
+      z-index: 1100;
       border: 2px solid #198754;
       text-decoration: none;
     }
@@ -271,7 +271,7 @@
     <a href="#" class="sidebar-sub">স্ক্রিন প্রোটেক্টর গ্লাস</a>
   </div>
 
-  <!-- Floating Banyan Tree Logo at Bottom Right Corner -->
+  <!-- Floating Banyan Tree Logo at Top Right Corner -->
   <div class="float-logo" title="Nadim Telecom Logo">
     🌳
   </div>
@@ -433,9 +433,6 @@
 
     function openNav() {
       document.getElementById("mySidebar").style.left = "0";
-    }
-    function closeNic() {
-      document.getElementById("mySidebar").style.left = "-280px";
     }
     function closeNav() {
       document.getElementById("mySidebar").style.left = "-280px";
