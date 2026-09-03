@@ -9,6 +9,36 @@
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
     header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 25px 10px; position: relative; }
     
+    /* Loading Screen Styles */
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    .loader-logo {
+      font-size: 4rem;
+      animation: bounce 1.5s infinite;
+    }
+    .loader-text {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      color: #0066cc;
+      font-weight: bold;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
     /* Hamburger Menu Styles with Scroll Fixed */
     .menu-btn {
       position: absolute;
@@ -29,7 +59,7 @@
       top: 0;
       left: -280px;
       background-color: white;
-      overflow-y: auto; /* এখানে স্ক্রল করার সুবিধা যোগ করা হয়েছে */
+      overflow-y: auto;
       transition: 0.3s;
       padding-top: 50px;
       padding-bottom: 50px;
@@ -117,6 +147,26 @@
       gap: 8px;
     }
 
+    /* Floating Banyan Tree Logo (Right Corner - Above WhatsApp) */
+    .float-logo {
+      position: fixed;
+      bottom: 85px;
+      right: 20px;
+      background-color: #ffffff;
+      color: #198754;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      border: 2px solid #198754;
+      text-decoration: none;
+    }
+
     /* Services List */
     .service-list { list-style: none; padding: 0; margin: 0 0 15px 0; }
     .service-list li { padding: 8px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; }
@@ -166,6 +216,12 @@
 </head>
 <body>
 
+  <!-- Loading Screen with Banyan Tree Logo -->
+  <div id="loader-wrapper">
+    <div class="loader-logo">🌳</div>
+    <div class="loader-text">Nadim Telecom লোড হচ্ছে...</div>
+  </div>
+
   <!-- Sidebar Menu -->
   <div id="mySidebar" class="sidebar">
     <span class="close-btn" onclick="closeNav()">&times;</span>
@@ -213,6 +269,11 @@
     <a href="#" class="sidebar-sub">সিলিকন চেইন</a>
     <a href="#" class="sidebar-sub">স্টিল চেইন</a>
     <a href="#" class="sidebar-sub">স্ক্রিন প্রোটেক্টর গ্লাস</a>
+  </div>
+
+  <!-- Floating Banyan Tree Logo at Bottom Right Corner -->
+  <div class="float-logo" title="Nadim Telecom Logo">
+    🌳
   </div>
 
   <a href="https://wa.me/8801716390762" target="_blank" class="float-wa">
@@ -361,8 +422,20 @@
   </footer>
 
   <script>
+    // Hide Loading Screen after page load
+    window.addEventListener('load', function() {
+      let loader = document.getElementById('loader-wrapper');
+      loader.style.opacity = '0';
+      setTimeout(function() {
+        loader.style.display = 'none';
+      }, 500);
+    });
+
     function openNav() {
       document.getElementById("mySidebar").style.left = "0";
+    }
+    function closeNic() {
+      document.getElementById("mySidebar").style.left = "-280px";
     }
     function closeNav() {
       document.getElementById("mySidebar").style.left = "-280px";
