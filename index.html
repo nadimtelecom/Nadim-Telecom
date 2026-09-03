@@ -9,7 +9,7 @@
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
     header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 25px 10px; position: relative; }
     
-    /* Hamburger Menu Styles */
+    /* Hamburger Menu Styles with Scroll Fixed */
     .menu-btn {
       position: absolute;
       left: 15px;
@@ -29,9 +29,10 @@
       top: 0;
       left: -280px;
       background-color: white;
-      overflow-x: hidden;
+      overflow-y: auto; /* এখানে স্ক্রল করার সুবিধা যোগ করা হয়েছে */
       transition: 0.3s;
-      padding-top: 60px;
+      padding-top: 50px;
+      padding-bottom: 50px;
       box-shadow: 2px 0 10px rgba(0,0,0,0.2);
     }
     .sidebar a {
@@ -50,6 +51,9 @@
       font-size: 1.5rem;
       cursor: pointer;
       color: #333;
+      z-index: 1210;
+      background: #fff;
+      padding: 0 5px;
     }
     .sidebar-heading {
       font-weight: bold;
@@ -166,7 +170,7 @@
   <div id="mySidebar" class="sidebar">
     <span class="close-btn" onclick="closeNav()">&times;</span>
     
-    <!-- 1. Brand Name ( সবার উপরে ) -->
+    <!-- 1. Brand Name -->
     <div class="sidebar-heading">🏷️ Brand Name</div>
     <a href="#" class="sidebar-sub">Xiaomi</a>
     <a href="#" class="sidebar-sub">Tecno</a>
@@ -216,7 +220,6 @@
   </a>
 
   <header>
-    <!-- Three Line Button -->
     <button class="menu-btn" onclick="openNav()">☰</button>
     <h1 style="margin:0; font-size: 1.6rem;">📱 Nadim Telecom</h1>
     <p style="margin:5px 0 0 0; font-size:0.9rem;">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
@@ -358,7 +361,6 @@
   </footer>
 
   <script>
-    // Sidebar Open/Close Functions
     function openNav() {
       document.getElementById("mySidebar").style.left = "0";
     }
@@ -366,7 +368,6 @@
       document.getElementById("mySidebar").style.left = "-280px";
     }
 
-    // Search Filter
     function filterItems() {
       let input = document.getElementById('searchInput').value.toLowerCase().trim();
       let items = document.getElementsByClassName('searchable-item');
@@ -381,7 +382,6 @@
       }
     }
 
-    // Image Preview Function
     function previewImage(event) {
       let reader = new FileReader();
       reader.onload = function(){
@@ -394,7 +394,6 @@
       }
     }
 
-    // Booking Handler (Directs to WhatsApp)
     function sendBooking(e) {
       e.preventDefault();
       let name = document.getElementById('custName').value;
@@ -405,7 +404,6 @@
       window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
     }
 
-    // Dynamic Review Adder
     function submitReview() {
       let name = document.getElementById('revName').value.trim();
       let comment = document.getElementById('revComment').value.trim();
