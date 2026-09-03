@@ -7,7 +7,63 @@
   <title>Nadim Telecom</title>
   <style>
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
-    header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 25px 10px; }
+    header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 25px 10px; position: relative; }
+    
+    /* Hamburger Menu Styles */
+    .menu-btn {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .sidebar {
+      height: 100%;
+      width: 280px;
+      position: fixed;
+      z-index: 1200;
+      top: 0;
+      left: -280px;
+      background-color: white;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .sidebar a {
+      padding: 10px 15px 10px 25px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      color: #333;
+      display: block;
+      transition: 0.2s;
+    }
+    .sidebar a:hover { background-color: #f1f1f1; color: #0066cc; }
+    .sidebar .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+    .sidebar-heading {
+      font-weight: bold;
+      color: #0066cc;
+      padding: 12px 15px 5px 25px;
+      font-size: 1rem;
+      border-top: 1px solid #eee;
+    }
+    .sidebar-sub {
+      padding-left: 40px !important;
+      font-size: 0.85rem !important;
+      color: #555 !important;
+    }
+
     .container { max-width: 500px; margin: 0 auto; padding: 15px; padding-bottom: 70px; }
     .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
@@ -106,11 +162,62 @@
 </head>
 <body>
 
+  <!-- Sidebar Menu -->
+  <div id="mySidebar" class="sidebar">
+    <span class="close-btn" onclick="closeNav()">&times;</span>
+    
+    <!-- 1. Brand Name ( সবার উপরে ) -->
+    <div class="sidebar-heading">🏷️ Brand Name</div>
+    <a href="#" class="sidebar-sub">Xiaomi</a>
+    <a href="#" class="sidebar-sub">Tecno</a>
+    <a href="#" class="sidebar-sub">Infinix</a>
+    <a href="#" class="sidebar-sub">Oppo</a>
+
+    <!-- 2. মোবাইল -->
+    <div class="sidebar-heading">📱 মোবাইল</div>
+    <a href="#" class="sidebar-sub">স্মার্ট ফোন</a>
+    <a href="#" class="sidebar-sub">ট্যাব</a>
+    <a href="#" class="sidebar-sub">বাটন ফোন</a>
+
+    <!-- 3. মোবাইল এক্সোসরিজ -->
+    <div class="sidebar-heading">🔌 মোবাইল এক্সোসরিজ</div>
+    <a href="#" class="sidebar-sub">অরাইমো চার্জার</a>
+    <a href="#" class="sidebar-sub">Baseus চার্জার</a>
+    <a href="#" class="sidebar-sub">হেডফোন</a>
+    <a href="#" class="sidebar-sub">ইয়ার বাডস</a>
+    <a href="#" class="sidebar-sub">ইয়ার পডস</a>
+    <a href="#" class="sidebar-sub">কেবল</a>
+    <a href="#" class="sidebar-sub">মোবাইল স্ট্যান্ড</a>
+    <a href="#" class="sidebar-sub">ব্যাক কভার</a>
+    <a href="#" class="sidebar-sub">স্ক্রিন প্রটেক্টর গ্লাস</a>
+    <a href="#" class="sidebar-sub">ডিসপ্লে</a>
+
+    <!-- 4. ঘড়ি -->
+    <div class="sidebar-heading">⌚ ঘড়ি</div>
+    <a href="#" class="sidebar-sub">লেডিস ঘড়ি</a>
+    <a href="#" class="sidebar-sub">জেন্স ঘড়ি</a>
+    <a href="#" class="sidebar-sub">স্মার্ট ঘড়ি</a>
+    <a href="#" class="sidebar-sub">অ্যানালগ ঘড়ি</a>
+    <a href="#" class="sidebar-sub">ক্যাসিও ঘড়ি</a>
+    <a href="#" class="sidebar-sub">কারেন্ট ঘড়ি</a>
+    <a href="#" class="sidebar-sub">নেভিফোর্স ঘড়ি</a>
+    <a href="#" class="sidebar-sub">চাইনা ঘড়ি</a>
+
+    <!-- 5. ঘড়ি এক্সোসরিজ -->
+    <div class="sidebar-heading">🔗 ঘড়ি এক্সোসরিজ</div>
+    <a href="#" class="sidebar-sub">চেইন</a>
+    <a href="#" class="sidebar-sub">সিলিকন চেইন</a>
+    <a href="#" class="sidebar-sub">স্টিল চেইন</a>
+    <a href="#" class="sidebar-sub">স্ক্রিন প্রোটেক্টর গ্লাস</a>
+  </div>
+
   <a href="https://wa.me/8801716390762" target="_blank" class="float-wa">
     💬 নক দিন
   </a>
 
   <header>
+    <!-- Three Line Button -->
+    <button class="menu-btn" onclick="openNav()">☰</button>
     <h1 style="margin:0; font-size: 1.6rem;">📱 Nadim Telecom</h1>
     <p style="margin:5px 0 0 0; font-size:0.9rem;">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
   </header>
@@ -127,7 +234,7 @@
       <a href="tel:01716390762" class="btn btn-call" style="background-color: #d9534f;">অফার নিতে কল করুন</a>
     </div>
 
-    <!-- NEW FEATURE: Image Upload / Problem Preview -->
+    <!-- Image Upload / Problem Preview -->
     <div class="card">
       <div class="section-title">📷 আপনার ফোনের সমস্যার ছবি পাঠান</div>
       <p style="font-size: 0.85rem; color: #555; margin-top: 0;">ফোনের ক্ষতিগ্রস্ত অংশ বা পার্টসের ছবি আপলোড করে প্রিভিউ দেখুন:</p>
@@ -139,7 +246,7 @@
       </div>
     </div>
 
-    <!-- NEW FEATURE: Quick Online Booking Form -->
+    <!-- Quick Online Booking Form -->
     <div class="card">
       <div class="section-title">📝 সার্ভিস বুকিং ফর্ম</div>
       <form onsubmit="sendBooking(event)">
@@ -197,7 +304,7 @@
       <a href="tel:01716390762" class="btn btn-green">রিপেয়ারের জন্য কল করুন</a>
     </div>
 
-    <!-- NEW FEATURE: Review Submission -->
+    <!-- Review Submission -->
     <div class="card">
       <div class="section-title">⭐ গ্রাহকদের মতামত</div>
       <div class="review-item">
@@ -251,6 +358,14 @@
   </footer>
 
   <script>
+    // Sidebar Open/Close Functions
+    function openNav() {
+      document.getElementById("mySidebar").style.left = "0";
+    }
+    function closeNav() {
+      document.getElementById("mySidebar").style.left = "-280px";
+    }
+
     // Search Filter
     function filterItems() {
       let input = document.getElementById('searchInput').value.toLowerCase().trim();
