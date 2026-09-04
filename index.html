@@ -162,7 +162,7 @@
       justify-content: center;
       font-size: 1.5rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 1100;
+      z-index: 1300; /* মেনু বা অন্যান্য উপাদানের উপরে থাকার জন্য z-index বাড়িয়ে দেওয়া হয়েছে */
       border: 2px solid #198754;
       text-decoration: none;
     }
@@ -271,7 +271,7 @@
     <a href="#" class="sidebar-sub">স্ক্রিন প্রোটেক্টর গ্লাস</a>
   </div>
 
-  <!-- Floating Banyan Tree Logo at Top Right Corner -->
+  <!-- Floating Banyan Tree Logo at Top Right Corner (Fixed) -->
   <div class="float-logo" title="Nadim Telecom Logo">
     🌳
   </div>
@@ -466,7 +466,7 @@
 
     function sendBooking(e) {
       e.preventDefault();
-      let name = document.getElementById('custName').value;
+      let name = `নভেম্বর%20বুকিং: ` + document.getElementById('custName').value; // সামান্য পরিবর্তিত
       let phone = document.getElementById('custPhone').value;
       let service = document.getElementById('serviceType').value;
       
