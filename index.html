@@ -147,7 +147,7 @@
 
   <!-- Notice Ticker Bar -->
   <div class="notice-bar">
-    <marquee scrollamount="5">⚡ বিশেষ ঘোষণা: নদীম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡</marquee>
+    <marquee scrollamount="5">⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡</marquee>
   </div>
 
   <!-- Sidebar Menu -->
@@ -196,6 +196,14 @@
 
     <div class="card" style="padding: 10px;">
       <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box" style="margin-bottom:0;">
+    </div>
+
+    <!-- নতুন ফিচার: দোকান পরিচিতি (About Us) -->
+    <div class="card">
+      <div class="section-title">ℹ️ আমাদের সম্পর্কে</div>
+      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
+        <strong>নাদিম টেলিকম</strong>-এ আপনাদের স্বাগতম! আমরা বিশ্বস্ততার সাথে দীর্ঘদিন ধরে মোবাইল রিপেয়ারিং, অরিজিনাল এক্সেসরিজ বিক্রয় এবং বিকাশ ও নগদের মতো মোবাইল ফিন্যান্সিয়াল সেবা প্রদান করে আসছে। আপনার যেকোনো প্রয়োজনে আমাদের সাথে যোগাযোগ করতে পারেন।
+      </p>
     </div>
 
     <div class="offer-box">
@@ -303,7 +311,7 @@
       </div>
       <div class="review-item">
         <strong>সাকিব হাসান</strong> <span class="stars">★★★★★</span>
-        <p style="margin: 3px 0; font-size: 0.85rem; color: var(--text-muted);">টাইপ-সি ক্যাবলটির কোয়ালিটি অনেক ভালো। ধন্যবাদ নদীম টেলিকম।</p>
+        <p style="margin: 3px 0; font-size: 0.85rem; color: var(--text-muted);">টাইপ-সি ক্যাবলটির কোয়ালিটি অনেক ভালো। ধন্যবাদ নাদিম টেলিকম।</p>
       </div>
       
       <div style="margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 10px;">
@@ -425,7 +433,7 @@
       e.preventDefault();
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType5').value || document.getElementById('serviceType').value;
       
       let msg = `নতুন%20বুকিং:%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
       window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
