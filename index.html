@@ -232,6 +232,15 @@
       <div id="calcResult" style="display: none; margin-top: 12px; padding: 10px; background-color: #e6f4ea; border-radius: 8px; text-align: center; font-weight: bold; color: #137333;"></div>
     </div>
 
+    <!-- MFS Charge Calculator Card -->
+    <div class="card">
+      <div class="section-title">💸 বিকাশ/নগদ চার্জ ক্যালকুলেটর</div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">টাকা ক্যাশ-আউট করতে কত চার্জ আসবে দেখে নিন:</p>
+      <input type="number" id="mfsAmount" placeholder="টাকার পরিমাণ লিখুন (যেমন: ১০০০)" class="form-input">
+      <button type="button" onclick="calculateMFS()" class="btn btn-call" style="background-color: #e2136e;">চার্জ হিসাব করুন</button>
+      <div id="mfsResult" style="display: none; margin-top: 12px; padding: 10px; background-color: #fdf2f8; border-radius: 8px; text-align: center; font-weight: bold; color: #e2136e;"></div>
+    </div>
+
     <!-- Image Upload / Problem Preview -->
     <div class="card">
       <div class="section-title">📷 আপনার ফোনের সমস্যার ছবি পাঠান</div>
@@ -417,6 +426,21 @@
       resultDiv.innerHTML = `আনুমানিক সার্ভিস খরচ: প্রায় ${estimatedCost}৳ থেকে শুরু`;
     }
 
+    // MFS Charge Calculator Logic
+    function calculateMFS() {
+      let amount = parseFloat(document.getElementById('mfsAmount').value);
+      let resultDiv = document.getElementById('mfsResult');
+      
+      if (!amount || amount <= 0) {
+        alert('সঠিক টাকার পরিমাণ লিখুন।');
+        return;
+      }
+      
+      let charge = (amount / 1000) * 14.50;
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)}৳`;
+    }
+
     function previewImage(event) {
       let reader = new FileReader();
       reader.onload = function(){
@@ -433,7 +457,7 @@
       e.preventDefault();
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType5').value || document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType').value;
       
       let msg = `নতুন%20বুকিং:%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
       window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
