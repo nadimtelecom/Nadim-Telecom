@@ -136,6 +136,11 @@
     .stars { color: #ffc107; font-size: 0.9rem; }
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
+
+    /* ব্লগ বা প্রোডাক্টের ছবিগুলোতে পয়েন্টার এবং ক্লিক প্রিভিউ স্টাইল */
+    .blog-img, img {
+        cursor: pointer;
+    }
   </style>
 </head>
 <body data-theme="light">
@@ -441,6 +446,12 @@
     </div>
   </div>
 
+  <!-- Image Preview Modal (ছবির উপর ক্লিক করলে বড় করে দেখানোর জন্য) -->
+  <div id="imageModal" style="display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); text-align:center;">
+    <span onclick="closeImageModal()" style="position:absolute; top:20px; right:30px; color:#fff; font-size:45px; font-weight:bold; cursor:pointer;">&times;</span>
+    <img id="modalImg" style="max-width:90%; max-height:85%; margin-top:5%; border-radius:8px; box-shadow:0 0 20px rgba(0,0,0,0.5);">
+  </div>
+
   <footer>
     <p style="margin:0;">Nadim Telecom - আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
     <p style="margin:5px 0 0 0;">© 2026 Nadim Telecom</p>
@@ -579,7 +590,6 @@
       let titleElem = document.getElementById('modalTitle');
       let bodyElem = document.getElementById('modalBody');
       
-      // যদি ডাইনামিক ব্লগ হয়
       if(blogData[blogKey]) {
         titleElem.textContent = blogData[blogKey].title;
         bodyElem.textContent = blogData[blogKey].body;
@@ -618,13 +628,11 @@
         let blogKey = 'custom_' + Date.now();
         let currentDate = 'সেপ্টেম্বর ২০২৬';
 
-        // ব্লগ ডাটা অবজেক্টে সেভ করা
         blogData[blogKey] = {
           title: title,
           body: desc
         };
 
-        // নতুন কার্ড HTML তৈরি করা
         let container = document.getElementById('dynamicBlogContainer');
         let newCardHTML = `
           <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
@@ -639,10 +647,8 @@
           </div>
         `;
 
-        // সবার উপরে নতুন পোস্ট যুক্ত করা
         container.insertAdjacentHTML('afterbegin', newCardHTML);
 
-        // লোকাল স্টোরেজে সংরক্ষণ করা (যাতে পেজ রিফ্রেশ করলে মুছে না যায়)
         saveBlogToLocalStorage({
           key: blogKey,
           title: title,
@@ -687,6 +693,27 @@
         `;
         container.insertAdjacentHTML('afterbegin', cardHTML);
       });
+    }
+
+    // ছবির উপর ক্লিক করলে বড় করে দেখানোর স্ক্রিপ্ট (Image Modal Logic)
+    document.addEventListener("click", function(event) {
+        if (event.target.tagName === 'IMG' && event.target.id !== 'modalImg') {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImg");
+            modal.style.display = "block";
+            modalImg.src = event.target.src;
+        }
+    });
+
+    function closeImageModal() {
+        document.getElementById("imageModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        var modal = document.getElementById("imageModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
     }
   </script>
 
