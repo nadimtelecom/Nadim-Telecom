@@ -72,10 +72,10 @@
 
     .container { max-width: 500px; margin: 0 auto; padding: 15px; padding-bottom: 70px; }
     .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: background 0.3s; }
-    .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
     /* Forms & Inputs */
-    .search-box, .form-input, .form-select {
+    .search-box, .form-input, .form-select, .form-textarea {
       width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color);
       border-radius: 8px; box-sizing: border-box; outline: none; font-size: 0.95rem; margin-bottom: 10px;
     }
@@ -83,7 +83,7 @@
     /* Product Cards */
     .product-card { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; }
     .product-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .product-img { width: 90px; height: 90px; border-radius: 8px; object-fit: cover; background-color: #eee; }
+    .product-img { width: 90px; height: 90px; border-radius: 8px; object-fit: cover; background-color: #eee; flex-shrink: 0; }
     .product-info { flex: 1; }
     .product-title { font-size: 1rem; font-weight: bold; margin: 0 0 5px 0; }
     .product-price { color: #d9534f; font-weight: bold; margin-bottom: 5px; }
@@ -93,6 +93,7 @@
     .btn-whatsapp { background-color: #25D366; color: white; }
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
+    .btn-write-now { background-color: #198754; color: white; padding: 5px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; }
 
     /* Floating WhatsApp Button */
     .float-wa {
@@ -200,7 +201,7 @@
 
     <!-- দোকান পরিচিতি (About Us) -->
     <div class="card">
-      <div class="section-title">ℹ️ আমাদের সম্পর্কে</div>
+      <div class="section-title"><span>ℹ️ আমাদের সম্পর্কে</span></div>
       <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
         <strong>নাদিম টেলিকম</strong>-এ আপনাদের স্বাগতম! আমরা বিশ্বস্ততার সাথে দীর্ঘদিন ধরে মোবাইল রিপেয়ারিং, অরিজিনাল এক্সেসরিজ বিক্রয় এবং বিকাশ ও নগদের মতো মোবাইল ফিন্যান্সিয়াল সেবা প্রদান করে আসছে। আপনার যেকোনো প্রয়োজনে আমাদের সাথে যোগাযোগ করতে পারেন।
       </p>
@@ -214,48 +215,54 @@
 
     <!-- সার্ভিস ও মোবাইল নিউজ / ব্লগ সেকশন -->
     <div class="card">
-      <div class="section-title">📰 মোবাইল নিউজ ও টেক ব্লগ</div>
+      <div class="section-title">
+        <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
+        <button onclick="openWriteModal()" class="btn-write-now">✍️ Write Now</button>
+      </div>
       
-      <!-- Oppo Find X9 Ultra ব্লগ পোস্ট -->
-      <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
-        <img src="oppo-find-x9-ultra-2.jpg" alt="Oppo Find X9 Ultra" class="product-img">
-        <div class="product-info">
-          <div class="product-title">Oppo Find X9 Ultra: অসাধারণ ক্যামেরা ও শক্তিশালী ব্যাটারির ফ্ল্যাগশিপ ফোন</div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">কোয়ালকম স্ন্যাপড্রাগন ৮ এলিট জেন ৫ প্রসেসর, ৭০৫০ এমএএইচ ব্যাটারি এবং ২০০ মেগাপিক্সেল ক্যামেরা নিয়ে আসছে নতুন ফ্ল্যাগশিপ...</p>
-          <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: এপ্রিল ২০২৬</span>
-          <br>
-          <button onclick="openBlogModal('oppoFindX9Ultra')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+      <!-- ডাইনামিক এবং স্ট্যাটিক ব্লগ পোস্ট প্রদর্শনের জায়গা -->
+      <div id="dynamicBlogContainer">
+        <!-- Oppo Find X9 Ultra ব্লগ পোস্ট -->
+        <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
+          <img src="oppo-find-x9-ultra-2.jpg" alt="Oppo Find X9 Ultra" class="product-img">
+          <div class="product-info">
+            <div class="product-title">Oppo Find X9 Ultra: অসাধারণ ক্যামেরা ও শক্তিশালী ব্যাটারির ফ্ল্যাগশিপ ফোন</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">কোয়ালকম স্ন্যাপড্রাগন ৮ এলিট জেন ৫ প্রসেসর, ৭০৫০ এমএএইচ ব্যাটারি এবং ২০০ মেগাপিক্সেল ক্যামেরা নিয়ে আসছে নতুন ফ্ল্যাগশিপ...</p>
+            <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: এপ্রিল ২০২৬</span>
+            <br>
+            <button onclick="openBlogModal('oppoFindX9Ultra')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+          </div>
         </div>
-      </div>
 
-      <!-- ব্লগ পোস্ট ১ -->
-      <div class="product-card searchable-item" style="align-items: flex-start;">
-        <img src="https://via.placeholder.com/90" alt="Mobile News" class="product-img">
-        <div class="product-info">
-          <div class="product-title">বাজার কাঁপাতে আসছে নতুন ৫জি স্মার্টফোন! জানুন ফিচার ও দাম</div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">নতুন ফোন কেনার আগে এর প্রসেসর, ক্যামেরা এবং ব্যাটারি ব্যাকআপ সম্পর্কে জেনে নিন বিস্তারিত...</p>
-          <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: সেপ্টেম্বর ২০২৬</span>
-          <br>
-          <button onclick="openBlogModal('newPhone')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+        <!-- ব্লগ পোস্ট ১ -->
+        <div class="product-card searchable-item" style="align-items: flex-start;">
+          <img src="https://via.placeholder.com/90" alt="Mobile News" class="product-img">
+          <div class="product-info">
+            <div class="product-title">বাজার কাঁপাতে আসছে নতুন ৫জি স্মার্টফোন! জানুন ফিচার ও দাম</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">নতুন ফোন কেনার আগে এর প্রসেসর, ক্যামেরা এবং ব্যাটারি ব্যাকআপ সম্পর্কে জেনে নিন বিস্তারিত...</p>
+            <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: সেপ্টেম্বর ২০২৬</span>
+            <br>
+            <button onclick="openBlogModal('newPhone')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+          </div>
         </div>
-      </div>
 
-      <!-- ব্লগ পোস্ট ২ -->
-      <div class="product-card searchable-item" style="align-items: flex-start; margin-top: 15px;">
-        <img src="https://via.placeholder.com/90" alt="Battery Care" class="product-img">
-        <div class="product-info">
-          <div class="product-title">স্মার্টফোনের ব্যাটারি দীর্ঘস্থায়ী করার ৫টি কার্যকরী উপায়</div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">সারাদিন চার্জ টিকিয়ে রাখতে এবং ব্যাটারির আয়ু বাড়াতে এই ছোট কৌশলগুলো মেনে চলুন...</p>
-          <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: সেপ্টেম্বর ২০২৬</span>
-          <br>
-          <button onclick="openBlogModal('batteryCare')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+        <!-- ব্লগ পোস্ট ২ -->
+        <div class="product-card searchable-item" style="align-items: flex-start; margin-top: 15px;">
+          <img src="https://via.placeholder.com/90" alt="Battery Care" class="product-img">
+          <div class="product-info">
+            <div class="product-title">স্মার্টফোনের ব্যাটারি দীর্ঘস্থায়ী করার ৫টি কার্যকরী উপায়</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">সারাদিন চার্জ টিকিয়ে রাখতে এবং ব্যাটারির আয়ু বাড়াতে এই ছোট কৌশলগুলো মেনে চলুন...</p>
+            <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: সেপ্টেম্বর ২০২৬</span>
+            <br>
+            <button onclick="openBlogModal('batteryCare')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Service Cost Calculator -->
     <div class="card">
-      <div class="section-title">🧮 সার্ভিস কস্ট ক্যালকুলেটর</div>
+      <div class="section-title"><span>🧮 সার্ভিস কস্ট ক্যালকুলেটর</span></div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">আপনার ফোনের সার্ভিস খরচ আনুমানিক কত হতে পারে তা দেখে নিন:</p>
       <select id="calcDevice" class="form-select">
         <option value="normal">সাধারণ অ্যান্ড্রয়েড / বাটন ফোন</option>
@@ -275,7 +282,7 @@
 
     <!-- MFS Charge Calculator Card -->
     <div class="card">
-      <div class="section-title">💸 বিকাশ/নগদ চার্জ ক্যালকুলেটর</div>
+      <div class="section-title"><span>💸 বিকাশ/নগদ চার্জ ক্যালকুলেটর</span></div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">টাকা ক্যাশ-আউট করতে কত চার্জ আসবে দেখে নিন:</p>
       <input type="number" id="mfsAmount" placeholder="টাকার পরিমাণ লিখুন (যেমন: ১০০০)" class="form-input">
       <button type="button" onclick="calculateMFS()" class="btn btn-call" style="background-color: #e2136e;">চার্জ হিসাব করুন</button>
@@ -284,7 +291,7 @@
 
     <!-- Image Upload / Problem Preview -->
     <div class="card">
-      <div class="section-title">📷 আপনার ফোনের সমস্যার ছবি পাঠান</div>
+      <div class="section-title"><span>📷 আপনার ফোনের সমস্যার ছবি পাঠান</span></div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">ফোনের ক্ষতিগ্রস্ত অংশ বা পার্টসের ছবি আপলোড করে প্রিভিউ দেখুন:</p>
       <input type="file" id="imageUploader" accept="image/*" onchange="previewImage(event)" class="form-input">
       <div id="imagePreviewContainer" style="display:none; text-align:center; margin-top:10px;">
@@ -296,7 +303,7 @@
 
     <!-- Quick Online Booking Form -->
     <div class="card">
-      <div class="section-title">📝 সার্ভিস বুকিং ফর্ম</div>
+      <div class="section-title"><span>📝 সার্ভিস বুকিং ফর্ম</span></div>
       <form onsubmit="sendBooking(event)">
         <input type="text" id="custName" placeholder="আপনার নাম" class="form-input" required>
         <input type="tel" id="custPhone" placeholder="মোবাইল নম্বর" class="form-input" required>
@@ -313,7 +320,7 @@
     </div>
 
     <div class="card">
-      <div class="section-title">📱 মোবাইল অ্যাক্সেসরিজ</div>
+      <div class="section-title"><span>📱 মোবাইল অ্যাক্সেসরিজ</span></div>
 
       <div class="product-card searchable-item">
         <img src="Apple_AirPods_Pro_01.jpg" alt="AirPods Pro" class="product-img">
@@ -340,7 +347,7 @@
     </div>
 
     <div class="card">
-      <div class="section-title">🛠️ মোবাইল রিপেয়ারিং সার্ভিস</div>
+      <div class="section-title"><span>🛠️ মোবাইল রিপেয়ারিং সার্ভিস</span></div>
       <ul class="service-list">
         <li class="searchable-item"><span>ডিসপ্লে পরিবর্তন</span> <strong>৮০০ থেকে শুরু</strong></li>
         <li class="searchable-item"><span>ব্যাটারি পরিবর্তন</span> <strong>৫০০ থেকে শুরু</strong></li>
@@ -354,7 +361,7 @@
 
     <!-- Review Submission -->
     <div class="card">
-      <div class="section-title">⭐ গ্রাহকদের মতামত</div>
+      <div class="section-title"><span>⭐ গ্রাহকদের মতামত</span></div>
       <div class="review-item">
         <strong>রনি আহমেদ</strong> <span class="stars">★★★★★</span>
         <p style="margin: 3px 0; font-size: 0.85rem; color: var(--text-muted);">খুবই দ্রুত ডিসপ্লে পরিবর্তন করে দিয়েছে। কাজ চমৎকার!</p>
@@ -373,7 +380,7 @@
     </div>
 
     <div class="card">
-      <div class="section-title">💳 লেনদেন ও পেমেন্ট মাধ্যম</div>
+      <div class="section-title"><span>💳 লেনদেন ও পেমেন্ট মাধ্যম</span></div>
       <p style="font-size: 0.9rem; margin: 5px 0 10px 0; color: var(--text-muted);">আমাদের দোকানে কাস্টমারদের সুবিধার্থে সবধরনের পেমেন্ট নেওয়া হয়:</p>
       <div>
         <span class="payment-badge bkash">bKash</span>
@@ -383,7 +390,7 @@
     </div>
 
     <div class="card">
-      <div class="section-title">📍 আমাদের ঠিকানা ও যোগাযোগ</div>
+      <div class="section-title"><span>📍 আমাদের ঠিকানা ও যোগাযোগ</span></div>
       <p style="margin: 5px 0;"><strong>Nadim Telecom</strong></p>
       <p style="margin: 5px 0; color: var(--text-muted);">Leaber Coloni, Newmoring Road, CEPZ, Chattogram - 4223</p>
       <p style="margin: 5px 0; color: var(--text-muted);">
@@ -400,12 +407,36 @@
 
   </div>
 
+  <!-- রাইট নাও (Write Now) পোস্ট লেখার পপআপ ফর্ম (Modal) -->
+  <div id="writeBlogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
+    <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:90vh; overflow-y:auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+      <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 style="color:#0066cc; margin-top:0; font-size:1.2rem;">✍️ নতুন ব্লগ পোস্ট লিখুন</h3>
+      
+      <form id="newBlogForm" onsubmit="publishNewBlog(event)">
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">শিরোনাম (Title):</label>
+        <input type="text" id="newBlogTitle" placeholder="পোস্টের শিরোনাম এখানে লিখুন..." class="form-input" required>
+        
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">ছবি সিলেক্ট করুন (Image):</label>
+        <input type="file" id="newBlogImage" accept="image/*" class="form-input" required>
+        
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Description):</label>
+        <textarea id="newBlogDesc" rows="4" placeholder="ব্লগের বিস্তারিত বিবরণ এখানে লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
+        
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <button type="button" onclick="closeWriteModal()" class="btn btn-call" style="background-color:#6c757d; flex:1;">বাতিল</button>
+          <button type="submit" class="btn btn-green" style="flex:1;">Accept & Publish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- ব্লগ ডিটেইলস পপআপ মডাল -->
   <div id="blogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:80vh; overflow-y:auto;">
       <span onclick="closeBlogModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.2rem;"></h3>
-      <p id="modalBody" style="font-size:0.9rem; line-height:1.6; color:var(--text-muted);"></p>
+      <p id="modalBody" style="font-size:0.9rem; line-height:1.6; color:var(--text-muted); white-space: pre-line;"></p>
       <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; margin-top:15px;">বন্ধ করুন</button>
     </div>
   </div>
@@ -423,6 +454,7 @@
       setTimeout(function() {
         loader.style.display = 'none';
       }, 500);
+      loadSavedBlogs(); // লোকাল স্টোরেজ থেকে কাস্টম ব্লগ লোড করা
     });
 
     // Dark / Light Theme Toggle Logic
@@ -547,15 +579,114 @@
       let titleElem = document.getElementById('modalTitle');
       let bodyElem = document.getElementById('modalBody');
       
+      // যদি ডাইনামিক ব্লগ হয়
       if(blogData[blogKey]) {
         titleElem.textContent = blogData[blogKey].title;
-        bodyElem.innerHTML = blogData[blogKey].body.replace(/\n/g, '<br>');
+        bodyElem.textContent = blogData[blogKey].body;
         modal.style.display = 'flex';
       }
     }
 
     function closeBlogModal() {
       document.getElementById('blogModal').style.display = 'none';
+    }
+
+    // Write Now Modal Functions
+    function openWriteModal() {
+      document.getElementById('writeBlogModal').style.display = 'flex';
+    }
+    function closeWriteModal() {
+      document.getElementById('writeBlogModal').style.display = 'none';
+      document.getElementById('newBlogForm').reset();
+    }
+
+    // Publish New Blog Function
+    function publishNewBlog(e) {
+      e.preventDefault();
+      let title = document.getElementById('newBlogTitle').value.trim();
+      let desc = document.getElementById('newBlogDesc').value.trim();
+      let imageFile = document.getElementById('newBlogImage').files[0];
+
+      if (!title || !desc || !imageFile) {
+        alert('দয়া করে সকল তথ্য সঠিকভাবে পূরণ করুন।');
+        return;
+      }
+
+      let reader = new FileReader();
+      reader.onload = function(event) {
+        let imageDataUrl = event.target.result;
+        let blogKey = 'custom_' + Date.now();
+        let currentDate = 'সেপ্টেম্বর ২০২৬';
+
+        // ব্লগ ডাটা অবজেক্টে সেভ করা
+        blogData[blogKey] = {
+          title: title,
+          body: desc
+        };
+
+        // নতুন কার্ড HTML তৈরি করা
+        let container = document.getElementById('dynamicBlogContainer');
+        let newCardHTML = `
+          <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
+            <img src="${imageDataUrl}" alt="Blog Image" class="product-img">
+            <div class="product-info">
+              <div class="product-title">${title}</div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${desc.substring(0, 90)}...</p>
+              <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: ${currentDate}</span>
+              <br>
+              <button onclick="openBlogModal('${blogKey}')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+            </div>
+          </div>
+        `;
+
+        // সবার উপরে নতুন পোস্ট যুক্ত করা
+        container.insertAdjacentHTML('afterbegin', newCardHTML);
+
+        // লোকাল স্টোরেজে সংরক্ষণ করা (যাতে পেজ রিফ্রেশ করলে মুছে না যায়)
+        saveBlogToLocalStorage({
+          key: blogKey,
+          title: title,
+          body: desc,
+          image: imageDataUrl,
+          date: currentDate
+        });
+
+        alert('ব্লগ পোস্ট সফলভাবে প্রকাশিত হয়েছে!');
+        closeWriteModal();
+      };
+      reader.readAsDataURL(imageFile);
+    }
+
+    function saveBlogToLocalStorage(blogObj) {
+      let savedBlogs = JSON.parse(localStorage.getItem('nadimTelecomCustomBlogs')) || [];
+      savedBlogs.unshift(blogObj);
+      localStorage.setItem('nadimTelecomCustomBlogs', JSON.stringify(savedBlogs));
+    }
+
+    function loadSavedBlogs() {
+      let savedBlogs = JSON.parse(localStorage.getItem('nadimTelecomCustomBlogs')) || [];
+      let container = document.getElementById('dynamicBlogContainer');
+
+      savedBlogs.forEach(blog => {
+        blogData[blog.key] = {
+          title: blog.title,
+          body: blog.body
+        };
+
+        let cardHTML = `
+          <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
+            <img src="${blog.image}" alt="Blog Image" class="product-img">
+            <div class="product-info">
+              <div class="product-title">${blog.title}</div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${blog.body.substring(0, 90)}...</p>
+              <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: ${blog.date}</span>
+              <br>
+              <button onclick="openBlogModal('${blog.key}')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('afterbegin', cardHTML);
+      });
     }
   </script>
 
