@@ -506,7 +506,7 @@
                 // গ্লোবাল blogData অবজেক্টে ডাটা যোগ করা যাতে মডাল কাজ করে
                 blogData[blogKey] = {
                     title: blog.title || 'শিরোনাম নেই',
-                    body: blog.content || 'বিবরণ নেই'
+                    body: blog.content || blog.body || 'বিবরণ নেই'
                 };
                 
                 const blogCard = document.createElement("div");
@@ -517,8 +517,10 @@
                     <div class="product-info" style="width: 100%;">
                         <div class="product-title">${blog.title || 'শিরোনাম নেই'}</div>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${blog.content ? blog.content.substring(0, 90) + '...' : 'বিবরণ নেই'}</p>
-                        <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: ${blog.date || 'সাম্প্রতিক'}</span>
-                        <br>
+                        <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold; display: flex; gap: 12px; margin-bottom: 5px; flex-wrap: wrap;">
+                            <span>লেখক: ${blog.author || 'নাদিম টেলিকম'}</span>
+                            <span>ভিউস: ${blog.Views || blog.views || 0}</span>
+                        </div>
                         <button onclick="openBlogModal('${blogKey}')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
                     </div>
                 `;
