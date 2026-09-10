@@ -468,7 +468,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
     import { getAuth } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
@@ -484,9 +485,16 @@
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const storage = getStorage(app);
 
     window.auth = auth;
     window.db = db;
+    window.storage = storage;
+    window.uploadBytes = uploadBytes;
+    window.ref = ref;
+    window.getDownloadURL = getDownloadURL;
+    window.addDoc = addDoc;
+    window.collection = collection;
 
     // ফায়ারস্টোর থেকে content এবং date ফেচ করে ডায়নামিক্যালি দেখানোর ফাংশন
     async function fetchFirestoreBlogs() {
@@ -494,7 +502,7 @@
             const querySnapshot = await getDocs(collection(window.db, "Blogs"));
             const container = document.getElementById("firestore-blogs-container");
             
-            container.innerHTML = ""; // আগের লোডিং টেক্সট মুছে ফেলা
+            container.innerHTML = ""; 
 
             if (querySnapshot.empty) {
                 container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো ব্লগ পাওয়া যায়নি।</p>";
@@ -505,13 +513,12 @@
                 const blog = docSnap.data();
                 const blogKey = docSnap.id;
 
-                // ফায়ারস্টোর ফিল্ড থেকে content এবং date নেওয়া হচ্ছে
                 const blogContent = blog.content || 'বিবরণ নেই';
                 const blogDate = blog.date || 'তারিখ উল্লেখ নেই';
                 const blogAuthor = blog.author || 'নাদিম টেলিকম';
                 const blogViews = blog.Views || blog.views || 0;
+                const blogImage = blog.imageUrl || 'https://via.placeholder.com/90';
 
-                // গ্লোবাল blogData অবজেক্টে ডাটা সেট করা যাতে মডালে সম্পূর্ণ content দেখা যায়
                 blogData[blogKey] = {
                     title: blog.title || 'শিরোনাম নেই',
                     body: blogContent
@@ -522,6 +529,7 @@
                 blogCard.style.cssText = "align-items: flex-start; margin-bottom: 15px;";
                 
                 blogCard.innerHTML = `
+                    <img src="${blogImage}" alt="Blog Image" class="product-img">
                     <div class="product-info" style="width: 100%;">
                         <div class="product-title">${blog.title || 'শিরোনাম নেই'}</div>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${blogContent.substring(0, 90)}...</p>
@@ -542,13 +550,52 @@
         }
     }
 
+    // ফায়ারবেস স্টোরেজে ছবি আপলোড এবং ফায়ারস্টোরে পোস্ট সেভ করার ফাংশন
+    window.publishNewBlog = async function(e) {
+      e.preventDefault();
+      let title = document.getElementById('newBlogTitle').value.trim();
+      let desc = document.getElementById('newBlogDesc').value.trim();
+      let dateVal = document.getElementById('newBlogDate').value.trim();
+      let imageFile = document.getElementById('newBlogImage').files[0];
+
+      if (!title || !desc || !dateVal || !imageFile) {
+        alert('দয়া করে সকল তথ্য (শিরোনাম, বিবরণ, তারিখ ও ছবি) সঠিকভাবে পূরণ করুন।');
+        return;
+      }
+
+      try {
+        alert('ছবি আপলোড হচ্ছে, দয়া করে অপেক্ষা করুন...');
+
+        const storageRef = window.ref(window.storage, 'blog_images/' + Date.now() + '_' + imageFile.name);
+        const snapshot = await window.uploadBytes(storageRef, imageFile);
+        const downloadURL = await window.getDownloadURL(snapshot.ref);
+
+        await window.addDoc(window.collection(window.db, "Blogs"), {
+          title: title,
+          content: desc,
+          date: dateVal,
+          imageUrl: downloadURL,
+          author: "নাদিম টেলিকম",
+          Views: 0,
+          createdAt: new Date().toISOString()
+        });
+
+        alert('ব্লগ পোস্ট সফলভাবে ফায়ারবেসে প্রকাশিত হয়েছে!');
+        closeWriteModal();
+        location.reload(); 
+
+      } catch (error) {
+        console.error("ব্লগ পাবলিশ করতে সমস্যা হয়েছে: ", error);
+        alert('ত্রুটি ঘটেছে: ' + error.message);
+      }
+    }
+
     window.addEventListener('load', function() {
       let loader = document.getElementById('loader-wrapper');
       loader.style.opacity = '0';
       setTimeout(function() {
         loader.style.display = 'none';
       }, 500);
-      loadSavedBlogs();
       fetchFirestoreBlogs(); 
     });
   </script>
@@ -687,99 +734,10 @@
     function openWriteModal() {
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
+    
     function closeWriteModal() {
       document.getElementById('writeBlogModal').style.display = 'none';
       document.getElementById('newBlogForm').reset();
-    }
-
-    function publishNewBlog(e) {
-      e.preventDefault();
-      let title = document.getElementById('newBlogTitle').value.trim();
-      let desc = document.getElementById('newBlogDesc').value.trim();
-      let dateVal = document.getElementById('newBlogDate').value.trim();
-      let imageFile = document.getElementById('newBlogImage').files[0];
-
-      if (!title || !desc || !dateVal || !imageFile) {
-        alert('দয়া করে সকল তথ্য (শিরোনাম, বিবরণ, তারিখ ও ছবি) সঠিকভাবে পূরণ করুন।');
-        return;
-      }
-
-      let reader = new FileReader();
-      reader.onload = function(event) {
-        let imageDataUrl = event.target.result;
-        let blogKey = 'custom_' + Date.now();
-
-        blogData[blogKey] = {
-          title: title,
-          body: desc
-        };
-
-        let container = document.getElementById('dynamicBlogContainer');
-        let newCardHTML = `
-          <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
-            <img src="${imageDataUrl}" alt="Blog Image" class="product-img">
-            <div class="product-info">
-              <div class="product-title">${title}</div>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${desc.substring(0, 90)}...</p>
-              <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold; display: flex; gap: 12px; margin-bottom: 5px; flex-wrap: wrap;">
-                <span>তারিখ: ${dateVal}</span>
-                <span>লেখক: নাদিম টেলিকম</span>
-                <span>ভিউস: ০</span>
-              </div>
-              <button onclick="openBlogModal('${blogKey}')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
-            </div>
-          </div>
-        `;
-
-        container.insertAdjacentHTML('afterbegin', newCardHTML);
-
-        saveBlogToLocalStorage({
-          key: blogKey,
-          title: title,
-          body: desc,
-          image: imageDataUrl,
-          date: dateVal
-        });
-
-        alert('ব্লগ পোস্ট সফলভাবে প্রকাশিত হয়েছে!');
-        closeWriteModal();
-      };
-      reader.readAsDataURL(imageFile);
-    }
-
-    function saveBlogToLocalStorage(blogObj) {
-      let savedBlogs = JSON.parse(localStorage.getItem('nadimTelecomCustomBlogs')) || [];
-      savedBlogs.unshift(blogObj);
-      localStorage.setItem('nadimTelecomCustomBlogs', JSON.stringify(savedBlogs));
-    }
-
-    function loadSavedBlogs() {
-      let savedBlogs = JSON.parse(localStorage.getItem('nadimTelecomCustomBlogs')) || [];
-      let container = document.getElementById('dynamicBlogContainer');
-
-      savedBlogs.forEach(blog => {
-        blogData[blog.key] = {
-          title: blog.title,
-          body: blog.body
-        };
-
-        let cardHTML = `
-          <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
-            <img src="${blog.image}" alt="Blog Image" class="product-img">
-            <div class="product-info">
-              <div class="product-title">${blog.title}</div>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${blog.body.substring(0, 90)}...</p>
-              <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold; display: flex; gap: 12px; margin-bottom: 5px; flex-wrap: wrap;">
-                <span>তারিখ: ${blog.date}</span>
-                <span>লেখক: নাদিম টেলিকম</span>
-                <span>ভিউস: ০</span>
-              </div>
-              <button onclick="openBlogModal('${blog.key}')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
-            </div>
-          </div>
-        `;
-        container.insertAdjacentHTML('afterbegin', cardHTML);
-      });
     }
 
     document.addEventListener("click", function(event) {
