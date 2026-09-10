@@ -224,6 +224,11 @@
         <button onclick="openWriteModal()" class="btn-write-now">✍️ Write Now</button>
       </div>
       
+      <!-- ফায়ারস্টোর থেকে ডাটা লোড হওয়ার জায়গা -->
+      <div id="firestore-blogs-container">
+        <p style="font-size: 0.85rem; color: var(--text-muted);">ফায়ারস্টোর থেকে ব্লগ লোড হচ্ছে...</p>
+      </div>
+
       <div id="dynamicBlogContainer">
         <!-- Oppo Find X9 Ultra ব্লগ পোস্ট -->
         <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
@@ -455,8 +460,77 @@
     <p style="margin:5px 0 0 0;">© 2026 Nadim Telecom</p>
   </footer>
 
-  <!-- Main JavaScript Logic -->
-  <script>
+  <!-- Main JavaScript & Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
+      authDomain: "nadim-telecom.firebaseapp.com",
+      projectId: "nadim-telecom",
+      storageBucket: "nadim-telecom.firebasestorage.app",
+      messagingSenderId: "472865277754",
+      appId: "1:472865277754:web:186dc565293197074d7203",
+      measurementId: "G-QTBJNJDV22"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.auth = auth;
+    window.db = db;
+
+    // ফায়ারস্টোর থেকে ব্লগ ফেচ করার ফাংশন
+    async function fetchFirestoreBlogs() {
+        try {
+            const querySnapshot = await getDocs(collection(window.db, "Blogs"));
+            const container = document.getElementById("firestore-blogs-container");
+            
+            container.innerHTML = ""; // আগের লেখা বা লোডিং টেক্সট মুছে ফেলা
+
+            if (querySnapshot.empty) {
+                container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো ব্লগ পাওয়া যায়নি।</p>";
+                return;
+            }
+
+            querySnapshot.forEach((docSnap) => {
+                const blog = docSnap.data();
+                const blogKey = docSnap.id;
+
+                // গ্লোবাল blogData অবজেক্টে ডাটা যোগ করা যাতে মডাল কাজ করে
+                blogData[blogKey] = {
+                    title: blog.title || 'শিরোনাম নেই',
+                    body: blog.content || 'বিবরণ নেই'
+                };
+                
+                const blogCard = document.createElement("div");
+                blogCard.className = "product-card searchable-item";
+                blogCard.style.cssText = "align-items: flex-start; margin-bottom: 15px;";
+                
+                blogCard.innerHTML = `
+                    <div class="product-info" style="width: 100%;">
+                        <div class="product-title">${blog.title || 'শিরোনাম নেই'}</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${blog.content ? blog.content.substring(0, 90) + '...' : 'বিবরণ নেই'}</p>
+                        <span style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">তারিখ: ${blog.date || 'সাম্প্রতিক'}</span>
+                        <br>
+                        <button onclick="openBlogModal('${blogKey}')" class="btn btn-call" style="margin-top: 8px; width: auto; padding: 5px 10px; font-size: 0.8rem;">বিস্তারিত পড়ুন</button>
+                    </div>
+                `;
+                
+                container.appendChild(blogCard);
+            });
+        } catch (error) {
+            console.error("ডেটা ফেচ করতে সমস্যা হয়েছে: ", error);
+            document.getElementById("firestore-blogs-container").innerHTML = "<p style='color:red; font-size: 0.85rem;'>ডাটা লোড করতে সমস্যা হয়েছে।</p>";
+        }
+    }
+
     window.addEventListener('load', function() {
       let loader = document.getElementById('loader-wrapper');
       loader.style.opacity = '0';
@@ -464,8 +538,12 @@
         loader.style.display = 'none';
       }, 500);
       loadSavedBlogs();
+      fetchFirestoreBlogs(); // পেজ লোড হওয়ার সময় ফায়ারস্টোর থেকে ডাটা কল করা
     });
+  </script>
 
+  <!-- Main JavaScript Logic -->
+  <script>
     function toggleTheme() {
       const body = document.body;
       const themeBtn = document.getElementById('themeToggleBtn');
@@ -706,35 +784,6 @@
             modal.style.display = "none";
         }
     }
-  </script>
-
-  <!-- Firebase Configuration & Initialization Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
-      authDomain: "nadim-telecom.firebaseapp.com",
-      projectId: "nadim-telecom",
-      storageBucket: "nadim-telecom.firebasestorage.app",
-      messagingSenderId: "472865277754",
-      appId: "1:472865277754:web:186dc565293197074d7203",
-      measurementId: "G-QTBJNJDV22"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    window.auth = auth;
-    window.db = db;
-    window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
-    window.signInWithEmailAndPassword = signInWithEmailAndPassword;
   </script>
 
 </body>
