@@ -137,7 +137,6 @@
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
 
-    /* ব্লগ বা প্রোডাক্টের ছবিগুলোতে পয়েন্টার এবং ক্লিক প্রিভিউ স্টাইল */
     .blog-img, img {
         cursor: pointer;
     }
@@ -225,7 +224,6 @@
         <button onclick="openWriteModal()" class="btn-write-now">✍️ Write Now</button>
       </div>
       
-      <!-- ডাইনামিক এবং স্ট্যাটিক ব্লগ পোস্ট প্রদর্শনের জায়গা -->
       <div id="dynamicBlogContainer">
         <!-- Oppo Find X9 Ultra ব্লগ পোস্ট -->
         <div class="product-card searchable-item" style="align-items: flex-start; margin-bottom: 15px;">
@@ -446,7 +444,7 @@
     </div>
   </div>
 
-  <!-- Image Preview Modal (ছবির উপর ক্লিক করলে বড় করে দেখানোর জন্য) -->
+  <!-- Image Preview Modal -->
   <div id="imageModal" style="display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); text-align:center;">
     <span onclick="closeImageModal()" style="position:absolute; top:20px; right:30px; color:#fff; font-size:45px; font-weight:bold; cursor:pointer;">&times;</span>
     <img id="modalImg" style="max-width:90%; max-height:85%; margin-top:5%; border-radius:8px; box-shadow:0 0 20px rgba(0,0,0,0.5);">
@@ -457,18 +455,17 @@
     <p style="margin:5px 0 0 0;">© 2026 Nadim Telecom</p>
   </footer>
 
+  <!-- Main JavaScript Logic -->
   <script>
-    // Hide Loading Screen after page load
     window.addEventListener('load', function() {
       let loader = document.getElementById('loader-wrapper');
       loader.style.opacity = '0';
       setTimeout(function() {
         loader.style.display = 'none';
       }, 500);
-      loadSavedBlogs(); // লোকাল স্টোরেজ থেকে কাস্টম ব্লগ লোড করা
+      loadSavedBlogs();
     });
 
-    // Dark / Light Theme Toggle Logic
     function toggleTheme() {
       const body = document.body;
       const themeBtn = document.getElementById('themeToggleBtn');
@@ -502,7 +499,6 @@
       }
     }
 
-    // Cost Calculator Logic
     function calculateCost() {
       let deviceType = document.getElementById('calcDevice').value;
       let basePrice = parseInt(document.getElementById('calcService').value);
@@ -520,7 +516,6 @@
       resultDiv.innerHTML = `আনুমানিক সার্ভিস খরচ: প্রায় ${estimatedCost}৳ থেকে শুরু`;
     }
 
-    // MFS Charge Calculator Logic
     function calculateMFS() {
       let amount = parseFloat(document.getElementById('mfsAmount').value);
       let resultDiv = document.getElementById('mfsResult');
@@ -569,7 +564,6 @@
       }
     }
 
-    // ব্লগ পপআপ ডেটা এবং কন্ট্রোল
     const blogData = {
       'oppoFindX9Ultra': {
         title: 'Oppo Find X9 Ultra: ফুল স্পেসিফিকেশন ও দাম',
@@ -601,7 +595,6 @@
       document.getElementById('blogModal').style.display = 'none';
     }
 
-    // Write Now Modal Functions
     function openWriteModal() {
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
@@ -610,7 +603,6 @@
       document.getElementById('newBlogForm').reset();
     }
 
-    // Publish New Blog Function
     function publishNewBlog(e) {
       e.preventDefault();
       let title = document.getElementById('newBlogTitle').value.trim();
@@ -695,7 +687,6 @@
       });
     }
 
-    // ছবির উপর ক্লিক করলে বড় করে দেখানোর স্ক্রিপ্ট (Image Modal Logic)
     document.addEventListener("click", function(event) {
         if (event.target.tagName === 'IMG' && event.target.id !== 'modalImg') {
             var modal = document.getElementById("imageModal");
@@ -715,6 +706,35 @@
             modal.style.display = "none";
         }
     }
+  </script>
+
+  <!-- Firebase Configuration & Initialization Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
+      authDomain: "nadim-telecom.firebaseapp.com",
+      projectId: "nadim-telecom",
+      storageBucket: "nadim-telecom.firebasestorage.app",
+      messagingSenderId: "472865277754",
+      appId: "1:472865277754:web:186dc565293197074d7203",
+      measurementId: "G-QTBJNJDV22"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.auth = auth;
+    window.db = db;
+    window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+    window.signInWithEmailAndPassword = signInWithEmailAndPassword;
   </script>
 
 </body>
