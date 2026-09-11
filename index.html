@@ -81,8 +81,8 @@
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-write-now { background-color: #198754; color: white; padding: 5px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; }
-    .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; }
-    .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; }
+    .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; display: none; }
+    .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
 
     .float-wa {
       position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white;
@@ -172,6 +172,14 @@
   </header>
 
   <div class="container">
+
+    <!-- Auth Bar for Signin/Signup -->
+    <div class="card" style="text-align: center; padding: 10px; background: rgba(0,102,204,0.05);">
+      <div id="authStatusContainer" style="font-size: 0.9rem; font-weight: bold;">
+        <span id="userInfoText">লগইন করা নেই</span>
+        <button id="authActionBtn" onclick="toggleAuthModal()" class="btn btn-call" style="width: auto; padding: 6px 12px; margin-top: 5px; font-size: 0.8rem;">Signin / Signup</button>
+      </div>
+    </div>
 
     <div class="card" style="padding: 10px;">
       <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? যেমন: ডিসপ্লে, চার্জার, AirPods..." class="search-box" style="margin-bottom:0;">
@@ -320,6 +328,29 @@
 
   </div>
 
+  <!-- Signin / Signup Modal -->
+  <div id="authModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
+    <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:400px; padding:20px; border-radius:12px; position:relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+      <span onclick="toggleAuthModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 id="authModalTitle" style="color:#0066cc; margin-top:0; font-size:1.2rem; text-align:center;">🔐 ইউজার সাইন-ইন</h3>
+      
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">ইমেইল (Email):</label>
+        <input type="email" id="authEmail" placeholder="example@gmail.com" class="form-input" required>
+        
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">পাসওয়ার্ড (Password):</label>
+        <input type="password" id="authPassword" placeholder="কমপক্ষে ৬ ডিজিট" class="form-input" required>
+        
+        <button type="submit" class="btn btn-green" id="authSubmitBtn" style="width:100%; margin-top:10px;">লগইন করুন</button>
+      </form>
+
+      <div style="text-align: center; margin-top: 15px; font-size: 0.85rem;">
+        <span id="authSwitchText">একাউন্ট নেই?</span> 
+        <a href="javascript:void(0)" onclick="switchAuthMode()" id="authSwitchLink" style="color: #0066cc; font-weight: bold; text-decoration: none;">রেজিস্ট্রেশন করুন (Sign Up)</a>
+      </div>
+    </div>
+  </div>
+
   <!-- Write/Edit Modal (Dynamic for both Blog and Accessory) -->
   <div id="writeBlogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:90vh; overflow-y:auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
@@ -373,6 +404,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app-check.js";
     import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
@@ -391,8 +423,76 @@
     });
 
     const db = getFirestore(app);
+    const auth = getAuth(app);
     window.db = db;
+    window.auth = auth;
     window.allDataStore = {};
+
+    // আপনার জিমেইল অ্যাকাউন্টটি এখানে অ্যাডমিন হিসেবে সেট করা হয়েছে
+    const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
+    window.isAdmin = false;
+
+    // Monitor Auth State
+    onAuthStateChanged(auth, (user) => {
+      const userInfoText = document.getElementById("userInfoText");
+      const authActionBtn = document.getElementById("authActionBtn");
+      
+      if (user) {
+        window.isAdmin = (user.email === ADMIN_EMAIL);
+        userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b> ${window.isAdmin ? '(🛡️ Admin)' : '(User)'}`;
+        authActionBtn.textContent = "লগআউট";
+        authActionBtn.setAttribute("onclick", "handleLogout()");
+      } else {
+        window.isAdmin = false;
+        userInfoText.innerHTML = "লগইন করা নেই";
+        authActionBtn.textContent = "Signin / Signup";
+        authActionBtn.setAttribute("onclick", "toggleAuthModal()");
+      }
+      fetchFirestoreBlogs();
+      fetchFirestoreAccessories();
+    });
+
+    let isSignUpMode = false;
+    window.toggleAuthModal = function() {
+      let modal = document.getElementById('authModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    window.switchAuthMode = function() {
+      isSignUpMode = !isSignUpMode;
+      document.getElementById('authModalTitle').textContent = isSignUpMode ? "🔐 ইউজার সাইন-আপ (Registration)" : "🔐 ইউজার সাইন-ইন";
+      document.getElementById('authSubmitBtn').textContent = isSignUpMode ? "রেজিস্ট্রেশন করুন" : "লগইন করুন";
+      document.getElementById('authSwitchText').textContent = isSignUpMode ? "ইতিমধ্যে একাউন্ট আছে?" : "একাউন্ট নেই?";
+      document.getElementById('authSwitchLink').textContent = isSignUpMode ? "লগইন করুন (Sign In)" : "রেজিস্ট্রেশন করুন (Sign Up)";
+    }
+
+    window.handleAuthSubmit = async function(e) {
+      e.preventDefault();
+      let email = document.getElementById('authEmail').value;
+      let password = document.getElementById('authPassword').value;
+
+      try {
+        if (isSignUpMode) {
+          await createUserWithEmailAndPassword(auth, email, password);
+          alert("সফলভাবে একাউন্ট তৈরি এবং লগইন হয়েছে!");
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          alert("সফলভাবে লগইন হয়েছে!");
+        }
+        toggleAuthModal();
+      } catch (error) {
+        alert("ত্রুটি: " + error.message);
+      }
+    }
+
+    window.handleLogout = async function() {
+      try {
+        await signOut(auth);
+        alert("সফলভাবে লগআউট করা হয়েছে।");
+      } catch (error) {
+        alert("লগআউট করতে সমস্যা হয়েছে: " + error.message);
+      }
+    }
 
     function getCurrentFormattedDateTime() {
       const now = new Date();
@@ -421,6 +521,11 @@
                 card.className = "product-card searchable-item";
                 card.style.cssText = "align-items: flex-start; margin-bottom: 15px;";
                 
+                let adminControls = window.isAdmin ? `
+                  <button onclick="editItem('Blogs', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+                  <button onclick="deleteItem('Blogs', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                ` : '';
+
                 card.innerHTML = `
                     <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" alt="Blog Image" class="product-img">
                     <div class="product-info" style="width: 100%;">
@@ -431,8 +536,7 @@
                         </div>
                         <div>
                           <button onclick="openBlogModal('${itemKey}')" class="btn btn-call" style="width: auto; padding: 4px 8px; font-size: 0.75rem; display:inline-block; margin-right:5px;">বিস্তারিত</button>
-                          <button onclick="editItem('Blogs', '${itemKey}')" class="btn-edit">এডিট</button>
-                          <button onclick="deleteItem('Blogs', '${itemKey}')" class="btn-delete">মুছে ফেলুন</button>
+                          ${adminControls}
                         </div>
                     </div>
                 `;
@@ -463,6 +567,11 @@
                 const card = document.createElement("div");
                 card.className = "product-card searchable-item";
                 
+                let adminControls = window.isAdmin ? `
+                  <button onclick="editItem('Accessories', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+                  <button onclick="deleteItem('Accessories', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                ` : '';
+
                 card.innerHTML = `
                     <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" alt="Accessory" class="product-img">
                     <div class="product-info">
@@ -474,8 +583,7 @@
                         <br style="margin-bottom: 5px;">
                         <div>
                           <a href="https://wa.me/8801716390762?text=আমি%20${encodeURIComponent(item.title)}%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 5px;">WhatsApp</a>
-                          <button onclick="editItem('Accessories', '${itemKey}')" class="btn-edit">এডিট</button>
-                          <button onclick="deleteItem('Accessories', '${itemKey}')" class="btn-delete">মুছে ফেলুন</button>
+                          ${adminControls}
                         </div>
                     </div>
                 `;
@@ -486,11 +594,24 @@
         }
     }
 
-    // Publish or Update Item (Both Blog and Accessory)
+    // Publish or Update Item
     window.publishItem = async function(e) {
       e.preventDefault();
+      
+      if (!auth.currentUser) {
+        alert("পোস্ট করার জন্য দয়া করে আগে Signin বা Sign-up করুন!");
+        toggleAuthModal();
+        return;
+      }
+
       let collectionName = document.getElementById('editCollectionName').value;
       let editId = document.getElementById('editBlogId').value;
+      
+      if (editId && !window.isAdmin) {
+        alert("দুঃখিত, শুধুমাত্র অ্যাডমিন এটি এডিট করতে পারবেন!");
+        return;
+      }
+
       let title = document.getElementById('newBlogTitle').value.trim();
       let price = document.getElementById('newBlogPrice').value.trim();
       let desc = document.getElementById('newBlogDesc').value.trim();
@@ -525,7 +646,8 @@
           title: title,
           content: desc,
           date: currentDateTime,
-          imageUrl: downloadURL
+          imageUrl: downloadURL,
+          authorEmail: auth.currentUser.email
         };
 
         if (collectionName === "Accessories") {
@@ -551,6 +673,10 @@
     }
 
     window.editItem = function(collectionName, itemKey) {
+      if (!window.isAdmin) {
+        alert("দুঃখিত, আপনি অ্যাডমিন নন!");
+        return;
+      }
       const item = window.allDataStore[itemKey];
       if (!item) return;
 
@@ -579,6 +705,10 @@
     }
 
     window.deleteItem = async function(collectionName, itemKey) {
+      if (!window.isAdmin) {
+        alert("দুঃখিত, শুধুমাত্র অ্যাডমিন পোস্ট মুছে ফেলতে পারবেন!");
+        return;
+      }
       if (confirm("আপনি কি নিশ্চিতভাবে এটি মুছে ফেলতে চান?")) {
         try {
           await deleteDoc(doc(window.db, collectionName, itemKey));
@@ -752,6 +882,12 @@
     function closeBlogModal() { document.getElementById('blogModal').style.display = 'none'; }
     
     function openWriteModal(type) { 
+      if (!window.auth.currentUser) {
+        alert("ব্লগ বা এক্সেসরিজ পোস্ট করতে হলে প্রথমে Signin বা Signup করতে হবে!");
+        toggleAuthModal();
+        return;
+      }
+
       document.getElementById('editCollectionName').value = (type === 'Accessory' ? 'Accessories' : 'Blogs');
       document.getElementById('editBlogId').value = '';
       
