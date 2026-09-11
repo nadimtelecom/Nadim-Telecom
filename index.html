@@ -466,6 +466,7 @@
   <!-- Main JavaScript & Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app-check.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
     import { getAuth } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
     import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -482,6 +483,13 @@
     };
 
     const app = initializeApp(firebaseConfig);
+
+    // App Check ইনিশিয়ালাইজেশন
+    const appCheck = initializeAppCheck(app, {
+      provider: new ReCaptchaEnterpriseProvider('6Lf817QtAAAAAKK09Rd2hYW6H9x_kYzPY8rlibCE'),
+      isTokenAutoRefreshEnabled: true
+    });
+
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -495,6 +503,9 @@
     window.getDownloadURL = getDownloadURL;
     window.addDoc = addDoc;
     window.collection = collection;
+
+    // গ্লোবাল ব্লগ ডাটা অবজেক্ট
+    window.blogData = window.blogData || {};
 
     // ফায়ারস্টোর থেকে content এবং date ফেচ করে ডায়নামিক্যালি দেখানোর ফাংশন
     async function fetchFirestoreBlogs() {
@@ -519,7 +530,7 @@
                 const blogViews = blog.Views || blog.views || 0;
                 const blogImage = blog.imageUrl || 'https://via.placeholder.com/90';
 
-                blogData[blogKey] = {
+                window.blogData[blogKey] = {
                     title: blog.title || 'শিরোনাম নেই',
                     body: blogContent
                 };
@@ -600,7 +611,7 @@
     });
   </script>
 
-  <!-- Main JavaScript Logic -->
+  <!-- Main UI & Helper JavaScript Logic -->
   <script>
     function toggleTheme() {
       const body = document.body;
@@ -720,9 +731,10 @@
       let titleElem = document.getElementById('modalTitle');
       let bodyElem = document.getElementById('modalBody');
       
-      if(blogData[blogKey]) {
-        titleElem.textContent = blogData[blogKey].title;
-        bodyElem.textContent = blogData[blogKey].body;
+      const targetBlog = window.blogData[blogKey] || blogData[blogKey];
+      if(targetBlog) {
+        titleElem.textContent = targetBlog.title;
+        bodyElem.textContent = targetBlog.body;
         modal.style.display = 'flex';
       }
     }
