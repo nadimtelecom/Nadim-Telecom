@@ -324,22 +324,19 @@
   <div id="writeBlogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:90vh; overflow-y:auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
       <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
-      <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.2rem;">✍️ নতুন ব্লগ পোস্ট লিখুন</h3>
+      <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.2rem;">✍️ নতুন পোস্ট বা প্রডাক্ট যোগ করুন</h3>
       
       <form id="newBlogForm" onsubmit="publishNewBlog(event)">
         <input type="hidden" id="editBlogId" value="">
         
-        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">শিরোনাম (Title):</label>
-        <input type="text" id="newBlogTitle" placeholder="পোস্টের শিরোনাম এখানে লিখুন..." class="form-input" required>
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">শিরোনাম / প্রডাক্ট নাম (Title):</label>
+        <input type="text" id="newBlogTitle" placeholder="শিরোনাম বা প্রডাক্টের নাম লিখুন..." class="form-input" required>
         
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">ছবি সিলেক্ট করুন (Image):</label>
         <input type="file" id="newBlogImage" accept="image/*" class="form-input">
         
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Content):</label>
-        <textarea id="newBlogDesc" rows="4" placeholder="ব্লগের বিবরণ এখানে লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
-        
-        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">তারিখ (Date):</label>
-        <input type="text" id="newBlogDate" placeholder="তারিখ (যেমন: সেপ্টেম্বর ২০২৬)" class="form-input" required>
+        <textarea id="newBlogDesc" rows="4" placeholder="বিস্তারিত বিবরণ বা দাম এখানে লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
         
         <div style="display: flex; gap: 10px; margin-top: 10px;">
           <button type="button" onclick="closeWriteModal()" class="btn btn-call" style="background-color:#6c757d; flex:1;">বাতিল</button>
@@ -393,6 +390,13 @@
     window.db = db;
     window.blogData = {};
 
+    // স্বয়ংক্রয়ভাবে তারিখ ও সময় ফরম্যাট করার ফাংশন
+    function getCurrentFormattedDateTime() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return now.toLocaleDateString('bn-BD', options);
+    }
+
     async function fetchFirestoreBlogs() {
         try {
             const querySnapshot = await getDocs(collection(window.db, "Blogs"));
@@ -400,7 +404,7 @@
             container.innerHTML = ""; 
 
             if (querySnapshot.empty) {
-                container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো ব্লগ পাওয়া যায়নি।</p>";
+                container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো পোস্ট পাওয়া যায়নি।</p>";
                 return;
             }
 
@@ -408,7 +412,7 @@
                 const blog = docSnap.data();
                 const blogKey = docSnap.id;
                 const blogContent = blog.content || 'বিবরণ নেই';
-                const blogDate = blog.date || 'তারিখ উল্লেখ নেই';
+                const blogDate = blog.date || getCurrentFormattedDateTime();
                 const blogImage = blog.imageUrl || 'https://via.placeholder.com/90';
 
                 window.blogData[blogKey] = {
@@ -423,12 +427,12 @@
                 blogCard.style.cssText = "align-items: flex-start; margin-bottom: 15px;";
                 
                 blogCard.innerHTML = `
-                    <img src="${blogImage}" alt="Blog Image" class="product-img">
+                    <img src="${blogImage}" alt="Post Image" class="product-img">
                     <div class="product-info" style="width: 100%;">
                         <div class="product-title">${blog.title || 'শিরোনাম নেই'}</div>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${blogContent.substring(0, 80)}...</p>
                         <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">
-                            <span>তারিখ: ${blogDate}</span>
+                            <span>সময় ও তারিখ: ${blogDate}</span>
                         </div>
                         <div>
                           <button onclick="openBlogModal('${blogKey}')" class="btn btn-call" style="width: auto; padding: 4px 8px; font-size: 0.75rem; display:inline-block; margin-right:5px;">বিস্তারিত</button>
@@ -450,11 +454,11 @@
       let editId = document.getElementById('editBlogId').value;
       let title = document.getElementById('newBlogTitle').value.trim();
       let desc = document.getElementById('newBlogDesc').value.trim();
-      let dateVal = document.getElementById('newBlogDate').value.trim();
       let imageFile = document.getElementById('newBlogImage').files[0];
+      let currentDateTime = getCurrentFormattedDateTime(); // স্বয়ংক্রয় সময় ও তারিখ জেনারেট
 
-      if (!title || !desc || !dateVal) {
-        alert('দয়া করে শিরোনাম, বিবরণ এবং তারিখ পূরণ করুন।');
+      if (!title || !desc) {
+        alert('দয়া করে শিরোনাম এবং বিবরণ পূরণ করুন।');
         return;
       }
 
@@ -481,20 +485,20 @@
           await updateDoc(blogRef, {
             title: title,
             content: desc,
-            date: dateVal,
+            date: currentDateTime, // আপডেট করার সময় নতুন সময় ও তারিখ বসবে
             imageUrl: downloadURL
           });
-          alert('ব্লগ পোস্ট সফলভাবে আপডেট করা হয়েছে!');
+          alert('পোস্ট সফলভাবে আপডেট করা হয়েছে!');
         } else {
           await addDoc(collection(window.db, "Blogs"), {
             title: title,
             content: desc,
-            date: dateVal,
+            date: currentDateTime, // নতুন পোস্টের সময় ও তারিখ স্বয়ংক্রয়ভাবে যুক্ত হবে
             imageUrl: downloadURL,
             author: "নাদিম টেলিকম",
             createdAt: new Date().toISOString()
           });
-          alert('নতুন ব্লগ পোস্ট সফলভাবে প্রকাশিত হয়েছে!');
+          alert('নতুন পোস্ট সফলভাবে প্রকাশিত হয়েছে!');
         }
 
         closeWriteModal();
@@ -511,18 +515,17 @@
       document.getElementById('editBlogId').value = blogKey;
       document.getElementById('newBlogTitle').value = blog.title;
       document.getElementById('newBlogDesc').value = blog.body;
-      document.getElementById('newBlogDate').value = blog.date;
-      document.getElementById('modalBlogHeader').textContent = "✍️ ব্লগ পোস্ট এডিট করুন";
+      document.getElementById('modalBlogHeader').textContent = "✍️ পোস্ট বা প্রডাক্ট এডিট করুন";
       document.getElementById('saveBlogBtn').textContent = "আপডেট করুন";
 
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
 
     window.deleteBlog = async function(blogKey) {
-      if (confirm("আপনি কি নিশ্চিতভাবে এই ব্লগটি মুছে ফেলতে চান?")) {
+      if (confirm("আপনি কি নিশ্চিতভাবে এই পোস্টটি মুছে ফেলতে চান?")) {
         try {
           await deleteDoc(doc(window.db, "Blogs", blogKey));
-          alert("ব্লগ সফলভাবে মুছে ফেলা হয়েছে!");
+          alert("পোস্ট সফলভাবে মুছে ফেলা হয়েছে!");
           fetchFirestoreBlogs();
         } catch (error) {
           alert("মুছে ফেলতে সমস্যা হয়েছে: " + error.message);
@@ -599,7 +602,6 @@
       resultDiv.innerHTML = `আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)}৳`;
     }
 
-    // Fixed Multi-Image Selection & Real-time Percentage Handler
     async function previewMultipleImages(event) {
       let files = event.target.files;
       let gridContainer = document.getElementById('multiPreviewGrid');
@@ -623,7 +625,6 @@
       progressBar.style.width = "0%";
       statusText.innerText = "লোডিং হচ্ছে: 0%";
 
-      // Helper function to read file using Promise
       const readFileAsync = (file) => {
         return new Promise((resolve, reject) => {
           let reader = new FileReader();
@@ -636,8 +637,6 @@
       for (let i = 0; i < totalFiles; i++) {
         try {
           let base64String = await readFileAsync(files[i]);
-          
-          // Create and append image preview
           let img = document.createElement('img');
           img.src = base64String;
           img.style.cssText = "width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
@@ -653,7 +652,6 @@
         }
       }
 
-      // Hide progress bar after completion
       setTimeout(() => {
         progressContainer.style.display = "none";
       }, 500);
@@ -696,7 +694,7 @@
     
     function openWriteModal() { 
       document.getElementById('editBlogId').value = '';
-      document.getElementById('modalBlogHeader').textContent = "✍️ নতুন ব্লগ পোস্ট লিখুন";
+      document.getElementById('modalBlogHeader').textContent = "✍️ নতুন পোস্ট বা প্রডাক্ট যোগ করুন";
       document.getElementById('saveBlogBtn').textContent = "Accept & Publish";
       document.getElementById('writeBlogModal').style.display = 'flex'; 
     }
