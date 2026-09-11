@@ -135,7 +135,7 @@
     <marquee scrollamount="5">⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡</marquee>
   </div>
 
-  <!-- কালারফুল আইকন ও ফোল্ডার লজিকসহ আপডেট করা সাইডবার -->
+  <!-- সাইডবার -->
   <div id="mySidebar" class="sidebar">
     <span class="close-btn" onclick="closeNav()">&times;</span>
     
@@ -175,7 +175,7 @@
 
   <div class="container">
 
-    <!-- Auth Bar for Signin/Signup -->
+    <!-- Auth Bar -->
     <div class="card" style="text-align: center; padding: 10px; background: rgba(0,102,204,0.05);">
       <div id="authStatusContainer" style="font-size: 0.9rem; font-weight: bold;">
         <span id="userInfoText">লগইন করা নেই</span>
@@ -187,15 +187,12 @@
       <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? যেমন: ডিসপ্লে, চার্জার, AirPods..." class="search-box" style="margin-bottom:0;">
     </div>
 
-    <!-- ক্যাটাগরি ক্লিকের পর রেজাল্ট দেখানোর বক্স -->
     <div id="categoryResultCard" class="card" style="display:none; border: 2px solid #0066cc;">
       <div class="section-title">
         <span id="categoryResultTitle">📂 ফোল্ডার রেজাল্ট</span>
         <button onclick="document.getElementById('categoryResultCard').style.display='none'" class="btn-write-now" style="background:#dc3545;">বন্ধ করুন</button>
       </div>
-      <div id="categoryResultBody">
-        <!-- ডাটা বা Data Not Found এখানে শো করবে -->
-      </div>
+      <div id="categoryResultBody"></div>
     </div>
 
     <div class="card">
@@ -250,7 +247,6 @@
       <div id="mfsResult" style="display: none; margin-top: 12px; padding: 10px; background-color: #fdf2f8; border-radius: 8px; text-align: center; font-weight: bold; color: #e2136e;"></div>
     </div>
 
-    <!-- Multi-Image Upload & Percentage Preview -->
     <div class="card">
       <div class="section-title"><span>📷 আপনার ফোনের সমস্যার ছবি পাঠান (একাধিক)</span></div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">একাধিক ছবি বা ক্ষতিগ্রস্ত অংশের ছবি একসাথে সিলেক্ট করুন:</p>
@@ -287,7 +283,7 @@
       </form>
     </div>
 
-    <!-- Accessories Section with Write Now Button -->
+    <!-- Accessories Section -->
     <div class="card">
       <div class="section-title">
         <span>📱 মোবাইল অ্যাক্সেসরিজ</span>
@@ -364,7 +360,7 @@
     </div>
   </div>
 
-  <!-- Write/Edit Modal (Dynamic with Multi-Image & Progress Bar) -->
+  <!-- Write/Edit Modal -->
   <div id="writeBlogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:90vh; overflow-y:auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
       <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
@@ -390,8 +386,9 @@
           <p id="progressText" style="font-size: 0.8rem; text-align: center; margin: 3px 0 0 0; color: var(--text-muted);">আপলোড হচ্ছে...</p>
         </div>
 
-        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">তারিখ (Date):</label>
-        <input type="text" id="newBlogDate" placeholder="তারিখ (যেমন: সেপ্টেম্বর ২০২৬)" class="form-input" required>
+        <!-- স্বয়ংক্রিয়ভাবে সময় ও তারিখ যুক্ত হওয়ার ইনপুট ফিল্ড -->
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">সময় ও তারিখ (স্বয়ংক্রিয়):</label>
+        <input type="text" id="newBlogDate" placeholder="তারিখ ও সময়..." class="form-input" required>
 
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Content):</label>
         <textarea id="newBlogDesc" rows="4" placeholder="বিস্তারিত বিবরণ লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
@@ -515,6 +512,7 @@
       }
     }
 
+    // স্বয়ংক্রিয়ভাবে বাংলা ফরম্যাটে সময়, তারিখ, মাস ও বছর পাওয়ার ফাংশন
     function getCurrentFormattedDateTime() {
       const now = new Date();
       const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -552,7 +550,7 @@
                         <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${(item.content || '').substring(0, 80)}...</p>
                         <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">
-                            <span>তারিখ: ${item.date || getCurrentFormattedDateTime()}</span>
+                            <span>তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</span>
                         </div>
                         <div>
                           <button onclick="openBlogModal('${itemKey}')" class="btn btn-call" style="width: auto; padding: 4px 8px; font-size: 0.75rem; display:inline-block; margin-right:5px;">বিস্তারিত</button>
@@ -597,7 +595,7 @@
                         <div class="product-title">${item.title || 'নাম নেই'}</div>
                         <div class="product-price">দাম: ${item.price || 'আলোচনা সাপেক্ষে'}</div>
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin: 3px 0;">${item.content || ''}</p>
-                        <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">তারিখ: ${item.date || getCurrentFormattedDateTime()}</div>
+                        <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</div>
                         <div class="badge in-stock"><span class="dot"></span> In Stock</div>
                         <br style="margin-bottom: 5px;">
                         <div>
@@ -613,9 +611,8 @@
         }
     }
 
-    // ব্র্যান্ড বা ক্যাটাগরি ফোল্ডারে ক্লিক করলে ডাটা ফিল্টার বা Data Not Found দেখানোর ফাংশন
     window.handleCategoryClick = function(categoryName) {
-      closeNav(); // সাইডবার বন্ধ হবে
+      closeNav();
       const resultCard = document.getElementById('categoryResultCard');
       const resultTitle = document.getElementById('categoryResultTitle');
       const resultBody = document.getElementById('categoryResultBody');
@@ -625,7 +622,6 @@
       resultBody.innerHTML = "";
 
       let matchedItems = [];
-      // allDataStore থেকে চেক করা
       for (let key in window.allDataStore) {
         let item = window.allDataStore[key];
         let titleText = (item.title || "").toLowerCase();
@@ -658,8 +654,6 @@
           </div>
         `;
       }
-
-      // স্ক্রিন রেজাল্ট কার্ডে স্ক্রোল করে নিয়ে যাওয়া
       resultCard.scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -803,7 +797,7 @@
       document.getElementById('editBlogId').value = itemKey;
       document.getElementById('newBlogTitle').value = item.title;
       document.getElementById('newBlogDesc').value = item.content;
-      document.getElementById('newBlogDate').value = item.date || "";
+      document.getElementById('newBlogDate').value = item.date || getCurrentFormattedDateTime();
       
       const priceInput = document.getElementById('newBlogPrice');
       const priceLabel = document.getElementById('priceLabelContainer');
@@ -1001,6 +995,7 @@
 
     function closeBlogModal() { document.getElementById('blogModal').style.display = 'none'; }
     
+    // রাইট মডাল ওপেন হওয়ার সাথে সাথেই স্বয়ংক্রিয়ভাবে বর্তমান তারিখ ও সময় ইনপুটে বসে যাবে
     function openWriteModal(type) { 
       if (!window.auth.currentUser) {
         alert("ব্লগ বা এক্সেসরিজ পোস্ট করতে হলে প্রথমে Signin বা Signup করতে হবে!");
@@ -1011,6 +1006,9 @@
       document.getElementById('editCollectionName').value = (type === 'Accessory' ? 'Accessories' : 'Blogs');
       document.getElementById('editBlogId').value = '';
       document.getElementById('newBlogForm').reset();
+      
+      // স্বয়ংক্রিয়ভাবে তারিখ ও সময় বসানো
+      document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
       const priceInput = document.getElementById('newBlogPrice');
       const priceLabel = document.getElementById('priceLabelContainer');
@@ -1050,6 +1048,13 @@
     });
 
     function closeImageModal() { document.getElementById("imageModal").style.display = "none"; }
+
+    // জাভাস্ক্রিপ্ট কোডের ভেতর ব্যবহারের জন্য ডেসক্রিপশন ফাংশনটি বাইরে রাখা হলো
+    function getCurrentFormattedDateTime() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return now.toLocaleDateString('bn-BD', options);
+    }
   </script>
 
 </body>
