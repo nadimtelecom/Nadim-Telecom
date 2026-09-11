@@ -27,29 +27,17 @@
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); transition: background 0.3s, color 0.3s; }
     header { background: var(--header-bg); color: white; text-align: center; padding: 25px 10px; position: relative; }
     
-    /* Notice Ticker Styles */
     .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; overflow: hidden; white-space: nowrap; box-sizing: border-box; }
     .notice-bar marquee { width: 100%; }
 
-    /* Loading Screen with Percentage Styles */
     #loader-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--card-bg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: var(--card-bg); display: flex; flex-direction: column;
+      justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease;
     }
     .loader-logo { font-size: 4rem; animation: bounce 1.5s infinite; }
     .loader-text { margin-top: 15px; font-size: 1.1rem; color: #0066cc; font-weight: bold; }
     
-    /* Progress Bar for Loading */
     .progress-container { width: 200px; height: 8px; background: #ddd; border-radius: 4px; margin-top: 15px; overflow: hidden; }
     .progress-bar { width: 0%; height: 100%; background: #0066cc; transition: width 0.2s; }
 
@@ -58,10 +46,7 @@
       50% { transform: translateY(-15px); }
     }
 
-    /* Hamburger Menu Styles */
     .menu-btn { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-    
-    /* Theme Toggle Button */
     .theme-btn { position: absolute; right: 70px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: white; width: 35px; height: 35px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
     .sidebar {
@@ -79,13 +64,11 @@
     .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: background 0.3s; }
     .section-title { color: #0066cc; font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
-    /* Forms & Inputs */
     .search-box, .form-input, .form-select, .form-textarea {
       width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color);
       border-radius: 8px; box-sizing: border-box; outline: none; font-size: 0.95rem; margin-bottom: 10px;
     }
 
-    /* Product Cards */
     .product-card { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; }
     .product-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .product-img { width: 90px; height: 90px; border-radius: 8px; object-fit: cover; background-color: #eee; flex-shrink: 0; }
@@ -93,7 +76,6 @@
     .product-title { font-size: 1rem; font-weight: bold; margin: 0 0 5px 0; }
     .product-price { color: #d9534f; font-weight: bold; margin-bottom: 5px; }
 
-    /* Buttons */
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; margin-top: 8px; border: none; cursor: pointer; }
     .btn-whatsapp { background-color: #25D366; color: white; }
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
@@ -102,42 +84,35 @@
     .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; }
     .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; }
 
-    /* Floating WhatsApp Button */
     .float-wa {
       position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white;
       border-radius: 50px; padding: 12px 20px; font-size: 0.9rem; font-weight: bold; text-decoration: none;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; display: flex; align-items: center; gap: 8px;
     }
 
-    /* Header Right Corner Logo */
     .float-logo {
       position: absolute; top: 50%; right: 15px; transform: translateY(-50%); background-color: #ffffff;
       color: #198754; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center;
       justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 2px solid #198754; text-decoration: none;
     }
 
-    /* Services List */
     .service-list { list-style: none; padding: 0; margin: 0 0 15px 0; }
     .service-list li { padding: 8px 0; border-bottom: 1px dashed var(--border-color); display: flex; justify-content: space-between; }
     .service-list li::before { content: "✔"; color: #198754; font-weight: bold; margin-right: 8px; }
 
-    /* Offer Box */
     .offer-box { background-color: #fff9e6; border: 1px solid #ffe8a8; border-radius: 10px; padding: 15px; text-align: center; margin-bottom: 20px; color: #333; }
     .offer-title { color: #d9534f; font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
 
-    /* Stock Badge Styles */
     .badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-top: 4px; width: fit-content; }
     .dot { width: 6px; height: 6px; border-radius: 50%; }
     .in-stock { background-color: #e6f4ea; color: #137333; border: 1px solid #ceebd6; }
     .in-stock .dot { background-color: #137333; }
 
-    /* Payment Badges */
     .payment-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; margin-right: 5px; margin-top: 5px; }
     .bkash { background-color: #e2136e; color: white; }
     .nagad { background-color: #f7931e; color: white; }
     .cod { background-color: #0066cc; color: white; }
 
-    /* Reviews Section */
     .review-item { border-bottom: 1px dashed var(--border-color); padding: 8px 0; }
     .review-item:last-child { border-bottom: none; }
     .stars { color: #ffc107; font-size: 0.9rem; }
@@ -148,7 +123,6 @@
 </head>
 <body data-theme="light">
 
-  <!-- Loading Screen with Percentage -->
   <div id="loader-wrapper">
     <div class="loader-logo">🌳</div>
     <div class="loader-text" id="loaderText">Nadim Telecom লোড হচ্ছে... (0%)</div>
@@ -157,12 +131,10 @@
     </div>
   </div>
 
-  <!-- Notice Ticker Bar -->
   <div class="notice-bar">
     <marquee scrollamount="5">⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡</marquee>
   </div>
 
-  <!-- Sidebar Menu -->
   <div id="mySidebar" class="sidebar">
     <span class="close-btn" onclick="closeNav()">&times;</span>
     <div class="sidebar-heading">🏷️ Brand Name</div>
@@ -205,7 +177,6 @@
       <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box" style="margin-bottom:0;">
     </div>
 
-    <!-- দোকান পরিচিতি (About Us) -->
     <div class="card">
       <div class="section-title"><span>ℹ️ আমাদের সম্পর্কে</span></div>
       <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
@@ -219,7 +190,6 @@
       <a href="tel:01716390762" class="btn btn-call" style="background-color: #d9534f;">অফার নিতে কল করুন</a>
     </div>
 
-    <!-- সার্ভিস ও মোবাইল নিউজ / ব্লগ সেকশন -->
     <div class="card">
       <div class="section-title">
         <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
@@ -231,7 +201,6 @@
       </div>
     </div>
 
-    <!-- Service Cost Calculator -->
     <div class="card">
       <div class="section-title"><span>🧮 সার্ভিস কস্ট ক্যালকুলেটর</span></div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">আপনার ফোনের সার্ভিস খরচ আনুমানিক কত হতে পারে তা দেখে নিন:</p>
@@ -251,7 +220,6 @@
       <div id="calcResult" style="display: none; margin-top: 12px; padding: 10px; background-color: #e6f4ea; border-radius: 8px; text-align: center; font-weight: bold; color: #137333;"></div>
     </div>
 
-    <!-- MFS Charge Calculator Card -->
     <div class="card">
       <div class="section-title"><span>💸 বিকাশ/নগদ চার্জ ক্যালকুলেটর</span></div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">টাকা ক্যাশ-আউট করতে কত চার্জ আসবে দেখে নিন:</p>
@@ -266,11 +234,10 @@
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">একাধিক ছবি বা ক্ষতিগ্রস্ত অংশের ছবি একসাথে সিলেক্ট করুন:</p>
       <input type="file" id="imageUploader" accept="image/*" multiple onchange="previewMultipleImages(event)" class="form-input">
       
-      <!-- Upload Progress Percentage -->
       <div id="uploadProgressContainer" style="display:none; margin-top: 8px;">
         <p style="font-size: 0.8rem; margin: 0 0 4px 0;" id="uploadStatusText">লোডিং হচ্ছে: 0%</p>
         <div style="width:100%; height:6px; background:#ddd; border-radius:3px; overflow:hidden;">
-          <div id="uploadProgressBar" style="width:0%; height:100%; background:#198754; transition: width 0.2s;"></div>
+          <div id="uploadProgressBar" style="width:0%; height:100%; background:#198754; transition: width 0.1s ease;"></div>
         </div>
       </div>
 
@@ -281,7 +248,6 @@
       </div>
     </div>
 
-    <!-- Quick Online Booking Form -->
     <div class="card">
       <div class="section-title"><span>📝 সার্ভিস বুকিং ফর্ম</span></div>
       <form onsubmit="sendBooking(event)">
@@ -323,7 +289,6 @@
       <a href="tel:01716390762" class="btn btn-green">রিপেয়ারের জন্য কল করুন</a>
     </div>
 
-    <!-- Review Submission -->
     <div class="card">
       <div class="section-title"><span>⭐ গ্রাহকদের মতামত</span></div>
       <div class="review-item">
@@ -356,7 +321,6 @@
 
   </div>
 
-  <!-- Write / Edit Blog Modal -->
   <div id="writeBlogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:90vh; overflow-y:auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
       <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
@@ -385,7 +349,6 @@
     </div>
   </div>
 
-  <!-- Blog Details Modal -->
   <div id="blogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:80vh; overflow-y:auto;">
       <span onclick="closeBlogModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
@@ -395,7 +358,6 @@
     </div>
   </div>
 
-  <!-- Image Preview Modal -->
   <div id="imageModal" style="display:none; position:fixed; z-index:99999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); text-align:center;">
     <span onclick="closeImageModal()" style="position:absolute; top:20px; right:30px; color:#fff; font-size:45px; font-weight:bold; cursor:pointer;">&times;</span>
     <img id="modalImg" style="max-width:90%; max-height:85%; margin-top:5%; border-radius:8px; box-shadow:0 0 20px rgba(0,0,0,0.5);">
@@ -406,7 +368,6 @@
     <p style="margin:5px 0 0 0;">© 2026 Nadim Telecom</p>
   </footer>
 
-  <!-- Main JavaScript & Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app-check.js";
@@ -516,7 +477,6 @@
         }
 
         if (editId) {
-          // Update Existing Blog
           const blogRef = doc(window.db, "Blogs", editId);
           await updateDoc(blogRef, {
             title: title,
@@ -526,7 +486,6 @@
           });
           alert('ব্লগ পোস্ট সফলভাবে আপডেট করা হয়েছে!');
         } else {
-          // Add New Blog
           await addDoc(collection(window.db, "Blogs"), {
             title: title,
             content: desc,
@@ -571,7 +530,6 @@
       }
     }
 
-    // Initial Loading Percentage Handler
     window.addEventListener('load', function() {
       let percent = 0;
       let progressBar = document.getElementById('progressBar');
@@ -594,7 +552,6 @@
     });
   </script>
 
-  <!-- Main UI & Helper JavaScript Logic -->
   <script>
     function toggleTheme() {
       const body = document.body;
@@ -642,8 +599,8 @@
       resultDiv.innerHTML = `আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)}৳`;
     }
 
-    // Multiple Images Selection with Percentage Preview Fix
-    function previewMultipleImages(event) {
+    // Fixed Multi-Image Selection & Real-time Percentage Handler
+    async function previewMultipleImages(event) {
       let files = event.target.files;
       let gridContainer = document.getElementById('multiPreviewGrid');
       let progressContainer = document.getElementById('uploadProgressContainer');
@@ -651,33 +608,55 @@
       let statusText = document.getElementById('uploadStatusText');
 
       gridContainer.innerHTML = "";
-      if (files.length === 0) return;
+      if (files.length === 0) {
+        progressContainer.style.display = "none";
+        document.getElementById('imagePreviewContainer').style.display = 'none';
+        return;
+      }
 
       progressContainer.style.display = "block";
-      let progress = 0;
+      document.getElementById('imagePreviewContainer').style.display = 'block';
       
-      let uploadInterval = setInterval(() => {
-        progress += 25;
-        if (progressBar) progressBar.style.width = progress + "%";
-        if (statusText) statusText.innerText = `লোডিং হচ্ছে: ${progress}%`;
+      let totalFiles = files.length;
+      let loadedCount = 0;
 
-        if (progress >= 100) {
-          clearInterval(uploadInterval);
-          progressContainer.style.display = "none";
-          document.getElementById('imagePreviewContainer').style.display = 'block';
+      progressBar.style.width = "0%";
+      statusText.innerText = "লোডিং হচ্ছে: 0%";
 
-          for (let i = 0; i < files.length; i++) {
-            let reader = new FileReader();
-            reader.onload = function(e) {
-              let img = document.createElement('img');
-              img.src = e.target.result;
-              img.style.cssText = "width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
-              gridContainer.appendChild(img);
-            }
-            reader.readAsDataURL(files[i]);
-          }
+      // Helper function to read file using Promise
+      const readFileAsync = (file) => {
+        return new Promise((resolve, reject) => {
+          let reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.onerror = (error) => reject(error);
+          reader.readAsDataURL(file);
+        });
+      };
+
+      for (let i = 0; i < totalFiles; i++) {
+        try {
+          let base64String = await readFileAsync(files[i]);
+          
+          // Create and append image preview
+          let img = document.createElement('img');
+          img.src = base64String;
+          img.style.cssText = "width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
+          gridContainer.appendChild(img);
+
+          loadedCount++;
+          let currentPercent = Math.round((loadedCount / totalFiles) * 100);
+          
+          progressBar.style.width = currentPercent + "%";
+          statusText.innerText = `লোডিং হচ্ছে: ${currentPercent}% (${loadedCount}/${totalFiles})`;
+        } catch (err) {
+          console.error("File read error: ", err);
         }
-      }, 120);
+      }
+
+      // Hide progress bar after completion
+      setTimeout(() => {
+        progressContainer.style.display = "none";
+      }, 500);
     }
 
     function sendBooking(e) {
