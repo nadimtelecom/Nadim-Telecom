@@ -58,7 +58,7 @@
     .sidebar a:hover { background-color: rgba(0,102,204,0.1); color: #0066cc; }
     .sidebar .close-btn { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: var(--text-color); z-index: 1210; background: transparent; padding: 0 5px; }
     .sidebar-heading { font-weight: bold; color: #0066cc; padding: 12px 15px 5px 25px; font-size: 1rem; border-top: 1px solid var(--border-color); }
-    .sidebar-sub { padding-left: 40px !important; font-size: 0.85rem !important; color: var(--text-muted) !important; }
+    .sidebar-sub { padding-left: 40px !important; font-size: 0.85rem !important; color: var(--text-muted) !important; cursor: pointer; }
 
     .container { max-width: 500px; margin: 0 auto; padding: 15px; padding-bottom: 70px; }
     .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: background 0.3s; }
@@ -135,30 +135,32 @@
     <marquee scrollamount="5">⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡</marquee>
   </div>
 
+  <!-- কালারফুল আইকন ও ফোল্ডার লজিকসহ আপডেট করা সাইডবার -->
   <div id="mySidebar" class="sidebar">
     <span class="close-btn" onclick="closeNav()">&times;</span>
-    <div class="sidebar-heading">🏷️ Brand Name</div>
-    <a href="#" class="sidebar-sub">Xiaomi</a>
-    <a href="#" class="sidebar-sub">Tecno</a>
-    <a href="#" class="sidebar-sub">Infinix</a>
-    <a href="#" class="sidebar-sub">Oppo</a>
+    
+    <div class="sidebar-heading">🏷️ ব্র্যান্ড ক্যাটাগরি (Brands)</div>
+    <a class="sidebar-sub" onclick="handleCategoryClick('Xiaomi')">🔴 Xiaomi ফোল্ডার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('Tecno')">🟢 Tecno ফোল্ডার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('Infinix')">🟣 Infinix ফোল্ডার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('Oppo')">🔵 Oppo ফোল্ডার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('Samsung')">🟠 Samsung ফোল্ডার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('Apple')">⚪ Apple ফোল্ডার</a>
 
-    <div class="sidebar-heading">📱 মোবাইল</div>
-    <a href="#" class="sidebar-sub">স্মার্ট ফোন</a>
-    <a href="#" class="sidebar-sub">ট্যাব</a>
-    <a href="#" class="sidebar-sub">বাটন ফোন</a>
+    <div class="sidebar-heading">📱 মোবাইল ফোন</div>
+    <a class="sidebar-sub" onclick="handleCategoryClick('স্মার্ট ফোন')">🔵 স্মার্ট ফোন</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('ট্যাব')">🟢 ট্যাব</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('বাটন ফোন')">🟠 বাটন ফোন</a>
 
-    <div class="sidebar-heading">🔌 মোবাইল এক্সোসরিজ</div>
-    <a href="#" class="sidebar-sub">অরাইমো চার্জার</a>
-    <a href="#" class="sidebar-sub">Baseus চার্জার</a>
-    <a href="#" class="sidebar-sub">হেডফোন</a>
-    <a href="#" class="sidebar-sub">ইয়ার বাডস</a>
-    <a href="#" class="sidebar-sub">ইয়ার পডস</a>
-    <a href="#" class="sidebar-sub">কেবল</a>
-    <a href="#" class="sidebar-sub">মোবাইল স্ট্যান্ড</a>
-    <a href="#" class="sidebar-sub">ব্যাক কভার</a>
-    <a href="#" class="sidebar-sub">স্ক্রিন প্রটেক্টর গ্লাস</a>
-    <a href="#" class="sidebar-sub">ডিসপ্লে</a>
+    <div class="sidebar-heading">🔌 মোবাইল অ্যাক্সেসরিজ</div>
+    <a class="sidebar-sub" onclick="handleCategoryClick('অরাইমো চার্জার')">⚡ অরাইমো চার্জার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('Baseus চার্জার')">⚡ Baseus চার্জার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('হেডফোন')">🎧 হেডফোন</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('ইয়ার বাডস')">🎵 ইয়ার বাডস</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('কেবল')">🔌 কেবল</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('ব্যাক কভার')">📱 ব্যাক কভার</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('স্ক্রিন প্রটেক্টর')">🛡️ স্ক্রিন প্রটেক্টর গ্লাস</a>
+    <a class="sidebar-sub" onclick="handleCategoryClick('ডিসপ্লে')">🖥️ ডিসপ্লে</a>
   </div>
 
   <a href="https://wa.me/8801716390762" target="_blank" class="float-wa">💬 নক দিন</a>
@@ -183,6 +185,17 @@
 
     <div class="card" style="padding: 10px;">
       <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? যেমন: ডিসপ্লে, চার্জার, AirPods..." class="search-box" style="margin-bottom:0;">
+    </div>
+
+    <!-- ক্যাটাগরি ক্লিকের পর রেজাল্ট দেখানোর বক্স -->
+    <div id="categoryResultCard" class="card" style="display:none; border: 2px solid #0066cc;">
+      <div class="section-title">
+        <span id="categoryResultTitle">📂 ফোল্ডার রেজাল্ট</span>
+        <button onclick="document.getElementById('categoryResultCard').style.display='none'" class="btn-write-now" style="background:#dc3545;">বন্ধ করুন</button>
+      </div>
+      <div id="categoryResultBody">
+        <!-- ডাটা বা Data Not Found এখানে শো করবে -->
+      </div>
     </div>
 
     <div class="card">
@@ -598,6 +611,56 @@
         } catch (error) {
             console.error("অ্যাক্সেসরিজ লোড করতে সমস্যা:", error);
         }
+    }
+
+    // ব্র্যান্ড বা ক্যাটাগরি ফোল্ডারে ক্লিক করলে ডাটা ফিল্টার বা Data Not Found দেখানোর ফাংশন
+    window.handleCategoryClick = function(categoryName) {
+      closeNav(); // সাইডবার বন্ধ হবে
+      const resultCard = document.getElementById('categoryResultCard');
+      const resultTitle = document.getElementById('categoryResultTitle');
+      const resultBody = document.getElementById('categoryResultBody');
+      
+      resultCard.style.display = 'block';
+      resultTitle.innerText = `📂 ফোল্ডার: ${categoryName}`;
+      resultBody.innerHTML = "";
+
+      let matchedItems = [];
+      // allDataStore থেকে চেক করা
+      for (let key in window.allDataStore) {
+        let item = window.allDataStore[key];
+        let titleText = (item.title || "").toLowerCase();
+        let contentText = (item.content || "").toLowerCase();
+        if (titleText.includes(categoryName.toLowerCase()) || contentText.includes(categoryName.toLowerCase())) {
+          matchedItems.push(item);
+        }
+      }
+
+      if (matchedItems.length > 0) {
+        let htmlContent = "";
+        matchedItems.forEach(item => {
+          htmlContent += `
+            <div class="product-card" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+              <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" class="product-img">
+              <div class="product-info">
+                <div class="product-title">${item.title}</div>
+                <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
+                <p style="font-size:0.8rem; color:var(--text-muted);">${item.content ? item.content.substring(0, 60) : ''}...</p>
+              </div>
+            </div>
+          `;
+        });
+        resultBody.innerHTML = htmlContent;
+      } else {
+        resultBody.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <p style="font-size: 1.1rem; color: #dc3545; font-weight: bold; margin-bottom: 5px;">⚠️ Data Not Found</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">${categoryName} ফোল্ডারে বর্তমানে কোনো ডাটা বা প্রডাক্ট নেই।</p>
+          </div>
+        `;
+      }
+
+      // স্ক্রিন রেজাল্ট কার্ডে স্ক্রোল করে নিয়ে যাওয়া
+      resultCard.scrollIntoView({ behavior: 'smooth' });
     }
 
     window.publishNewBlog = async function(e) {
