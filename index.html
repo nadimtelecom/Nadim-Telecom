@@ -174,7 +174,7 @@
   <div class="container">
 
     <div class="card" style="padding: 10px;">
-      <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? (যেমন: ডিসপ্লে, চার্জার)..." class="search-box" style="margin-bottom:0;">
+      <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? যেমন: ডিসপ্লে, চার্জার, AirPods..." class="search-box" style="margin-bottom:0;">
     </div>
 
     <div class="card">
@@ -190,10 +190,11 @@
       <a href="tel:01716390762" class="btn btn-call" style="background-color: #d9534f;">অফার নিতে কল করুন</a>
     </div>
 
+    <!-- Blog Section -->
     <div class="card">
       <div class="section-title">
         <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
-        <button onclick="openWriteModal()" class="btn-write-now">✍️ Write Now</button>
+        <button onclick="openWriteModal('Blog')" class="btn-write-now">✍️ Write Now</button>
       </div>
       
       <div id="firestore-blogs-container">
@@ -265,17 +266,15 @@
       </form>
     </div>
 
+    <!-- Accessories Section with Write Now Button -->
     <div class="card">
-      <div class="section-title"><span>📱 মোবাইল অ্যাক্সেসরিজ</span></div>
-      <div class="product-card searchable-item">
-        <img src="Apple_AirPods_Pro_01.jpg" alt="AirPods Pro" class="product-img">
-        <div class="product-info">
-          <div class="product-title">AirPods Pro (High Quality)</div>
-          <div class="product-price">দাম: ১,৮৫০৳</div>
-          <div class="badge in-stock"><span class="dot"></span> In Stock</div>
-          <br>
-          <a href="https://wa.me/8801716390762?text=আমি%20AirPods%20Pro%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp">WhatsApp-এ অর্ডার করুন</a>
-        </div>
+      <div class="section-title">
+        <span>📱 মোবাইল অ্যাক্সেসরিজ</span>
+        <button onclick="openWriteModal('Accessory')" class="btn-write-now">✍️ Write Now</button>
+      </div>
+      
+      <div id="firestore-accessories-container">
+        <p style="font-size: 0.85rem; color: var(--text-muted);">ফায়ারস্টোর থেকে এক্সেসরিজ লোড হচ্ছে...</p>
       </div>
     </div>
 
@@ -321,22 +320,27 @@
 
   </div>
 
+  <!-- Write/Edit Modal (Dynamic for both Blog and Accessory) -->
   <div id="writeBlogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:90vh; overflow-y:auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
       <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
-      <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.2rem;">✍️ নতুন পোস্ট বা প্রডাক্ট যোগ করুন</h3>
+      <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.2rem;">✍️ নতুন আইটেম যোগ করুন</h3>
       
-      <form id="newBlogForm" onsubmit="publishNewBlog(event)">
+      <form id="newBlogForm" onsubmit="publishItem(event)">
+        <input type="hidden" id="editCollectionName" value="">
         <input type="hidden" id="editBlogId" value="">
         
-        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">শিরোনাম / প্রডাক্ট নাম (Title):</label>
-        <input type="text" id="newBlogTitle" placeholder="শিরোনাম বা প্রডাক্টের নাম লিখুন..." class="form-input" required>
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">শিরোনাম / প্রডাক্টের নাম (Title):</label>
+        <input type="text" id="newBlogTitle" placeholder="নাম বা শিরোনাম লিখুন..." class="form-input" required>
         
+        <label id="priceLabelContainer" style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">দাম (Price) [যদি এক্সেসরিজ হয়]:</label>
+        <input type="text" id="newBlogPrice" placeholder="যেমন: ১,৮৫০৳" class="form-input">
+
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">ছবি সিলেক্ট করুন (Image):</label>
         <input type="file" id="newBlogImage" accept="image/*" class="form-input">
         
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Content):</label>
-        <textarea id="newBlogDesc" rows="4" placeholder="বিস্তারিত বিবরণ বা দাম এখানে লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
+        <textarea id="newBlogDesc" rows="4" placeholder="বিস্তারিত বিবরণ লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
         
         <div style="display: flex; gap: 10px; margin-top: 10px;">
           <button type="button" onclick="closeWriteModal()" class="btn btn-call" style="background-color:#6c757d; flex:1;">বাতিল</button>
@@ -388,15 +392,15 @@
 
     const db = getFirestore(app);
     window.db = db;
-    window.blogData = {};
+    window.allDataStore = {};
 
-    // স্বয়ংক্রয়ভাবে তারিখ ও সময় ফরম্যাট করার ফাংশন
     function getCurrentFormattedDateTime() {
       const now = new Date();
       const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
       return now.toLocaleDateString('bn-BD', options);
     }
 
+    // Fetch Blogs
     async function fetchFirestoreBlogs() {
         try {
             const querySnapshot = await getDocs(collection(window.db, "Blogs"));
@@ -404,58 +408,94 @@
             container.innerHTML = ""; 
 
             if (querySnapshot.empty) {
-                container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো পোস্ট পাওয়া যায়নি।</p>";
+                container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো ব্লগ পাওয়া যায়নি।</p>";
                 return;
             }
 
             querySnapshot.forEach((docSnap) => {
-                const blog = docSnap.data();
-                const blogKey = docSnap.id;
-                const blogContent = blog.content || 'বিবরণ নেই';
-                const blogDate = blog.date || getCurrentFormattedDateTime();
-                const blogImage = blog.imageUrl || 'https://via.placeholder.com/90';
-
-                window.blogData[blogKey] = {
-                    title: blog.title || 'শিরোনাম নেই',
-                    body: blogContent,
-                    imageUrl: blogImage,
-                    date: blogDate
-                };
+                const item = docSnap.data();
+                const itemKey = docSnap.id;
+                window.allDataStore[itemKey] = { collection: "Blogs", ...item };
                 
-                const blogCard = document.createElement("div");
-                blogCard.className = "product-card searchable-item";
-                blogCard.style.cssText = "align-items: flex-start; margin-bottom: 15px;";
+                const card = document.createElement("div");
+                card.className = "product-card searchable-item";
+                card.style.cssText = "align-items: flex-start; margin-bottom: 15px;";
                 
-                blogCard.innerHTML = `
-                    <img src="${blogImage}" alt="Post Image" class="product-img">
+                card.innerHTML = `
+                    <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" alt="Blog Image" class="product-img">
                     <div class="product-info" style="width: 100%;">
-                        <div class="product-title">${blog.title || 'শিরোনাম নেই'}</div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${blogContent.substring(0, 80)}...</p>
+                        <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${(item.content || '').substring(0, 80)}...</p>
                         <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">
-                            <span>সময় ও তারিখ: ${blogDate}</span>
+                            <span>সময় ও তারিখ: ${item.date || getCurrentFormattedDateTime()}</span>
                         </div>
                         <div>
-                          <button onclick="openBlogModal('${blogKey}')" class="btn btn-call" style="width: auto; padding: 4px 8px; font-size: 0.75rem; display:inline-block; margin-right:5px;">বিস্তারিত</button>
-                          <button onclick="editBlog('${blogKey}')" class="btn-edit">এডিট</button>
-                          <button onclick="deleteBlog('${blogKey}')" class="btn-delete">মুছে ফেলুন</button>
+                          <button onclick="openBlogModal('${itemKey}')" class="btn btn-call" style="width: auto; padding: 4px 8px; font-size: 0.75rem; display:inline-block; margin-right:5px;">বিস্তারিত</button>
+                          <button onclick="editItem('Blogs', '${itemKey}')" class="btn-edit">এডিট</button>
+                          <button onclick="deleteItem('Blogs', '${itemKey}')" class="btn-delete">মুছে ফেলুন</button>
                         </div>
                     </div>
                 `;
-                container.appendChild(blogCard);
+                container.appendChild(card);
             });
         } catch (error) {
-            console.error("ডেটা ফেচ করতে সমস্যা হয়েছে: ", error);
-            document.getElementById("firestore-blogs-container").innerHTML = "<p style='color:red; font-size: 0.85rem;'>ডাটা লোড করতে সমস্যা হয়েছে।</p>";
+            console.error("ব্লগ লোড করতে সমস্যা:", error);
         }
     }
 
-    window.publishNewBlog = async function(e) {
+    // Fetch Accessories
+    async function fetchFirestoreAccessories() {
+        try {
+            const querySnapshot = await getDocs(collection(window.db, "Accessories"));
+            const container = document.getElementById("firestore-accessories-container");
+            container.innerHTML = ""; 
+
+            if (querySnapshot.empty) {
+                container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো এক্সেসরিজ পাওয়া যায়নি।</p>";
+                return;
+            }
+
+            querySnapshot.forEach((docSnap) => {
+                const item = docSnap.data();
+                const itemKey = docSnap.id;
+                window.allDataStore[itemKey] = { collection: "Accessories", ...item };
+                
+                const card = document.createElement("div");
+                card.className = "product-card searchable-item";
+                
+                card.innerHTML = `
+                    <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" alt="Accessory" class="product-img">
+                    <div class="product-info">
+                        <div class="product-title">${item.title || 'নাম নেই'}</div>
+                        <div class="product-price">দাম: ${item.price || 'আলোচনা সাপেক্ষে'}</div>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 3px 0;">${item.content || ''}</p>
+                        <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">তারিখ: ${item.date || getCurrentFormattedDateTime()}</div>
+                        <div class="badge in-stock"><span class="dot"></span> In Stock</div>
+                        <br style="margin-bottom: 5px;">
+                        <div>
+                          <a href="https://wa.me/8801716390762?text=আমি%20${encodeURIComponent(item.title)}%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 5px;">WhatsApp</a>
+                          <button onclick="editItem('Accessories', '${itemKey}')" class="btn-edit">এডিট</button>
+                          <button onclick="deleteItem('Accessories', '${itemKey}')" class="btn-delete">মুছে ফেলুন</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        } catch (error) {
+            console.error("অ্যাক্সেসরিজ লোড করতে সমস্যা:", error);
+        }
+    }
+
+    // Publish or Update Item (Both Blog and Accessory)
+    window.publishItem = async function(e) {
       e.preventDefault();
+      let collectionName = document.getElementById('editCollectionName').value;
       let editId = document.getElementById('editBlogId').value;
       let title = document.getElementById('newBlogTitle').value.trim();
+      let price = document.getElementById('newBlogPrice').value.trim();
       let desc = document.getElementById('newBlogDesc').value.trim();
       let imageFile = document.getElementById('newBlogImage').files[0];
-      let currentDateTime = getCurrentFormattedDateTime(); // স্বয়ংক্রয় সময় ও তারিখ জেনারেট
+      let currentDateTime = getCurrentFormattedDateTime();
 
       if (!title || !desc) {
         alert('দয়া করে শিরোনাম এবং বিবরণ পূরণ করুন।');
@@ -463,7 +503,8 @@
       }
 
       try {
-        let downloadURL = editId ? window.blogData[editId].imageUrl : 'https://via.placeholder.com/90';
+        let existingItem = editId ? window.allDataStore[editId] : null;
+        let downloadURL = existingItem ? existingItem.imageUrl : 'https://via.placeholder.com/90';
 
         if (imageFile) {
           alert('ছবি আপলোড হচ্ছে, দয়া করে অপেক্ষা করুন...');
@@ -480,53 +521,70 @@
           downloadURL = result.data.url;
         }
 
+        let dataPayload = {
+          title: title,
+          content: desc,
+          date: currentDateTime,
+          imageUrl: downloadURL
+        };
+
+        if (collectionName === "Accessories") {
+          dataPayload.price = price || 'আলোচনা সাপেক্ষে';
+        }
+
         if (editId) {
-          const blogRef = doc(window.db, "Blogs", editId);
-          await updateDoc(blogRef, {
-            title: title,
-            content: desc,
-            date: currentDateTime, // আপডেট করার সময় নতুন সময় ও তারিখ বসবে
-            imageUrl: downloadURL
-          });
-          alert('পোস্ট সফলভাবে আপডেট করা হয়েছে!');
+          const docRef = doc(window.db, collectionName, editId);
+          await updateDoc(docRef, dataPayload);
+          alert('সফলভাবে আপডেট করা হয়েছে!');
         } else {
-          await addDoc(collection(window.db, "Blogs"), {
-            title: title,
-            content: desc,
-            date: currentDateTime, // নতুন পোস্টের সময় ও তারিখ স্বয়ংক্রয়ভাবে যুক্ত হবে
-            imageUrl: downloadURL,
-            author: "নাদিম টেলিকম",
-            createdAt: new Date().toISOString()
-          });
-          alert('নতুন পোস্ট সফলভাবে প্রকাশিত হয়েছে!');
+          dataPayload.createdAt = new Date().toISOString();
+          await addDoc(collection(window.db, collectionName), dataPayload);
+          alert('সফলভাবে প্রকাশিত হয়েছে!');
         }
 
         closeWriteModal();
-        fetchFirestoreBlogs(); 
+        fetchFirestoreBlogs();
+        fetchFirestoreAccessories();
       } catch (error) {
         alert('ত্রুটি ঘটেছে: ' + error.message);
       }
     }
 
-    window.editBlog = function(blogKey) {
-      const blog = window.blogData[blogKey];
-      if (!blog) return;
+    window.editItem = function(collectionName, itemKey) {
+      const item = window.allDataStore[itemKey];
+      if (!item) return;
 
-      document.getElementById('editBlogId').value = blogKey;
-      document.getElementById('newBlogTitle').value = blog.title;
-      document.getElementById('newBlogDesc').value = blog.body;
-      document.getElementById('modalBlogHeader').textContent = "✍️ পোস্ট বা প্রডাক্ট এডিট করুন";
+      document.getElementById('editCollectionName').value = collectionName;
+      document.getElementById('editBlogId').value = itemKey;
+      document.getElementById('newBlogTitle').value = item.title;
+      document.getElementById('newBlogDesc').value = item.content;
+      
+      const priceInput = document.getElementById('newBlogPrice');
+      const priceLabel = document.getElementById('priceLabelContainer');
+
+      if (collectionName === "Accessories") {
+        priceInput.value = item.price || '';
+        priceInput.style.display = "block";
+        priceLabel.style.display = "block";
+        document.getElementById('modalBlogHeader').textContent = "✍️ এক্সেসরিজ এডিট করুন";
+      } else {
+        priceInput.value = "";
+        priceInput.style.display = "none";
+        priceLabel.style.display = "none";
+        document.getElementById('modalBlogHeader').textContent = "✍️ ব্লগ পোস্ট এডিট করুন";
+      }
+
       document.getElementById('saveBlogBtn').textContent = "আপডেট করুন";
-
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
 
-    window.deleteBlog = async function(blogKey) {
-      if (confirm("আপনি কি নিশ্চিতভাবে এই পোস্টটি মুছে ফেলতে চান?")) {
+    window.deleteItem = async function(collectionName, itemKey) {
+      if (confirm("আপনি কি নিশ্চিতভাবে এটি মুছে ফেলতে চান?")) {
         try {
-          await deleteDoc(doc(window.db, "Blogs", blogKey));
-          alert("পোস্ট সফলভাবে মুছে ফেলা হয়েছে!");
+          await deleteDoc(doc(window.db, collectionName, itemKey));
+          alert("সফলভাবে মুছে ফেলা হয়েছে!");
           fetchFirestoreBlogs();
+          fetchFirestoreAccessories();
         } catch (error) {
           alert("মুছে ফেলতে সমস্যা হয়েছে: " + error.message);
         }
@@ -551,7 +609,8 @@
         }
       }, 50);
 
-      fetchFirestoreBlogs(); 
+      fetchFirestoreBlogs();
+      fetchFirestoreAccessories();
     });
   </script>
 
@@ -678,23 +737,37 @@
       }
     }
 
-    function openBlogModal(blogKey) {
+    function openBlogModal(itemKey) {
       let modal = document.getElementById('blogModal');
       let titleElem = document.getElementById('modalTitle');
       let bodyElem = document.getElementById('modalBody');
-      const targetBlog = window.blogData[blogKey];
-      if(targetBlog) {
-        titleElem.textContent = targetBlog.title;
-        bodyElem.textContent = targetBlog.body;
+      const targetItem = window.allDataStore[itemKey];
+      if(targetItem) {
+        titleElem.textContent = targetItem.title;
+        bodyElem.textContent = targetItem.content;
         modal.style.display = 'flex';
       }
     }
 
     function closeBlogModal() { document.getElementById('blogModal').style.display = 'none'; }
     
-    function openWriteModal() { 
+    function openWriteModal(type) { 
+      document.getElementById('editCollectionName').value = (type === 'Accessory' ? 'Accessories' : 'Blogs');
       document.getElementById('editBlogId').value = '';
-      document.getElementById('modalBlogHeader').textContent = "✍️ নতুন পোস্ট বা প্রডাক্ট যোগ করুন";
+      
+      const priceInput = document.getElementById('newBlogPrice');
+      const priceLabel = document.getElementById('priceLabelContainer');
+
+      if (type === 'Accessory') {
+        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন মোবাইল এক্সেসরিজ যোগ করুন";
+        priceInput.style.display = "block";
+        priceLabel.style.display = "block";
+      } else {
+        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন ব্লগ পোস্ট লিখুন";
+        priceInput.style.display = "none";
+        priceLabel.style.display = "none";
+      }
+
       document.getElementById('saveBlogBtn').textContent = "Accept & Publish";
       document.getElementById('writeBlogModal').style.display = 'flex'; 
     }
