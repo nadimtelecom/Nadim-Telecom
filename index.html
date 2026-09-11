@@ -183,6 +183,7 @@
       </div>
     </div>
 
+    <!-- সার্চ বক্স -->
     <div class="card" style="padding: 10px;">
       <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? যেমন: ডিসপ্লে, চার্জার, AirPods..." class="search-box" style="margin-bottom:0;">
     </div>
@@ -386,7 +387,6 @@
           <p id="progressText" style="font-size: 0.8rem; text-align: center; margin: 3px 0 0 0; color: var(--text-muted);">আপলোড হচ্ছে...</p>
         </div>
 
-        <!-- স্বয়ংক্রিয়ভাবে সময় ও তারিখ যুক্ত হওয়ার ইনপুট ফিল্ড -->
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">সময় ও তারিখ (স্বয়ংক্রিয়):</label>
         <input type="text" id="newBlogDate" placeholder="তারিখ ও সময়..." class="form-input" required>
 
@@ -512,7 +512,6 @@
       }
     }
 
-    // স্বয়ংক্রিয়ভাবে বাংলা ফরম্যাটে সময়, তারিখ, মাস ও বছর পাওয়ার ফাংশন
     function getCurrentFormattedDateTime() {
       const now = new Date();
       const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -560,6 +559,7 @@
                 `;
                 container.appendChild(card);
             });
+            filterItems(); // সার্চ ফিল্টার আপডেট করার জন্য
         } catch (error) {
             console.error("ব্লগ লোড করতে সমস্যা:", error);
         }
@@ -606,6 +606,7 @@
                 `;
                 container.appendChild(card);
             });
+            filterItems(); // সার্চ ফিল্টার আপডেট করার জন্য
         } catch (error) {
             console.error("অ্যাক্সেসরিজ লোড করতে সমস্যা:", error);
         }
@@ -874,12 +875,18 @@
     function openNav() { document.getElementById("mySidebar").style.left = "0"; }
     function closeNav() { document.getElementById("mySidebar").style.left = "-280px"; }
 
+    // শক্তিশালী সার্চ ফাংশন (যা এক্সেসরিজ, ব্লগ এবং রিপেয়ারিং সেবার ভেতরেও প্রডাক্ট বা নাম খুঁজবে)
     function filterItems() {
       let input = document.getElementById('searchInput').value.toLowerCase().trim();
       let items = document.getElementsByClassName('searchable-item');
+      
       for (let i = 0; i < items.length; i++) {
         let text = items[i].textContent.toLowerCase();
-        items[i].style.display = text.includes(input) ? "" : "none";
+        if (text.includes(input)) {
+          items[i].style.display = "";
+        } else {
+          items[i].style.display = "none";
+        }
       }
     }
 
@@ -995,7 +1002,6 @@
 
     function closeBlogModal() { document.getElementById('blogModal').style.display = 'none'; }
     
-    // রাইট মডাল ওপেন হওয়ার সাথে সাথেই স্বয়ংক্রিয়ভাবে বর্তমান তারিখ ও সময় ইনপুটে বসে যাবে
     function openWriteModal(type) { 
       if (!window.auth.currentUser) {
         alert("ব্লগ বা এক্সেসরিজ পোস্ট করতে হলে প্রথমে Signin বা Signup করতে হবে!");
@@ -1007,7 +1013,6 @@
       document.getElementById('editBlogId').value = '';
       document.getElementById('newBlogForm').reset();
       
-      // স্বয়ংক্রিয়ভাবে তারিখ ও সময় বসানো
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
       const priceInput = document.getElementById('newBlogPrice');
@@ -1048,13 +1053,6 @@
     });
 
     function closeImageModal() { document.getElementById("imageModal").style.display = "none"; }
-
-    // জাভাস্ক্রিপ্ট কোডের ভেতর ব্যবহারের জন্য ডেসক্রিপশন ফাংশনটি বাইরে রাখা হলো
-    function getCurrentFormattedDateTime() {
-      const now = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-      return now.toLocaleDateString('bn-BD', options);
-    }
   </script>
 
 </body>
