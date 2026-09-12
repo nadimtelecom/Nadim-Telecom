@@ -183,16 +183,12 @@
       </div>
     </div>
 
-    <!-- সুনির্দিষ্টভাবে একটিমাত্র গুগল সার্চ বক্স -->
+    <!-- সাইটের ভেতরের লাইভ সার্চ বক্স -->
     <div class="card" style="padding: 15px;">
-      <form action="https://www.google.com/search" method="get" target="_blank" style="margin-bottom: 0;">
-        <input type="hidden" name="q" id="googleSiteQuery" value="site:nadimtelecom.github.io">
-        
-        <div style="display: flex; gap: 8px;">
-          <input type="text" id="googleInput" placeholder="গুগলে খুঁজুন (যেমন: Tecno display, Redmi buds)..." class="search-box" style="margin-bottom: 0;" oninput="updateGoogleQuery(this.value)" required>
-          <button type="submit" class="btn btn-call" style="width: auto; padding: 0 15px; white-space: nowrap; background-color: #4285F4;">🔍 Google</button>
-        </div>
-      </form>
+      <div style="display: flex; gap: 8px;">
+        <input type="text" id="internalSearchInput" placeholder="সাইটের ভেতর খুঁজুন (যেমন: Tecno, Display)..." class="search-box" style="margin-bottom: 0;" oninput="searchInternalSite(this.value)">
+        <button type="button" onclick="searchInternalSite(document.getElementById('internalSearchInput').value)" class="btn btn-call" style="width: auto; padding: 0 15px; white-space: nowrap; background-color: #0066cc;">🔍 খুঁজুন</button>
+      </div>
     </div>
 
     <div id="categoryResultCard" class="card" style="display:none; border: 2px solid #0066cc;">
@@ -663,6 +659,57 @@
       resultCard.scrollIntoView({ behavior: 'smooth' });
     }
 
+    // সাইটের ভেতরের লাইভ সার্চ ফাংশন
+    window.searchInternalSite = function(keyword) {
+      let query = keyword.trim().toLowerCase();
+      const resultCard = document.getElementById('categoryResultCard');
+      const resultTitle = document.getElementById('categoryResultTitle');
+      const resultBody = document.getElementById('categoryResultBody');
+
+      if (!query) {
+        resultCard.style.display = 'none';
+        return;
+      }
+
+      resultCard.style.display = 'block';
+      resultTitle.innerText = `🔍 সার্চ রেজাল্ট: "${keyword}"`;
+      resultBody.innerHTML = "";
+
+      let matchedItems = [];
+      for (let key in window.allDataStore) {
+        let item = window.allDataStore[key];
+        let titleText = (item.title || "").toLowerCase();
+        let contentText = (item.content || "").toLowerCase();
+        if (titleText.includes(query) || contentText.includes(query)) {
+          matchedItems.push(item);
+        }
+      }
+
+      if (matchedItems.length > 0) {
+        let htmlContent = "";
+        matchedItems.forEach(item => {
+          htmlContent += `
+            <div class="product-card" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+              <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" class="product-img">
+              <div class="product-info">
+                <div class="product-title">${item.title}</div>
+                <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
+                <p style="font-size:0.8rem; color:var(--text-muted);">${item.content ? item.content.substring(0, 60) : ''}...</p>
+              </div>
+            </div>
+          `;
+        });
+        resultBody.innerHTML = htmlContent;
+      } else {
+        resultBody.innerHTML = `
+          <div style="text-align: center; padding: 20px;">
+            <p style="font-size: 1.1rem; color: #dc3545; font-weight: bold; margin-bottom: 5px;">⚠️ কিছু পাওয়া যায়নি</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">"${keyword}" দিয়ে আপনার সাইটে কোনো পোস্ট বা এক্সেসরিজ নেই।</p>
+          </div>
+        `;
+      }
+    }
+
     window.publishNewBlog = async function(e) {
       e.preventDefault();
       
@@ -879,10 +926,6 @@
 
     function openNav() { document.getElementById("mySidebar").style.left = "0"; }
     function closeNav() { document.getElementById("mySidebar").style.left = "-280px"; }
-
-    function updateGoogleQuery(val) {
-      document.getElementById('googleSiteQuery').value = "site:nadimtelecom.github.io " + val;
-    }
 
     function calculateCost() {
       let deviceType = document.getElementById('calcDevice').value;
