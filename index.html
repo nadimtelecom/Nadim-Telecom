@@ -69,7 +69,8 @@
       border-radius: 8px; box-sizing: border-box; outline: none; font-size: 0.95rem; margin-bottom: 10px;
     }
 
-    .product-card { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; }
+    .product-card { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; cursor: pointer; transition: background 0.2s; }
+    .product-card:hover { background-color: rgba(0,102,204,0.03); }
     .product-card:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .product-img { width: 90px; height: 90px; border-radius: 8px; object-fit: cover; background-color: #eee; flex-shrink: 0; }
     .product-info { flex: 1; }
@@ -540,10 +541,12 @@
                 const card = document.createElement("div");
                 card.className = "product-card";
                 card.style.cssText = "align-items: flex-start; margin-bottom: 15px;";
+                // কার্ডে ক্লিক করলে সরাসরি বিস্তারিত মড্যাল ওপেন হবে
+                card.onclick = () => openBlogModal(itemKey);
                 
                 let adminControls = window.isAdmin ? `
-                  <button onclick="editItem('Blogs', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
-                  <button onclick="deleteItem('Blogs', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                  <button onclick="event.stopPropagation(); editItem('Blogs', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+                  <button onclick="event.stopPropagation(); deleteItem('Blogs', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
                 ` : '';
 
                 card.innerHTML = `
@@ -555,7 +558,7 @@
                             <span>তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</span>
                         </div>
                         <div>
-                          <button onclick="openBlogModal('${itemKey}')" class="btn btn-call" style="width: auto; padding: 4px 8px; font-size: 0.75rem; display:inline-block; margin-right:5px;">বিস্তারিত</button>
+                          <button onclick="event.stopPropagation(); openBlogModal('${itemKey}')" class="btn btn-call" style="width: auto; padding: 4px 8px; font-size: 0.75rem; display:inline-block; margin-right:5px;">বিস্তারিত</button>
                           ${adminControls}
                         </div>
                     </div>
@@ -585,10 +588,12 @@
                 
                 const card = document.createElement("div");
                 card.className = "product-card";
+                // এক্সেসরিজ কার্ডে ক্লিক করলেও বিস্তারিত দেখাবে
+                card.onclick = () => openBlogModal(itemKey);
                 
                 let adminControls = window.isAdmin ? `
-                  <button onclick="editItem('Accessories', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
-                  <button onclick="deleteItem('Accessories', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                  <button onclick="event.stopPropagation(); editItem('Accessories', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+                  <button onclick="event.stopPropagation(); deleteItem('Accessories', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
                 ` : '';
 
                 card.innerHTML = `
@@ -601,7 +606,7 @@
                         <div class="badge in-stock"><span class="dot"></span> In Stock</div>
                         <br style="margin-bottom: 5px;">
                         <div>
-                          <a href="https://wa.me/8801716390762?text=আমি%20${encodeURIComponent(item.title)}%20সম্পর্কে%20জানতে%20চাই" class="btn btn-whatsapp" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 5px;">WhatsApp</a>
+                          <a href="https://wa.me/8801716390762?text=আমি%20${encodeURIComponent(item.title)}%20সম্পর্কে%20জানতে%20চাই" onclick="event.stopPropagation()" class="btn btn-whatsapp" style="padding: 4px 8px; font-size: 0.75rem; margin-right: 5px;">WhatsApp</a>
                           ${adminControls}
                         </div>
                     </div>
@@ -629,7 +634,7 @@
         let titleText = (item.title || "").toLowerCase();
         let contentText = (item.content || "").toLowerCase();
         if (titleText.includes(categoryName.toLowerCase()) || contentText.includes(categoryName.toLowerCase())) {
-          matchedItems.push(item);
+          matchedItems.push({ key, ...item });
         }
       }
 
@@ -637,7 +642,7 @@
         let htmlContent = "";
         matchedItems.forEach(item => {
           htmlContent += `
-            <div class="product-card" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+            <div class="product-card" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;" onclick="openBlogModal('${item.key}')">
               <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" class="product-img">
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
@@ -681,7 +686,7 @@
         let titleText = (item.title || "").toLowerCase();
         let contentText = (item.content || "").toLowerCase();
         if (titleText.includes(query) || contentText.includes(query)) {
-          matchedItems.push(item);
+          matchedItems.push({ key, ...item });
         }
       }
 
@@ -689,7 +694,7 @@
         let htmlContent = "";
         matchedItems.forEach(item => {
           htmlContent += `
-            <div class="product-card" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+            <div class="product-card" style="margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;" onclick="openBlogModal('${item.key}')">
               <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" class="product-img">
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
@@ -1081,7 +1086,7 @@
     }
 
     document.addEventListener("click", function(event) {
-        if (event.target.tagName === 'IMG' && event.target.id !== 'modalImg' && !event.target.closest('.sidebar')) {
+        if (event.target.tagName === 'IMG' && event.target.id !== 'modalImg' && !event.target.closest('.sidebar') && !event.target.closest('.product-card')) {
             var modal = document.getElementById("imageModal");
             var modalImg = document.getElementById("modalImg");
             modal.style.display = "block";
