@@ -81,7 +81,7 @@
     .btn-whatsapp { background-color: #25D366; color: white; }
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
-    .btn-write-now { background-color: #198754; color: white; padding: 5px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; pointer-events: auto; }
+    .btn-write-now { background-color: #198754; color: white; padding: 5px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; display: none; }
     .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; display: none; }
     .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
 
@@ -194,7 +194,7 @@
     <div id="categoryResultCard" class="card" style="display:none; border: 2px solid #0066cc;">
       <div class="section-title">
         <span id="categoryResultTitle">📂 ফোল্ডার রেজাল্ট</span>
-        <button onclick="document.getElementById('categoryResultCard').style.display='none'" class="btn-write-now" style="background:#dc3545;">বন্ধ করুন</button>
+        <button onclick="document.getElementById('categoryResultCard').style.display='none'" class="btn" style="background:#dc3545; color:#fff; padding:3px 8px; font-size:0.75rem;">বন্ধ করুন</button>
       </div>
       <div id="categoryResultBody"></div>
     </div>
@@ -216,7 +216,7 @@
     <div class="card">
       <div class="section-title">
         <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
-        <button onclick="openWriteModal('Blog')" class="btn-write-now">✍️ Write Now</button>
+        <button id="adminBlogBtn" onclick="openWriteModal('Blog')" class="btn-write-now">✍️ Write Now</button>
       </div>
       
       <div id="firestore-blogs-container">
@@ -271,7 +271,7 @@
     </div>
 
     <div class="card">
-      <div class="section-title"><span>📝 সার্ভিস বুকিং ফর্ম</span></div>
+      <div class="section-title"><span>📝 সার্ভিস বুকিং ফর্ম (সাইন-ইন বাধ্যতামূলক)</span></div>
       <form onsubmit="sendBooking(event)">
         <input type="text" id="custName" placeholder="আপনার নাম" class="form-input" required>
         <input type="tel" id="custPhone" placeholder="মোবাইল নম্বর" class="form-input" required>
@@ -291,7 +291,7 @@
     <div class="card">
       <div class="section-title">
         <span>📱 মোবাইল অ্যাক্সেসরিজ</span>
-        <button onclick="openWriteModal('Accessory')" class="btn-write-now">✍️ Write Now</button>
+        <button id="adminAccessoryBtn" onclick="openWriteModal('Accessory')" class="btn-write-now">✍️ Write Now</button>
       </div>
       
       <div id="firestore-accessories-container">
@@ -345,7 +345,7 @@
   <div id="authModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10000; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:400px; padding:20px; border-radius:12px; position:relative; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
       <span onclick="toggleAuthModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
-      <h3 id="authModalTitle" style="color:#0066cc; margin-top:0; font-size:1.2rem; text-align:center;">🔐 ইউজার সাইন-ইন</h3>
+      <h3 id="authModalTitle" style="color:#0066cc; margin-top:0; font-size:1.2rem; text-align:center;">🔐 সাইন-ইন / সাইন-আপ</h3>
       
       <form id="authForm" onsubmit="handleAuthSubmit(event)">
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">ইমেইল (Email):</label>
@@ -458,17 +458,32 @@
     onAuthStateChanged(auth, (user) => {
       const userInfoText = document.getElementById("userInfoText");
       const authActionBtn = document.getElementById("authActionBtn");
+      const adminBlogBtn = document.getElementById("adminBlogBtn");
+      const adminAccessoryBtn = document.getElementById("adminAccessoryBtn");
       
       if (user) {
         window.isAdmin = (user.email === ADMIN_EMAIL);
         userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b> ${window.isAdmin ? '(🛡️ Admin)' : '(User)'}`;
         authActionBtn.textContent = "লগআউট";
         authActionBtn.setAttribute("onclick", "handleLogout()");
+
+        // শুধুমাত্র অ্যাডমিন হলেই Write Now বাটন দেখাবে
+        if (window.isAdmin) {
+          if(adminBlogBtn) adminBlogBtn.style.display = "inline-block";
+          if(adminAccessoryBtn) adminAccessoryBtn.style.display = "inline-block";
+        } else {
+          if(adminBlogBtn) adminBlogBtn.style.display = "none";
+          if(adminAccessoryBtn) adminAccessoryBtn.style.display = "none";
+        }
       } else {
         window.isAdmin = false;
         userInfoText.innerHTML = "লগইন করা নেই";
         authActionBtn.textContent = "Signin / Signup";
         authActionBtn.setAttribute("onclick", "toggleAuthModal()");
+
+        // লগআউট থাকলে Write Now বাটন হাইড থাকবে
+        if(adminBlogBtn) adminBlogBtn.style.display = "none";
+        if(adminAccessoryBtn) adminAccessoryBtn.style.display = "none";
       }
       fetchFirestoreBlogs();
       fetchFirestoreAccessories();
@@ -715,9 +730,8 @@
     window.publishNewBlog = async function(e) {
       e.preventDefault();
       
-      if (!auth.currentUser) {
-        alert("পোস্ট করার জন্য দয়া করে আগে Signin বা Sign-up করুন!");
-        toggleAuthModal();
+      if (!window.isAdmin) {
+        alert("দুঃখিত, শুধুমাত্র অ্যাডমিন পোস্ট বা এক্সেসরিজ যুক্ত করতে পারবেন!");
         return;
       }
 
@@ -891,9 +905,8 @@
     }
 
     window.openWriteModal = function(type) { 
-      if (!auth.currentUser) {
-        alert("ব্লগ বা এক্সেসরিজ পোস্ট করতে হলে প্রথমে Signin বা Signup করতে হবে!");
-        toggleAuthModal();
+      if (!window.isAdmin) {
+        alert("দুঃখিত, এই অপশনটি শুধুমাত্র অ্যাডমিনের জন্য!");
         return;
       }
 
@@ -947,7 +960,6 @@
       document.getElementById('blogModal').style.display = 'none'; 
     }
 
-    // ছবির ওপর ক্লিক করলে বড় করে দেখানোর জন্য নতুন ফাংশন
     window.openImageModal = function(imgSrc) {
       var modal = document.getElementById("imageModal");
       var modalImg = document.getElementById("modalImg");
@@ -1077,10 +1089,20 @@
 
     function sendBooking(e) {
       e.preventDefault();
+      
+      // ইউজার সাইন-ইন করা আছে কিনা চেক করা
+      if (!window.auth.currentUser) {
+        alert("অনলাইন থেকে বুকিং বা ক্রয় করার জন্য অবশ্যই Sign-in বা Sign-up করে থাকতে হবে!");
+        toggleAuthModal();
+        return;
+      }
+
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
       let service = document.getElementById('serviceType').value;
-      let msg = `নতুন%20বুকিং:%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
+      let userEmail = window.auth.currentUser.email;
+
+      let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
       window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
     }
 
