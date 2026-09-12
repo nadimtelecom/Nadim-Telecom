@@ -243,6 +243,50 @@
       <div id="categoryResultBody"></div>
     </div>
 
+    <!-- Google Pixel 7 Pro Network Specs Section -->
+    <div class="card">
+      <div class="section-title"><span>📱 Google Pixel 7 Pro - Network Specs</span></div>
+      <div class="spec-container">
+        <div class="spec-category">Google Pixel 7 Pro Specifications</div>
+        <div class="spec-row">
+            <div class="spec-label">Technology</div>
+            <div class="spec-value">GSM / CDMA / HSPA / EVDO / LTE / 5G</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">2G bands</div>
+            <div class="spec-value">GSM 850 / 900 / 1800 / 1900</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">CDMA bands</div>
+            <div class="spec-value">CDMA 800 / 1700 / 1900</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">3G bands</div>
+            <div class="spec-value">HSDPA 800 / 850 / 900 / 1700(AWS) / 1900 / 2100</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">CDMA2000</div>
+            <div class="spec-value">1xEV-DO</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">4G bands (GE2AE)</div>
+            <div class="spec-value">1, 2, 3, 4, 5, 7, 8, 12, 13, 14, 17, 18, 19, 20, 25, 26, 28, 29, 30, 38, 39, 40, 41, 42, 46, 48, 66, 71</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">4G bands (GP4BC)</div>
+            <div class="spec-value">1, 2, 3, 4, 5, 7, 8, 12, 13, 14, 17, 18, 19, 20, 25, 26, 28, 29, 30, 32, 38, 39, 40, 41, 46, 48, 66, 71</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">5G bands (GE2AE)</div>
+            <div class="spec-value">1, 2, 3, 5, 7, 8, 12, 14, 20, 25, 28, 30, 38, 40, 41, 48, 66, 71, 77, 78, 257, 258, 260, 261 SA/NSA/Sub6/mmWave</div>
+        </div>
+        <div class="spec-row">
+            <div class="spec-label">5G bands (GP4BC)</div>
+            <div class="spec-value">1, 2, 3, 5, 7, 8, 12, 14, 20, 25, 28, 30, 38, 40, 41, 48, 66, 71, 75, 76, 77, 78 SA/NSA/Sub6</div>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="section-title"><span>ℹ️ আমাদের সম্পর্কে</span></div>
       <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; margin: 0;">
@@ -986,7 +1030,6 @@
       if(publishBtn) publishBtn.disabled = false;
     }
 
-    // GSMArena থেকে সরাসরি কপি করা টেক্সট অটো-ডিটেক্ট করে সুন্দর দুই কলামে দেখানোর নতুন ফাংশন
     window.openBlogModal = function(itemKey) {
       let modal = document.getElementById('blogModal');
       let titleElem = document.getElementById('modalTitle');
@@ -1193,7 +1236,7 @@
 
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType')->value;
       let userEmail = window.auth.currentUser.email;
 
       let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
