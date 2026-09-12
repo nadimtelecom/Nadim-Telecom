@@ -1000,14 +1000,12 @@
         let formattedHTML = `<div class="spec-container">`;
         let hasSpecStructure = false;
 
-        // GSMArena-এর ক্যাটাগরিগুলোর নাম যা সাধারণত কোলন ছাড়া থাকে
         const knownCategories = ["Network", "Launch", "Body", "Display", "Platform", "Memory", "Main Camera", "Selfie camera", "Sound", "Comms", "Features", "Battery", "Misc", "Tests", "Memory", "Camera", "Connectivity", "General", "Hardware", "Design"];
 
         for (let line of lines) {
           line = line.trim();
           if (!line) continue;
 
-          // যদি লাইনে কোলন থাকে অথবা দুই বা ততোধিক শব্দ থাকে যার মাঝে স্পেস আছে, সেটিকে লেবেল-ভ্যালু হিসেবে ভাগ করার চেষ্টা করব
           let colonIndex = line.indexOf(':');
           if (colonIndex === -1) {
             colonIndex = line.indexOf('ঃ');
@@ -1025,21 +1023,17 @@
               hasSpecStructure = true;
             }
           } else {
-            // যদি GSMArena থেকে কপি করার সময় কোলন না আসে, তবে লাইনটিতে স্পেস বা ট্যাব থাকলে প্রথম শব্দটিকে লেবেল এবং বাকিটা ভ্যালু ধরতে পারি, অথবা ক্যাটাগরি হিসেবে দেখাতে পারি
             let spaceIndex = line.indexOf(' ');
             if (spaceIndex !== -1 && line.length < 35 && !line.includes('/') && !line.includes('.')) {
-              // এটি হয়তো ছোট কোনো লেবেল বা ক্যাটাগরি হেডিং
               let possibleCat = line;
               if (knownCategories.some(cat => possibleCat.toLowerCase().includes(cat.toLowerCase())) || possibleCat.length < 18) {
                 formattedHTML += `<div class="spec-category">${line}</div>`;
                 hasSpecStructure = true;
               } else {
-                // লেবেল বা ভ্যালু আলাদা না থাকলে সাধারণ রো তে বা ক্যাটাগরিতে ফেলে দেওয়া
                 formattedHTML += `<div class="spec-category">${line}</div>`;
                 hasSpecStructure = true;
               }
             } else {
-              // সাধারণ বড় লাইন বা ক্যাটাগরি হেডিং
               formattedHTML += `<div class="spec-category">${line}</div>`;
               hasSpecStructure = true;
             }
