@@ -183,9 +183,21 @@
       </div>
     </div>
 
-    <!-- সার্চ বক্স -->
-    <div class="card" style="padding: 10px;">
-      <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="কী খুঁজছেন? যেমন: ডিসপ্লে, চার্জার, AirPods..." class="search-box" style="margin-bottom:0;">
+    <!-- গুগল সার্চ এবং লোকাল লাইভ সার্চ বক্স -->
+    <div class="card" style="padding: 15px;">
+      <form action="https://www.google.com/search" method="get" target="_blank" style="margin-bottom: 10px;">
+        <input type="hidden" name="q" id="googleSiteQuery" value="site:nadimtelecom.github.io">
+        
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="googleInput" placeholder="গুগলে খুঁজুন (যেমন: Tecno display, Redmi buds)..." class="search-box" style="margin-bottom: 0;" oninput="updateGoogleQuery(this.value)" required>
+          <button type="submit" class="btn btn-call" style="width: auto; padding: 0 15px; white-space: nowrap; background-color: #4285F4;">🔍 Google</button>
+        </div>
+      </form>
+
+      <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 12px 0;">
+
+      <!-- ওয়েবসাইটের নিজস্ব লাইভ সার্চ (Data Not Found সহ) -->
+      <input type="text" id="searchInput" onkeyup="filterItems()" placeholder="ওয়েবসাইটের ভেতরের ডাটা খুঁজুন..." class="search-box" style="margin-bottom: 0;">
     </div>
 
     <div id="categoryResultCard" class="card" style="display:none; border: 2px solid #0066cc;">
@@ -559,7 +571,7 @@
                 `;
                 container.appendChild(card);
             });
-            filterItems(); // সার্চ ফিল্টার আপডেট করার জন্য
+            filterItems(); 
         } catch (error) {
             console.error("ব্লগ লোড করতে সমস্যা:", error);
         }
@@ -606,7 +618,7 @@
                 `;
                 container.appendChild(card);
             });
-            filterItems(); // সার্চ ফিল্টার আপডেট করার জন্য
+            filterItems(); 
         } catch (error) {
             console.error("অ্যাক্সেসরিজ লোড করতে সমস্যা:", error);
         }
@@ -875,17 +887,42 @@
     function openNav() { document.getElementById("mySidebar").style.left = "0"; }
     function closeNav() { document.getElementById("mySidebar").style.left = "-280px"; }
 
-    // শক্তিশালী সার্চ ফাংশন (যা এক্সেসরিজ, ব্লগ এবং রিপেয়ারিং সেবার ভেতরেও প্রডাক্ট বা নাম খুঁজবে)
+    // গুগল সার্চ সাইট কুয়েরি আপডেট করার ফাংশন
+    function updateGoogleQuery(val) {
+      document.getElementById('googleSiteQuery').value = "site:nadimtelecom.github.io " + val;
+    }
+
+    // নিখুঁত লাইভ সার্চ এবং Product Not Found মেসেজ লজিক
     function filterItems() {
       let input = document.getElementById('searchInput').value.toLowerCase().trim();
       let items = document.getElementsByClassName('searchable-item');
+      let foundCount = 0;
       
       for (let i = 0; i < items.length; i++) {
         let text = items[i].textContent.toLowerCase();
         if (text.includes(input)) {
           items[i].style.display = "";
+          foundCount++;
         } else {
           items[i].style.display = "none";
+        }
+      }
+
+      // যদি কিছু না পাওয়া যায় এবং সার্চ বক্সে কিছু লেখা থাকে
+      let notFoundMsg = document.getElementById('searchNotFoundMsg');
+      if (!notFoundMsg && input !== "") {
+        notFoundMsg = document.createElement('div');
+        notFoundMsg.id = 'searchNotFoundMsg';
+        notFoundMsg.style.cssText = "text-align: center; padding: 15px; color: #dc3545; font-weight: bold; font-size: 0.9rem;";
+        document.getElementById('searchInput').parentNode.appendChild(notFoundMsg);
+      }
+
+      if (notFoundMsg) {
+        if (foundCount === 0 && input !== "") {
+          notFoundMsg.style.display = "block";
+          notFoundMsg.innerHTML = `⚠️ কোনো প্রডাক্ট বা তথ্য পাওয়া যায়নি ("${input}")`;
+        } else {
+          notFoundMsg.style.display = "none";
         }
       }
     }
