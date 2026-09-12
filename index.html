@@ -82,7 +82,6 @@
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-write-now { background-color: #198754; color: white; padding: 5px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; pointer-events: auto; }
-    .write-now-btn { pointer-events: auto; cursor: pointer; }
     .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; display: none; }
     .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
 
@@ -258,7 +257,7 @@
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0;">একাধিক ছবি বা ক্ষতিগ্রস্ত অংশের ছবি একসাথে সিলেক্ট করুন:</p>
       <input type="file" id="imageUploader" accept="image/*" multiple onchange="previewMultipleImages(event)" class="form-input">
       
-      <div id="uploadProgressContainer" style="display:none; margin-top: 8px;">
+      <div id="uploadProgressContainerMain" style="display:none; margin-top: 8px;">
         <p style="font-size: 0.8rem; margin: 0 0 4px 0;" id="uploadStatusText">লোডিং হচ্ছে: 0%</p>
         <div style="width:100%; height:6px; background:#ddd; border-radius:3px; overflow:hidden;">
           <div id="uploadProgressBar" style="width:0%; height:100%; background:#198754; transition: width 0.1s ease;"></div>
@@ -891,6 +890,64 @@
       }
     }
 
+    // Write Now ফাংশনটি যা এখন সঠিকভাবে কাজ করবে
+    window.openWriteModal = function(type) { 
+      if (!auth.currentUser) {
+        alert("ব্লগ বা এক্সেসরিজ পোস্ট করতে হলে প্রথমে Signin বা Signup করতে হবে!");
+        toggleAuthModal();
+        return;
+      }
+
+      document.getElementById('editCollectionName').value = (type === 'Accessory' ? 'Accessories' : 'Blogs');
+      document.getElementById('editBlogId').value = '';
+      document.getElementById('newBlogForm').reset();
+      
+      document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
+      
+      const priceInput = document.getElementById('newBlogPrice');
+      const priceLabel = document.getElementById('priceLabelContainer');
+      const uploadProgress = document.getElementById('uploadProgressContainer');
+      if(uploadProgress) uploadProgress.style.display = 'none';
+
+      if (type === 'Accessory') {
+        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন মোবাইল এক্সেসরিজ যোগ করুন";
+        priceInput.style.display = "block";
+        priceLabel.style.display = "block";
+      } else {
+        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন ব্লগ পোস্ট লিখুন";
+        priceInput.style.display = "none";
+        priceLabel.style.display = "none";
+      }
+
+      document.getElementById('publishBtn').textContent = "Accept & Publish";
+      document.getElementById('writeBlogModal').style.display = 'flex'; 
+    }
+
+    window.closeWriteModal = function() { 
+      document.getElementById('writeBlogModal').style.display = 'none';
+      document.getElementById('newBlogForm').reset();
+      const uploadProgress = document.getElementById('uploadProgressContainer');
+      if(uploadProgress) uploadProgress.style.display = 'none';
+      const publishBtn = document.getElementById('publishBtn');
+      if(publishBtn) publishBtn.disabled = false;
+    }
+
+    window.openBlogModal = function(itemKey) {
+      let modal = document.getElementById('blogModal');
+      let titleElem = document.getElementById('modalTitle');
+      let bodyElem = document.getElementById('modalBody');
+      const targetItem = window.allDataStore[itemKey];
+      if(targetItem) {
+        titleElem.textContent = targetItem.title;
+        bodyElem.textContent = targetItem.content;
+        modal.style.display = 'flex';
+      }
+    }
+
+    window.closeBlogModal = function() { 
+      document.getElementById('blogModal').style.display = 'none'; 
+    }
+
     window.addEventListener('load', function() {
       let percent = 0;
       let progressBar = document.getElementById('progressBarLoader');
@@ -955,7 +1012,7 @@
     async function previewMultipleImages(event) {
       let files = event.target.files;
       let gridContainer = document.getElementById('multiPreviewGrid');
-      let progressContainer = document.getElementById('uploadProgressContainer');
+      let progressContainer = document.getElementById('uploadProgressContainerMain');
       let progressBar = document.getElementById('uploadProgressBar');
       let statusText = document.getElementById('uploadStatusText');
 
@@ -1026,61 +1083,6 @@
       } else {
         alert('অনুগ্রহ করে নাম এবং মতামত লিখুন।');
       }
-    }
-
-    function openBlogModal(itemKey) {
-      let modal = document.getElementById('blogModal');
-      let titleElem = document.getElementById('modalTitle');
-      let bodyElem = document.getElementById('modalBody');
-      const targetItem = window.allDataStore[itemKey];
-      if(targetItem) {
-        titleElem.textContent = targetItem.title;
-        bodyElem.textContent = targetItem.content;
-        modal.style.display = 'flex';
-      }
-    }
-
-    function closeBlogModal() { document.getElementById('blogModal').style.display = 'none'; }
-    
-    function openWriteModal(type) { 
-      if (!window.auth.currentUser) {
-        alert("ব্লগ বা এক্সেসরিজ পোস্ট করতে হলে প্রথমে Signin বা Signup করতে হবে!");
-        toggleAuthModal();
-        return;
-      }
-
-      document.getElementById('editCollectionName').value = (type === 'Accessory' ? 'Accessories' : 'Blogs');
-      document.getElementById('editBlogId').value = '';
-      document.getElementById('newBlogForm').reset();
-      
-      document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
-      
-      const priceInput = document.getElementById('newBlogPrice');
-      const priceLabel = document.getElementById('priceLabelContainer');
-      const uploadProgress = document.getElementById('uploadProgressContainer');
-      if(uploadProgress) uploadProgress.style.display = 'none';
-
-      if (type === 'Accessory') {
-        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন মোবাইল এক্সেসরিজ যোগ করুন";
-        priceInput.style.display = "block";
-        priceLabel.style.display = "block";
-      } else {
-        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন ব্লগ পোস্ট লিখুন";
-        priceInput.style.display = "none";
-        priceLabel.style.display = "none";
-      }
-
-      document.getElementById('publishBtn').textContent = "Accept & Publish";
-      document.getElementById('writeBlogModal').style.display = 'flex'; 
-    }
-
-    function closeWriteModal() { 
-      document.getElementById('writeBlogModal').style.display = 'none';
-      document.getElementById('newBlogForm').reset();
-      const uploadProgress = document.getElementById('uploadProgressContainer');
-      if(uploadProgress) uploadProgress.style.display = 'none';
-      const publishBtn = document.getElementById('publishBtn');
-      if(publishBtn) publishBtn.disabled = false;
     }
 
     document.addEventListener("click", function(event) {
