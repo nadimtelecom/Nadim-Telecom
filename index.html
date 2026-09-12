@@ -438,7 +438,7 @@
         <input type="text" id="newBlogDate" placeholder="তারিখ ও সময়..." class="form-input" required>
 
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Content):</label>
-        <textarea id="newBlogDesc" rows="6" placeholder="বিস্তারিত বিবরণ লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
+        <textarea id="newBlogDesc" rows="6" placeholder="GSMArena থেকে কপি করা স্পেসিফিকেশন এখানে পেস্ট করুন..." class="form-textarea" required style="resize: vertical;"></textarea>
         
         <div style="display: flex; gap: 10px; margin-top: 10px;">
           <button type="button" onclick="closeWriteModal()" class="btn btn-call" style="background-color:#6c757d; flex:1;">বাতিল</button>
@@ -968,7 +968,7 @@
         priceInput.style.display = "block";
         priceLabel.style.display = "block";
       } else {
-        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন ব্লগ পোস্ট লিখুন (যেমন: PLATFORM, MEMORY ইত্যাদি)";
+        document.getElementById('modalBlogHeader').textContent = "✍️ নতুন ব্লগ পোস্ট লিখুন (GSMArena থেকে কপি পেস্ট করুন)";
         priceInput.style.display = "none";
         priceLabel.style.display = "none";
       }
@@ -986,7 +986,7 @@
       if(publishBtn) publishBtn.disabled = false;
     }
 
-    // ব্লগ ডিটেইলস মডালে GSMArena স্টাইলে রেন্ডার করার ফাংশন
+    // GSMArena থেকে সরাসরি কপি করা টেক্সট অটো-ডিটেক্ট করে সুন্দর দুই কলামে দেখানোর নতুন ফাংশন
     window.openBlogModal = function(itemKey) {
       let modal = document.getElementById('blogModal');
       let titleElem = document.getElementById('modalTitle');
@@ -996,28 +996,26 @@
       if(targetItem) {
         titleElem.textContent = targetItem.title;
         let contentText = targetItem.content || "";
-
-        // টেক্সটকে GSMArena স্টাইলে ফরম্যাট করা (যদি ব্যবহারকারী সেকশন বা কোলন ফরম্যাটে লেখে)
-        // উদাহরণস্বরূপ: ব্যবহারকারী লিখতে পারেন "PLATFORM \n OS : Android 16" এভাবে।
-        // নিচে কোডটি স্বয়ংক্রিয়ভাবে লাইনগুলোকে চেক করে স্টাইল করে দেবে।
         let lines = contentText.split('\n');
         let formattedHTML = `<div class="spec-container">`;
         let hasSpecStructure = false;
+
+        // GSMArena-এর ক্যাটাগরিগুলোর নাম যা সাধারণত কোলন ছাড়া থাকে
+        const knownCategories = ["Network", "Launch", "Body", "Display", "Platform", "Memory", "Main Camera", "Selfie camera", "Sound", "Comms", "Features", "Battery", "Misc", "Tests", "Memory", "Camera", "Connectivity", "General", "Hardware", "Design"];
 
         for (let line of lines) {
           line = line.trim();
           if (!line) continue;
 
-          // যদি লাইনে কোলন (:) না থাকে, তবে ধরে নেওয়া যাক এটি প্রধান ক্যাটাগরি (লাল হেডিং)
-          if (!line.includes(':') && !line.includes('ঃ')) {
-            formattedHTML += `<div class="spec-category">${line}</div>`;
-            hasSpecStructure = true;
-          } else {
-            // কোলন থাকলে লেবেল এবং ভ্যালু আলাদা করা
-            let parts = line.split(/[:ঃ]/);
-            let label = parts[0] ? parts[0].trim() : '';
-            let val = parts.slice(1).join(':').trim();
-            
+          // যদি লাইনে কোলন থাকে অথবা দুই বা ততোধিক শব্দ থাকে যার মাঝে স্পেস আছে, সেটিকে লেবেল-ভ্যালু হিসেবে ভাগ করার চেষ্টা করব
+          let colonIndex = line.indexOf(':');
+          if (colonIndex === -1) {
+            colonIndex = line.indexOf('ঃ');
+          }
+
+          if (colonIndex !== -1) {
+            let label = line.substring(0, colonIndex).trim();
+            let val = line.substring(colonIndex + 1).trim();
             if (label && val) {
               formattedHTML += `
                 <div class="spec-row">
@@ -1026,12 +1024,30 @@
                 </div>`;
               hasSpecStructure = true;
             }
+          } else {
+            // যদি GSMArena থেকে কপি করার সময় কোলন না আসে, তবে লাইনটিতে স্পেস বা ট্যাব থাকলে প্রথম শব্দটিকে লেবেল এবং বাকিটা ভ্যালু ধরতে পারি, অথবা ক্যাটাগরি হিসেবে দেখাতে পারি
+            let spaceIndex = line.indexOf(' ');
+            if (spaceIndex !== -1 && line.length < 35 && !line.includes('/') && !line.includes('.')) {
+              // এটি হয়তো ছোট কোনো লেবেল বা ক্যাটাগরি হেডিং
+              let possibleCat = line;
+              if (knownCategories.some(cat => possibleCat.toLowerCase().includes(cat.toLowerCase())) || possibleCat.length < 18) {
+                formattedHTML += `<div class="spec-category">${line}</div>`;
+                hasSpecStructure = true;
+              } else {
+                // লেবেল বা ভ্যালু আলাদা না থাকলে সাধারণ রো তে বা ক্যাটাগরিতে ফেলে দেওয়া
+                formattedHTML += `<div class="spec-category">${line}</div>`;
+                hasSpecStructure = true;
+              }
+            } else {
+              // সাধারণ বড় লাইন বা ক্যাটাগরি হেডিং
+              formattedHTML += `<div class="spec-category">${line}</div>`;
+              hasSpecStructure = true;
+            }
           }
         }
         formattedHTML += `</div>`;
 
-        // যদি স্পেসিফিকেশন ফরম্যাটে না লিখে সাধারণ প্যারাগ্রাফ লেখে, তবে সাধারণ টেক্সট দেখাবে
-        if (!hasSpecStructure || formattedHTML.includes('spec-container') && lines.length <= 1) {
+        if (!hasSpecStructure) {
           bodyElem.innerHTML = `<p style="white-space: pre-line; margin:0;">${contentText}</p>`;
         } else {
           bodyElem.innerHTML = formattedHTML;
@@ -1183,7 +1199,7 @@
 
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType.value') || document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
       let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
