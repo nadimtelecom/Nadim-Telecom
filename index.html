@@ -119,50 +119,6 @@
     .stars { color: #ffc107; font-size: 0.9rem; }
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 15px; font-size: 0.85rem; }
-
-    /* --- GSMArena স্টাইল স্পেসিফিকেশন ডিজাইন --- */
-    .spec-container {
-        max-width: 100%;
-        margin: 10px auto;
-        font-family: Arial, sans-serif;
-        background-color: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 6px;
-        overflow: hidden;
-    }
-
-    .spec-category {
-        background-color: rgba(0, 0, 0, 0.04);
-        color: #cc0000;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 8px 12px;
-        border-top: 2px solid #cc0000;
-        border-bottom: 1px solid var(--border-color);
-        letter-spacing: 0.5px;
-    }
-
-    .spec-row {
-        display: flex;
-        border-bottom: 1px solid var(--border-color);
-        padding: 8px 12px;
-        font-size: 13px;
-    }
-
-    .spec-row:last-child {
-        border-bottom: none;
-    }
-
-    .spec-label {
-        width: 30%;
-        color: var(--text-color);
-        font-weight: 600;
-    }
-
-    .spec-value {
-        width: 70%;
-        color: var(--text-muted);
-    }
   </style>
 </head>
 <body data-theme="light">
@@ -438,7 +394,7 @@
         <input type="text" id="newBlogDate" placeholder="তারিখ ও সময়..." class="form-input" required>
 
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Content):</label>
-        <textarea id="newBlogDesc" rows="6" placeholder="বিস্তারিত বিবরণ লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
+        <textarea id="newBlogDesc" rows="4" placeholder="বিস্তারিত বিবরণ লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
         
         <div style="display: flex; gap: 10px; margin-top: 10px;">
           <button type="button" onclick="closeWriteModal()" class="btn btn-call" style="background-color:#6c757d; flex:1;">বাতিল</button>
@@ -452,7 +408,7 @@
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:80vh; overflow-y:auto;">
       <span onclick="closeBlogModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.2rem;"></h3>
-      <div id="modalBody" style="font-size:0.9rem; line-height:1.6; color:var(--text-muted);"></div>
+      <p id="modalBody" style="font-size:0.9rem; line-height:1.6; color:var(--text-muted); white-space: pre-line;"></p>
       <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; margin-top:15px;">বন্ধ করুন</button>
     </div>
   </div>
@@ -511,6 +467,7 @@
         authActionBtn.textContent = "লগআউট";
         authActionBtn.setAttribute("onclick", "handleLogout()");
 
+        // শুধুমাত্র অ্যাডমিন হলেই Write Now বাটন দেখাবে
         if (window.isAdmin) {
           if(adminBlogBtn) adminBlogBtn.style.display = "inline-block";
           if(adminAccessoryBtn) adminAccessoryBtn.style.display = "inline-block";
@@ -524,6 +481,7 @@
         authActionBtn.textContent = "Signin / Signup";
         authActionBtn.setAttribute("onclick", "toggleAuthModal()");
 
+        // লগআউট থাকলে Write Now বাটন হাইড থাকবে
         if(adminBlogBtn) adminBlogBtn.style.display = "none";
         if(adminAccessoryBtn) adminAccessoryBtn.style.display = "none";
       }
@@ -991,44 +949,9 @@
       let titleElem = document.getElementById('modalTitle');
       let bodyElem = document.getElementById('modalBody');
       const targetItem = window.allDataStore[itemKey];
-      
       if(targetItem) {
         titleElem.textContent = targetItem.title;
-        let contentText = targetItem.content || "";
-        let lines = contentText.split('\n');
-        let formattedHTML = `<div class="spec-container">`;
-        let hasSpecStructure = false;
-
-        for (let line of lines) {
-          line = line.trim();
-          if (!line) continue;
-
-          if (!line.includes(':') && !line.includes('ঃ')) {
-            formattedHTML += `<div class="spec-category">${line}</div>`;
-            hasSpecStructure = true;
-          } else {
-            let parts = line.split(/[:ঃ]/);
-            let label = parts[0] ? parts[0].trim() : '';
-            let val = parts.slice(1).join(':').trim();
-            
-            if (label && val) {
-              formattedHTML += `
-                <div class="spec-row">
-                    <div class="spec-label">${label}</div>
-                    <div class="spec-value">${val}</div>
-                </div>`;
-              hasSpecStructure = true;
-            }
-          }
-        }
-        formattedHTML += `</div>`;
-
-        if (!hasSpecStructure || formattedHTML.includes('spec-container') && lines.length <= 1) {
-          bodyElem.innerHTML = `<p style="white-space: pre-line; margin:0;">${contentText}</p>`;
-        } else {
-          bodyElem.innerHTML = formattedHTML;
-        }
-
+        bodyElem.textContent = targetItem.content;
         modal.style.display = 'flex';
       }
     }
@@ -1167,6 +1090,7 @@
     function sendBooking(e) {
       e.preventDefault();
       
+      // ইউজার সাইন-ইন করা আছে কিনা চেক করা
       if (!window.auth.currentUser) {
         alert("অনলাইন থেকে বুকিং বা ক্রয় করার জন্য অবশ্যই Sign-in বা Sign-up করে থাকতে হবে!");
         toggleAuthModal();
