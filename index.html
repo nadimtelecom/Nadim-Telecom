@@ -393,8 +393,8 @@
         <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">সময় ও তারিখ (স্বয়ংক্রিয়):</label>
         <input type="text" id="newBlogDate" placeholder="তারিখ ও সময়..." class="form-input" required>
 
-        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Content):</label>
-        <textarea id="newBlogDesc" rows="4" placeholder="বিস্তারিত বিবরণ লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 5px;">বিস্তারিত বিবরণ (Content - HTML টেবিলসহ দিতে পারেন):</label>
+        <textarea id="newBlogDesc" rows="6" placeholder="বিস্তারিত বিবরণ লিখুন..." class="form-textarea" required style="resize: vertical;"></textarea>
         
         <div style="display: flex; gap: 10px; margin-top: 10px;">
           <button type="button" onclick="closeWriteModal()" class="btn btn-call" style="background-color:#6c757d; flex:1;">বাতিল</button>
@@ -404,11 +404,13 @@
     </div>
   </div>
 
+  <!-- Blog Details Modal (যেখানে টেবিল রেন্ডার হবে) -->
   <div id="blogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
-    <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:450px; padding:20px; border-radius:12px; position:relative; max-height:80vh; overflow-y:auto;">
+    <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:600px; padding:20px; border-radius:12px; position:relative; max-height:85vh; overflow-y:auto;">
       <span onclick="closeBlogModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.2rem;"></h3>
-      <p id="modalBody" style="font-size:0.9rem; line-height:1.6; color:var(--text-muted); white-space: pre-line;"></p>
+      <!-- innerHTML ব্যবহার করা হয়েছে যাতে টেবিল ও স্টাইল সঠিক থাকে -->
+      <div id="modalBody" style="font-size:0.9rem; line-height:1.6; color:var(--text-muted);"></div>
       <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; margin-top:15px;">বন্ধ করুন</button>
     </div>
   </div>
@@ -467,7 +469,6 @@
         authActionBtn.textContent = "লগআউট";
         authActionBtn.setAttribute("onclick", "handleLogout()");
 
-        // শুধুমাত্র অ্যাডমিন হলেই Write Now বাটন দেখাবে
         if (window.isAdmin) {
           if(adminBlogBtn) adminBlogBtn.style.display = "inline-block";
           if(adminAccessoryBtn) adminAccessoryBtn.style.display = "inline-block";
@@ -481,7 +482,6 @@
         authActionBtn.textContent = "Signin / Signup";
         authActionBtn.setAttribute("onclick", "toggleAuthModal()");
 
-        // লগআউট থাকলে Write Now বাটন হাইড থাকবে
         if(adminBlogBtn) adminBlogBtn.style.display = "none";
         if(adminAccessoryBtn) adminAccessoryBtn.style.display = "none";
       }
@@ -567,7 +567,7 @@
                     <img src="${item.imageUrl || 'https://via.placeholder.com/90'}" alt="Blog Image" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/90'}')">
                     <div class="product-info" style="width: 100%;">
                         <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${(item.content || '').substring(0, 80)}...</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 5px 0;">${(item.content || '').replace(/<[^>]*>?/gm, '').substring(0, 80)}...</p>
                         <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">
                             <span>তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</span>
                         </div>
@@ -614,7 +614,7 @@
                     <div class="product-info">
                         <div class="product-title">${item.title || 'নাম নেই'}</div>
                         <div class="product-price">দাম: ${item.price || 'আলোচনা সাপেক্ষে'}</div>
-                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 3px 0;">${item.content || ''}</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin: 3px 0;">${(item.content || '').replace(/<[^>]*>?/gm, '').substring(0, 60)}</p>
                         <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-bottom: 5px;">তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</div>
                         <div class="badge in-stock"><span class="dot"></span> In Stock</div>
                         <br style="margin-bottom: 5px;">
@@ -660,7 +660,7 @@
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
-                <p style="font-size:0.8rem; color:var(--text-muted);">${item.content ? item.content.substring(0, 60) : ''}...</p>
+                <p style="font-size:0.8rem; color:var(--text-muted);">${(item.content || '').replace(/<[^>]*>?/gm, '').substring(0, 60)}...</p>
               </div>
             </div>
           `;
@@ -711,7 +711,7 @@
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
-                <p style="font-size:0.8rem; color:var(--text-muted);">${item.content ? item.content.substring(0, 60) : ''}...</p>
+                <p style="font-size:0.8rem; color:var(--text-muted);">${(item.content || '').replace(/<[^>]*>?/gm, '').substring(0, 60)}...</p>
               </div>
             </div>
           `;
@@ -740,7 +740,7 @@
       
       let title = document.getElementById('newBlogTitle').value.trim();
       let price = document.getElementById('newBlogPrice').value.trim();
-      let desc = document.getElementById('newBlogDesc').value.trim();
+      let desc = document.getElementById('newBlogDesc').value.trim(); // এখানে HTML টেবিল কোডসহ বসানো যাবে
       let dateVal = document.getElementById('newBlogDate').value.trim();
       let imageFiles = document.getElementById('newBlogImage').files;
 
@@ -916,6 +916,54 @@
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
+      // ডিফলਟভাবে লেখার বক্সে স্পেসিফিকেশন টেবিল কোডটি দিয়ে দেওয়া হলো যাতে সহজেই ব্যবহার করা যায়
+      document.getElementById('newBlogDesc').value = `<table style="width:100%; border-collapse: collapse; font-family: Arial, sans-serif;">
+  <tr>
+    <td colspan="2" style="color: #ff007f; font-size: 20px; font-weight: bold; padding-top: 15px; padding-bottom: 5px;">Network</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; width: 40%; font-weight: bold;">Technology</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; width: 60%;">GSM / HSPA</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="color: #ff007f; font-size: 18px; font-weight: bold; padding-top: 10px; padding-bottom: 5px;">Launch</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; font-weight: bold;">Announced</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd;">2010, April. Released 2010, October</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; font-weight: bold;">Status</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd;">Discontinued</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="color: #ff007f; font-size: 20px; font-weight: bold; padding-top: 15px; padding-bottom: 5px;">Body</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; font-weight: bold;">Dimensions</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd;">113.5 x 59.1 x 12.9 mm, 86 cc</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; font-weight: bold;">Weight</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd;">135 g (4.76 oz)</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; font-weight: bold;">SIM</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd;">Mini-SIM</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="color: #ff007f; font-size: 20px; font-weight: bold; padding-top: 15px; padding-bottom: 5px;">Display</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; font-weight: bold;">Type</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd;">AMOLED</td>
+  </tr>
+  <tr>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd; font-weight: bold;">Size</td>
+    <td style="padding: 6px; border-bottom: 1px solid #ddd;">3.5 inches</td>
+  </tr>
+</table>`;
+      
       const priceInput = document.getElementById('newBlogPrice');
       const priceLabel = document.getElementById('priceLabelContainer');
       const uploadProgress = document.getElementById('uploadProgressContainer');
@@ -951,7 +999,8 @@
       const targetItem = window.allDataStore[itemKey];
       if(targetItem) {
         titleElem.textContent = targetItem.title;
-        bodyElem.textContent = targetItem.content;
+        // textContent এর পরিবর্তে innerHTML ব্যবহার করা হয়েছে যাতে টেবিল ও স্টাইল সঠিক দেখায়
+        bodyElem.innerHTML = targetItem.content;
         modal.style.display = 'flex';
       }
     }
@@ -1090,7 +1139,6 @@
     function sendBooking(e) {
       e.preventDefault();
       
-      // ইউজার সাইন-ইন করা আছে কিনা চেক করা
       if (!window.auth.currentUser) {
         alert("অনলাইন থেকে বুকিং বা ক্রয় করার জন্য অবশ্যই Sign-in বা Sign-up করে থাকতে হবে!");
         toggleAuthModal();
