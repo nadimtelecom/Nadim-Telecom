@@ -24,7 +24,17 @@
       --border-color: #333333;
     }
 
-    body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); transition: background 0.3s, color 0.3s; width: 100%; overflow-x: hidden; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); transition: background 0.3s, color 0.3s; width: 100%; max-width: 1200px; margin: 0 auto; padding-left: 10px; padding-right: 10px; box-sizing: border-box; overflow-x: hidden; }
+    
+    /* মোবাইল ডিভাইসের জন্য নির্দিষ্ট প্যাডিং ও উইডথ */
+    @media screen and (max-width: 768px) {
+        body {
+            padding-left: 5px;
+            padding-right: 5px;
+            overflow-x: hidden;
+        }
+    }
+
     header { background: var(--header-bg); color: white; text-align: center; padding: 25px 10px; position: relative; width: 100%; box-sizing: border-box; }
     
     .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; overflow: hidden; white-space: nowrap; box-sizing: border-box; width: 100%; }
@@ -60,7 +70,6 @@
     .sidebar-heading { font-weight: bold; color: #0066cc; padding: 12px 15px 5px 25px; font-size: 1rem; border-top: 1px solid var(--border-color); }
     .sidebar-sub { padding-left: 40px !important; font-size: 0.85rem !important; color: var(--text-muted) !important; cursor: pointer; }
 
-    /* কন্টেইনার উইডথ ফিক্স: মোবাইল ও ডেস্কটপ উভয় মোডের জন্য নিখুঁত মাপ */
     .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 15px; padding-bottom: 70px; box-sizing: border-box; }
     
     .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: background 0.3s; box-sizing: border-box; width: 100%; }
@@ -1106,7 +1115,7 @@
         return;
       }
 
-      let name = document.getElementById('custName appropriately').value || document.getElementById('custName').value;
+      let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
       let service = document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
