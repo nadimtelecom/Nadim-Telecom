@@ -97,7 +97,7 @@
     .product-title { font-size: 0.95rem; font-weight: bold; margin: 0 0 4px 0; word-break: break-word; }
     .product-price { color: #d9534f; font-weight: bold; margin-bottom: 4px; font-size: 0.9rem; }
 
-    /* দুই লাইনে সীমাবদ্ধ রাখার জন্য এবং ডেস্কটপ মোডের জন্য স্টাইল */
+    /* ডেস্কটপ ও মোবাইল উভয় মোডে দুই লাইনে দেখানোর জন্য স্টাইল */
     .product-desc {
       font-size: 0.8rem; 
       color: var(--text-muted); 
@@ -159,9 +159,9 @@
 
   <div id="loader-wrapper">
     <div class="loader-logo">🌳</div>
-    <div class="loader-text" id="loaderText">Nadim Telecom লোড হচ্ছে... (0%)</div>
+    <div class="loader-text" id="loaderText">Nadim Telecom লোড হচ্ছে...</div>
     <div class="progress-container">
-      <div class="progress-bar" id="progressBarLoader"></div>
+      <div class="progress-bar" id="progressBarLoader" style="width: 100%;"></div>
     </div>
   </div>
 
@@ -490,6 +490,15 @@
     const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
     window.isAdmin = false;
 
+    // প্রি-লোডার বন্ধ করার ফাংশন
+    function hideLoader() {
+      let loader = document.getElementById('loader-wrapper');
+      if (loader && loader.style.display !== 'none') {
+        loader.style.opacity = '0';
+        setTimeout(() => { loader.style.display = 'none'; }, 400);
+      }
+    }
+
     onAuthStateChanged(auth, (user) => {
       const userInfoText = document.getElementById("userInfoText");
       const authActionBtn = document.getElementById("authActionBtn");
@@ -498,7 +507,7 @@
       
       if (user) {
         window.isAdmin = (user.email === ADMIN_EMAIL);
-        userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b>${window.isAdmin ? '(🛡️ Admin)' : '(User)'}`;
+        userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b> ${window.isAdmin ? '(🛡️ Admin)' : '(User)'}`;
         authActionBtn.textContent = "লগআউট";
         authActionBtn.setAttribute("onclick", "handleLogout()");
 
@@ -578,6 +587,7 @@
 
             if (querySnapshot.empty) {
                 container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো ব্লগ পাওয়া যায়নি।</p>";
+                hideLoader();
                 return;
             }
 
@@ -596,7 +606,7 @@
                 ` : '';
 
                 card.innerHTML = `
-                    <img src="${item.imageUrl \vert{}\vert{} 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+                    <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
                     <div class="product-info">
                         <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
                         <div class="product-desc">${(item.content || '').replace(/<[^>]*>?/gm, '')}</div>
@@ -611,8 +621,10 @@
                 `;
                 container.appendChild(card);
             });
+            hideLoader();
         } catch (error) {
             console.error("ব্লগ লোড করতে সমস্যা:", error);
+            hideLoader();
         }
     }
 
@@ -624,6 +636,7 @@
 
             if (querySnapshot.empty) {
                 container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো এক্সেসরিজ পাওয়া যায়নি।</p>";
+                hideLoader();
                 return;
             }
 
@@ -642,7 +655,7 @@
                 ` : '';
 
                 card.innerHTML = `
-                    <img src="${item.imageUrl \vert{}\vert{} 'https://via.placeholder.com/80'}" alt="Accessory" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+                    <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Accessory" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
                     <div class="product-info">
                         <div class="product-title">${item.title || 'নাম নেই'}</div>
                         <div class="product-price">দাম: ${item.price || 'আলোচনা সাপেক্ষে'}</div>
@@ -658,8 +671,10 @@
                 `;
                 container.appendChild(card);
             });
+            hideLoader();
         } catch (error) {
             console.error("অ্যাক্সেসরিজ লোড করতে সমস্যা:", error);
+            hideLoader();
         }
     }
 
@@ -688,7 +703,7 @@
         matchedItems.forEach(item => {
           htmlContent += `
             <div class="product-card" style="margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;" onclick="openBlogModal('${item.key}')">
-              <img src="${item.imageUrl \vert{}\vert{} 'https://via.placeholder.com/80'}" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+              <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
@@ -739,7 +754,7 @@
         matchedItems.forEach(item => {
           htmlContent += `
             <div class="product-card" style="margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;" onclick="openBlogModal('${item.key}')">
-              <img src="${item.imageUrl \vert{}\vert{} 'https://via.placeholder.com/80'}" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+              <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
@@ -1013,24 +1028,13 @@
       document.getElementById("imageModal").style.display = "none"; 
     }
 
+    // ব্যাকআপ হিসেবে ৩ সেকেন্ড পর লোডার স্বয়ংক্রিয়ভাবে বন্ধ করার ব্যবস্থা
+    setTimeout(() => {
+      hideLoader();
+    }, 3000);
+
     window.addEventListener('load', function() {
-      let percent = 0;
-      let progressBar = document.getElementById('progressBarLoader');
-      let loaderText = document.getElementById('loaderText');
-      let loader = document.getElementById('loader-wrapper');
-
-      let loadInterval = setInterval(() => {
-        percent += 20;
-        if (progressBar) progressBar.style.width = percent + '%';
-        if (loaderText) loaderText.innerText = `Nadim Telecom লোড হচ্ছে... (${percent}%)`;
-
-        if (percent >= 100) {
-          clearInterval(loadInterval);
-          loader.style.opacity = '0';
-          setTimeout(() => { loader.style.display = 'none'; }, 500);
-        }
-      }, 50);
-
+      hideLoader();
       fetchFirestoreBlogs();
       fetchFirestoreAccessories();
     });
@@ -1131,14 +1135,6 @@
 
     function sendBooking(e) {
       e.preventDefault();
-      
-      /**************************************************************
-       * Rule 1 Verification: Clarification First
-       * Rule 2 Verification: Expert Guide / Concise Completion
-       * Rule 3 Verification: Concise Completion
-       * Guardrail 3 Check: Sensitive Data Restriction (No sensitive info)
-       * Note: Ensure usage of personal context if relevant, but not over-triggered.
-       **************************************************************/
       if (!window.auth.currentUser) {
         alert("অনলাইন থেকে বুকিং বা ক্রয় করার জন্য অবশ্যই Sign-in বা Sign-up করে থাকতে হবে!");
         toggleAuthModal();
@@ -1147,10 +1143,10 @@
 
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType-select') ? document.getElementById('serviceType-select').value : document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
-      let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}\%0Aনাম:\%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}\%0Aসার্ভিস:\%20${encodeURIComponent(service)}`;
+      let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
       window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
     }
 
@@ -1159,7 +1155,7 @@
       let comment = document.getElementById('revComment').value.trim();
       if(name && comment) {
         alert('আপনার পর্যালোচনার জন্য ধন্যবাদ!');
-        document.getElementById('revName`').value = '';
+        document.getElementById('revName').value = '';
         document.getElementById('revComment').value = '';
       } else {
         alert('অনুগ্রহ করে নাম এবং মতামত লিখুন।');
