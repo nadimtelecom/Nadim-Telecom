@@ -24,14 +24,24 @@
       --border-color: #333333;
     }
 
-    body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); transition: background 0.3s, color 0.3s; width: 100%; max-width: 1200px; margin: 0 auto; padding-left: 10px; padding-right: 10px; box-sizing: border-box; overflow-x: hidden; }
+    body, html { 
+      font-family: 'Segoe UI', Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background-color: var(--bg-color); 
+      color: var(--text-color); 
+      transition: background 0.3s, color 0.3s; 
+      width: 100%; 
+      max-width: 100% !important; 
+      box-sizing: border-box; 
+      overflow-x: hidden; 
+    }
     
-    /* মোবাইল ডিভাইসের জন্য নির্দিষ্ট প্যাডিং ও উইডথ */
+    /* মোবাইল ডিভাইসের জন্য নির্দিষ্ট প্যাডিং */
     @media screen and (max-width: 768px) {
         body {
             padding-left: 5px;
             padding-right: 5px;
-            overflow-x: hidden;
         }
     }
 
@@ -70,7 +80,7 @@
     .sidebar-heading { font-weight: bold; color: #0066cc; padding: 12px 15px 5px 25px; font-size: 1rem; border-top: 1px solid var(--border-color); }
     .sidebar-sub { padding-left: 40px !important; font-size: 0.85rem !important; color: var(--text-muted) !important; cursor: pointer; }
 
-    .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 15px; padding-bottom: 70px; box-sizing: border-box; }
+    .container { width: 100% !important; max-width: 100% !important; margin: 0 auto; padding: 15px 20px; padding-bottom: 70px; box-sizing: border-box; }
     
     .card { background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: background 0.3s; box-sizing: border-box; width: 100%; }
     .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -1117,7 +1127,7 @@
 
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType-select') ? document.getElementById('serviceType-select').value : document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
       let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
