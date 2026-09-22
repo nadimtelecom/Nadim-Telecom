@@ -647,7 +647,7 @@
                     <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
                     <div class="product-info">
                         <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
-                        <div class="product-desc">${(item.content || '').replace(/<[^>]*>?/gm, '')}</div>
+                        <div class="product-desc">${item.content || ''}</div>
                         <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-bottom: 4px;">
                             <span>তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</span>
                         </div>
@@ -698,7 +698,7 @@
                     <div class="product-info">
                         <div class="product-title">${item.title || 'নাম নেই'}</div>
                         <div class="product-price">দাম: ${item.price || 'আলোচনা সাপেক্ষে'}</div>
-                        <div class="product-desc">${(item.content || '').replace(/<[^>]*>?/gm, '')}</div>
+                        <div class="product-desc">${item.content || ''}</div>
                         <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-bottom: 4px;">তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</div>
                         <div class="badge in-stock"><span class="dot"></span> In Stock</div>
                         <br style="margin-bottom: 4px;">
@@ -746,7 +746,7 @@
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
-                <div class="product-desc">${(item.content || '').replace(/<[^>]*>?/gm, '')}</div>
+                <div class="product-desc">${item.content || ''}</div>
               </div>
             </div>
           `;
@@ -797,7 +797,7 @@
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
-                <div class="product-desc">${(item.content || '').replace(/<[^>]*>?/gm, '')}</div>
+                <div class="product-desc">${item.content || ''}</div>
               </div>
             </div>
           `;
@@ -898,7 +898,7 @@
           imageUrl: uploadedImageUrls[0] || 'https://via.placeholder.com/80',
           allImages: uploadedImageUrls,
           authorEmail: auth.currentUser.email,
-          createdAt: new Date().toISOString() // নতুন এবং এডিট করা আইটেম সবার উপরে রাখতে এটি ব্যবহার করা হয়েছে
+          createdAt: new Date().toISOString()
         };
 
         if (collectionName === "Accessories") {
