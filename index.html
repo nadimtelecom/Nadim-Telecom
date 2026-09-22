@@ -152,7 +152,6 @@
     .review-item:last-child { border-bottom: none; }
     .stars { color: #ffc107; font-size: 0.85rem; }
 
-    /* GSMArena Style Table Format inside Modal & Description */
     #modalBody {
       font-size: 0.9rem !important;
       line-height: 1.6 !important;
@@ -170,7 +169,6 @@
       font-size: 0.85rem;
       vertical-align: top;
     }
-    /* GSMArena style red section header inside table */
     .gsm-section-header {
       background-color: #f2f2f2;
       color: #c00;
@@ -444,7 +442,7 @@
         <input type="hidden" id="editBlogId" value="">
         
         <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">শিরোনাম / প্রডাক্টের নাম (Title):</label>
-        <input type="text" id="newBlogTitle" placeholder="নাম বা শিরোনাম লিখুন..." class="form-input" required>
+        <input type="text" id="newBlogTitle" placeholder="নাম বা শিরোনাম লিখুন..." class="form-input" oninput="updateAutoWeight(this.value)" required>
         
         <label id="priceLabelContainer" style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">দাম (Price):</label>
         <input type="text" id="newBlogPrice" placeholder="যেমন: ১,৮৫০৳" class="form-input">
@@ -480,7 +478,6 @@
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem;"></h3>
       <div id="modalBody"></div>
       
-      <!-- সোশ্যাল শেয়ার বাটন -->
       <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid var(--border-color); display: flex; gap: 8px;">
         <button onclick="shareOnWhatsApp()" class="btn btn-whatsapp" style="flex:1; padding: 6px; font-size:0.8rem;">📤 WhatsApp এ শেয়ার করুন</button>
         <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
@@ -813,6 +810,34 @@
       }
     }
 
+    // স্মার্ট ওজন ফাইন্ডার (ফোন মডেল অনুযায়ী আসল ওজন সিলেক্ট করার ডাটাবেজ)
+    window.getPhoneWeightByName = function(title) {
+      let t = title.toLowerCase();
+      if (t.includes("pixel 9 pro xl")) return "221 g";
+      if (t.includes("xiaomi 14 ultra")) return "219.8 g or 224 g";
+      if (t.includes("oppo reno14") || t.includes("find x9")) return "187 g";
+      if (t.includes("redmi 14") || t.includes("redmi buds")) return "205 g";
+      if (t.includes("samsung") || t.includes("galaxy s24")) return "196 g";
+      if (t.includes("iphone")) return "199 g";
+      if (t.includes("tecno") || t.includes("infinix")) return "195 g";
+      return "190 g"; // ডিফল্ট ওজন
+    }
+
+    // টাইপ করার সাথে সাথে লেখার ভেতরের ওজন স্বয়ংক্রিয়ভাবে আপডেট করার ফাংশন
+    window.updateAutoWeight = function(titleText) {
+      let descBox = document.getElementById('newBlogDesc');
+      if (!descBox) return;
+      let currentDesc = descBox.value;
+      let newWeight = window.getPhoneWeightByName(titleText);
+
+      // যদি জিএসএমঅ্যারেন স্টাইল টেবিল থাকে, তবে ওয়ে ওজন ট্যাগ পরিবর্তন করে দেবো
+      if (currentDesc.includes("Weight")) {
+        // Regex দিয়ে Weight এর পরের লাইনে বা TD তে নতুন ওজন বসিয়ে দেওয়া
+        let updatedDesc = currentDesc.replace(/(<tr>\s*<td[^>]*>Weight<\/td>\s*<td[^>]*>)(.*?)(<\/td>\s*<\/tr>)/i, `$1${newWeight}$3`);
+        descBox.value = updatedDesc;
+      }
+    }
+
     window.publishNewBlog = async function(e) {
       e.preventDefault();
       
@@ -1002,7 +1027,7 @@
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
-      // GSMArena Style Default Table Template with requested red headers and Weight: 200 g
+      // ডিফল্ট টেমপ্লেট যেখানে ডিফল্ট ওজন রাখা হয়েছে
       document.getElementById('newBlogDesc').value = `<table>
   <tr>
     <td colspan="2" class="gsm-section-header">Network</td>
@@ -1031,7 +1056,7 @@
   </tr>
   <tr>
     <td style="font-weight: bold;">Weight</td>
-    <td>200 g</td>
+    <td>190 g</td>
   </tr>
   <tr>
     <td colspan="2" class="gsm-section-header">Display</td>
@@ -1309,7 +1334,7 @@
       }
 
       let name = document.getElementById('custName.value') || document.getElementById('custName').value;
-      let phone = document.getElementById('custPhone').value;
+      let phone = document.getElementById('custPhone.value') || document.getElementById('custPhone.value');
       let service = document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
