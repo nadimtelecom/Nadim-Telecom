@@ -99,7 +99,7 @@
     .container { width: 100% !important; max-width: 100% !important; margin: 0 auto; padding: 15px 20px; padding-bottom: 70px; box-sizing: border-box; }
     
     .card { background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: background 0.3s; box-sizing: border-box; width: 100%; border: 1px solid var(--border-color); }
-    .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 
     .search-box, .form-input, .form-select, .form-textarea {
       width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color);
@@ -131,9 +131,10 @@
     .btn-whatsapp { background-color: #25D366; color: white; }
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
-    .btn-write-now { background-color: #198754; color: white; padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; display: none; }
-    .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; display: none; }
-    .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
+    
+    .btn-write-now { background-color: #198754; color: white; padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .btn-edit { background-color: #ffc107; color: #000; padding: 4px 10px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; }
+    .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 10px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; }
 
     .float-wa {
       position: fixed; bottom: 20px; right: 20px; background-color: #25D366; color: white;
@@ -169,8 +170,8 @@
     .stars { color: #ffc107; font-size: 0.85rem; }
 
     #modalBody {
-      font-size: 0.9rem !important;
-      line-height: 1.6 !important;
+      font-size: var(--table-font-size) !important;
+      line-height: var(--table-line-height) !important;
       color: var(--text-color) !important;
       word-break: break-word;
     }
@@ -192,7 +193,7 @@
     }
     .gsm-section-header {
       background-color: var(--table-header-bg);
-      color: var(--table-header-color);
+      color: var(--table-header-color) !important;
       font-weight: bold;
       text-transform: uppercase;
       font-size: calc(var(--table-font-size) * 0.95);
@@ -217,8 +218,8 @@
       margin-bottom: 4px;
     }
     .table-customizer select, .table-customizer input {
-      padding: 4px 8px;
-      font-size: 0.8rem;
+      padding: 6px 10px;
+      font-size: 0.85rem;
       border-radius: 6px;
       border: 1px solid var(--border-color);
       background: var(--card-bg);
@@ -239,6 +240,7 @@
     <div class="progress-container">
       <div class="progress-bar" id="progressBarLoader" style="width: 100%;"></div>
     </div>
+    <button onclick="hideLoader()" class="btn" style="margin-top: 15px; background: #0066cc; color: white; padding: 6px 16px; font-size: 0.8rem;">সরাসরি প্রবেশ করুন</button>
   </div>
 
   <div class="notice-bar">
@@ -322,11 +324,11 @@
     <div class="card">
       <div class="section-title">
         <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
-        <button id="adminBlogBtn" onclick="openWriteModal('Blog')" class="btn-write-now">✍️ Write Now</button>
+        <button id="adminBlogBtn" onclick="openWriteModal('Blog')" class="btn-write-now" style="display:none;">✍️ Write Now</button>
       </div>
       
       <div id="firestore-blogs-container">
-        <p style="font-size: 0.85rem; color: var(--text-muted);">ফায়ারস্টোর থেকে ব্লগ লোড হচ্ছে...</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">ব্লগ লোড হচ্ছে...</p>
       </div>
     </div>
 
@@ -396,11 +398,11 @@
     <div class="card">
       <div class="section-title">
         <span>📱 মোবাইল অ্যাক্সেসরিজ</span>
-        <button id="adminAccessoryBtn" onclick="openWriteModal('Accessory')" class="btn-write-now">✍️ Write Now</button>
+        <button id="adminAccessoryBtn" onclick="openWriteModal('Accessory')" class="btn-write-now" style="display:none;">✍️ Write Now</button>
       </div>
       
       <div id="firestore-accessories-container">
-        <p style="font-size: 0.85rem; color: var(--text-muted);">ফায়ারস্টোর থেকে এক্সেসরিজ লোড হচ্ছে...</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">অ্যাক্সেসরিজ লোড হচ্ছে...</p>
       </div>
     </div>
 
@@ -534,7 +536,7 @@
           </div>
           <div>
             <label>হেডিং কালার:</label>
-            <input type="color" id="tableHeaderColorPicker" value="#c00" onchange="changeTableStyle('headerColor', this.value)" style="width: 35px; height: 26px; vertical-align: middle; border: none; cursor: pointer; background: transparent;">
+            <input type="color" id="tableHeaderColorPicker" value="#c00" onchange="changeTableStyle('headerColor', this.value)" style="width: 45px; height: 32px; vertical-align: middle; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; background: transparent;">
           </div>
           <div>
             <label>প্যাডিং:</label>
@@ -582,20 +584,34 @@
       measurementId: "G-QTBJNJDV22"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const appCheck = initializeAppCheck(app, {
-      provider: new ReCaptchaEnterpriseProvider('6Lf817QtAAAAAKK09Rd2hYW6H9x_kYzPY8rlibCE'),
-      isTokenAutoRefreshEnabled: true
-    });
+    let app, db, auth;
+    try {
+      app = initializeApp(firebaseConfig);
+      // Fallback or init app check safely without blocking execution
+      try {
+        initializeAppCheck(app, {
+          provider: new ReCaptchaEnterpriseProvider('6Lf817QtAAAAAKK09Rd2hYW6H9x_kYzPY8rlibCE'),
+          isTokenAutoRefreshEnabled: true
+        });
+      } catch(e) {
+        console.warn("AppCheck init notice:", e);
+      }
+      db = getFirestore(app);
+      auth = getAuth(app);
+      window.db = db;
+      window.auth = auth;
+    } catch(err) {
+      console.error("Firebase init error:", err);
+    }
 
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    window.db = db;
-    window.auth = auth;
     window.allDataStore = {};
-
     const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
     window.isAdmin = false;
+
+    // Safety timeout to guarantee loader disappears within 2 seconds even if offline/slow
+    setTimeout(() => {
+      hideLoader();
+    }, 2000);
 
     function hideLoader() {
       let loader = document.getElementById('loader-wrapper');
@@ -604,38 +620,43 @@
         setTimeout(() => { loader.style.display = 'none'; }, 400);
       }
     }
+    window.hideLoader = hideLoader;
 
-    onAuthStateChanged(auth, (user) => {
-      const userInfoText = document.getElementById("userInfoText");
-      const authActionBtn = document.getElementById("authActionBtn");
-      const adminBlogBtn = document.getElementById("adminBlogBtn");
-      const adminAccessoryBtn = document.getElementById("adminAccessoryBtn");
-      
-      if (user) {
-        window.isAdmin = (user.email === ADMIN_EMAIL);
-        userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b> ${window.isAdmin ? '(🛡️ Admin)' : '(User)'}`;
-        authActionBtn.textContent = "লগআউট";
-        authActionBtn.setAttribute("onclick", "handleLogout()");
+    if (auth) {
+      onAuthStateChanged(auth, (user) => {
+        const userInfoText = document.getElementById("userInfoText");
+        const authActionBtn = document.getElementById("authActionBtn");
+        const adminBlogBtn = document.getElementById("adminBlogBtn");
+        const adminAccessoryBtn = document.getElementById("adminAccessoryBtn");
+        
+        if (user) {
+          window.isAdmin = (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
+          userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b> ${window.isAdmin ? '(🛡️ Admin)' : '(User)'}`;
+          authActionBtn.textContent = "লগআউট";
+          authActionBtn.setAttribute("onclick", "handleLogout()");
 
-        if (window.isAdmin) {
-          if(adminBlogBtn) adminBlogBtn.style.display = "inline-block";
-          if(adminAccessoryBtn) adminAccessoryBtn.style.display = "inline-block";
+          if (window.isAdmin) {
+            if(adminBlogBtn) adminBlogBtn.style.display = "inline-flex";
+            if(adminAccessoryBtn) adminAccessoryBtn.style.display = "inline-flex";
+          } else {
+            if(adminBlogBtn) adminBlogBtn.style.display = "none";
+            if(adminAccessoryBtn) adminAccessoryBtn.style.display = "none";
+          }
         } else {
+          window.isAdmin = false;
+          userInfoText.innerHTML = "লগইন করা নেই";
+          authActionBtn.textContent = "Signin / Signup";
+          authActionBtn.setAttribute("onclick", "toggleAuthModal()");
+
           if(adminBlogBtn) adminBlogBtn.style.display = "none";
           if(adminAccessoryBtn) adminAccessoryBtn.style.display = "none";
         }
-      } else {
-        window.isAdmin = false;
-        userInfoText.innerHTML = "লগইন করা নেই";
-        authActionBtn.textContent = "Signin / Signup";
-        authActionBtn.setAttribute("onclick", "toggleAuthModal()");
-
-        if(adminBlogBtn) adminBlogBtn.style.display = "none";
-        if(adminAccessoryBtn) adminAccessoryBtn.style.display = "none";
-      }
-      fetchFirestoreBlogs();
-      fetchFirestoreAccessories();
-    });
+        fetchFirestoreBlogs();
+        fetchFirestoreAccessories();
+      });
+    } else {
+      hideLoader();
+    }
 
     let isSignUpMode = false;
     window.toggleAuthModal = function() {
@@ -686,6 +707,10 @@
     }
 
     async function fetchFirestoreBlogs() {
+        if (!window.db) {
+          hideLoader();
+          return;
+        }
         try {
             const q = query(collection(window.db, "Blogs"), orderBy("createdAt", "desc"));
             const querySnapshot = await getDocs(q);
@@ -708,12 +733,14 @@
                 card.onclick = () => openBlogModal(itemKey);
                 
                 let adminControls = window.isAdmin ? `
-                  <button onclick="event.stopPropagation(); editItem('Blogs', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
-                  <button onclick="event.stopPropagation(); deleteItem('Blogs', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                  <div style="margin-top: 6px;">
+                    <button onclick="event.stopPropagation(); editItem('Blogs', '${itemKey}')" class="btn-edit">এডিট</button>
+                    <button onclick="event.stopPropagation(); deleteItem('Blogs', '${itemKey}')" class="btn-delete">মুছে ফেলুন</button>
+                  </div>
                 ` : '';
 
                 card.innerHTML = `
-                    <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+                    <img src="${item.imageUrl || 'https://placehold.co/80x80/eee/333?text=Img'}" alt="Blog Image" class="product-img" onerror="this.src='https://placehold.co/80x80/eee/333?text=Img'" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || ''}')">
                     <div class="product-info">
                         <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
                         <div class="product-desc">${item.content || ''}</div>
@@ -731,11 +758,19 @@
             hideLoader();
         } catch (error) {
             console.error("ব্লগ লোড করতে সমস্যা:", error);
+            const container = document.getElementById("firestore-blogs-container");
+            if(container && container.innerHTML.includes("লোড হচ্ছে")) {
+              container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>তথ্য লোড করতে নেটওয়ার্ক সমস্যা হয়েছে।</p>";
+            }
             hideLoader();
         }
     }
 
     async function fetchFirestoreAccessories() {
+        if (!window.db) {
+          hideLoader();
+          return;
+        }
         try {
             const q = query(collection(window.db, "Accessories"), orderBy("createdAt", "desc"));
             const querySnapshot = await getDocs(q);
@@ -758,19 +793,21 @@
                 card.onclick = () => openBlogModal(itemKey);
                 
                 let adminControls = window.isAdmin ? `
-                  <button onclick="event.stopPropagation(); editItem('Accessories', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
-                  <button onclick="event.stopPropagation(); deleteItem('Accessories', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                  <div style="margin-top: 6px;">
+                    <button onclick="event.stopPropagation(); editItem('Accessories', '${itemKey}')" class="btn-edit">এডিট</button>
+                    <button onclick="event.stopPropagation(); deleteItem('Accessories', '${itemKey}')" class="btn-delete">মুছে ফেলুন</button>
+                  </div>
                 ` : '';
 
                 card.innerHTML = `
-                    <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Accessory" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+                    <img src="${item.imageUrl || 'https://placehold.co/80x80/eee/333?text=Item'}" alt="Accessory" class="product-img" onerror="this.src='https://placehold.co/80x80/eee/333?text=Item'" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || ''}')">
                     <div class="product-info">
                         <div class="product-title">${item.title || 'নাম নেই'}</div>
                         <div class="product-price">দাম: ${item.price || 'আলোচনা সাপেক্ষে'}</div>
                         <div class="product-desc">${item.content || ''}</div>
                         <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-bottom: 4px;">তারিখ ও সময়: ${item.date || getCurrentFormattedDateTime()}</div>
                         <div class="badge in-stock"><span class="dot"></span> In Stock</div>
-                        <br style="margin-bottom: 4px;">
+                        <br>
                         <div>
                           <a href="https://wa.me/8801716390762?text=আমি%20${encodeURIComponent(item.title)}%20সম্পর্কে%20জানতে%20চাই" onclick="event.stopPropagation()" class="btn btn-whatsapp" style="padding: 3px 6px; font-size: 0.7rem; margin-right: 4px;">WhatsApp</a>
                           ${adminControls}
@@ -782,6 +819,10 @@
             hideLoader();
         } catch (error) {
             console.error("অ্যাক্সেসরিজ লোড করতে সমস্যা:", error);
+            const container = document.getElementById("firestore-accessories-container");
+            if(container && container.innerHTML.includes("লোড হচ্ছে")) {
+              container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>তথ্য লোড করতে নেটওয়ার্ক সমস্যা হয়েছে।</p>";
+            }
             hideLoader();
         }
     }
@@ -809,13 +850,21 @@
       if (matchedItems.length > 0) {
         let htmlContent = "";
         matchedItems.forEach(item => {
+          let adminControls = window.isAdmin ? `
+            <div style="margin-top: 6px;">
+              <button onclick="event.stopPropagation(); editItem('${item.collection}', '${item.key}')" class="btn-edit">এডিট</button>
+              <button onclick="event.stopPropagation(); deleteItem('${item.collection}', '${item.key}')" class="btn-delete">মুছে ফেলুন</button>
+            </div>
+          ` : '';
+
           htmlContent += `
             <div class="product-card" style="margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;" onclick="openBlogModal('${item.key}')">
-              <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+              <img src="${item.imageUrl || 'https://placehold.co/80x80/eee/333?text=Img'}" class="product-img" onerror="this.src='https://placehold.co/80x80/eee/333?text=Img'" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || ''}')">
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
                 <div class="product-desc">${item.content || ''}</div>
+                ${adminControls}
               </div>
             </div>
           `;
@@ -860,13 +909,21 @@
       if (matchedItems.length > 0) {
         let htmlContent = "";
         matchedItems.forEach(item => {
+          let adminControls = window.isAdmin ? `
+            <div style="margin-top: 6px;">
+              <button onclick="event.stopPropagation(); editItem('${item.collection}', '${item.key}')" class="btn-edit">এডিট</button>
+              <button onclick="event.stopPropagation(); deleteItem('${item.collection}', '${item.key}')" class="btn-delete">মুছে ফেলুন</button>
+            </div>
+          ` : '';
+
           htmlContent += `
             <div class="product-card" style="margin-bottom: 8px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;" onclick="openBlogModal('${item.key}')">
-              <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" class="product-img" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || 'https://via.placeholder.com/80'}')">
+              <img src="${item.imageUrl || 'https://placehold.co/80x80/eee/333?text=Img'}" class="product-img" onerror="this.src='https://placehold.co/80x80/eee/333?text=Img'" onclick="event.stopPropagation(); openImageModal('${item.imageUrl || ''}')">
               <div class="product-info">
                 <div class="product-title">${item.title}</div>
                 <div class="product-price">${item.price ? 'দাম: ' + item.price : ''}</div>
                 <div class="product-desc">${item.content || ''}</div>
+                ${adminControls}
               </div>
             </div>
           `;
@@ -879,30 +936,6 @@
             <p style="font-size: 0.8rem; color: var(--text-muted);">"${keyword}" দিয়ে আপনার সাইটে কোনো পোস্ট বা এক্সেসরিজ নেই।</p>
           </div>
         `;
-      }
-    }
-
-    window.getPhoneWeightByName = function(title) {
-      let t = title.toLowerCase();
-      if (t.includes("pixel 9 pro xl")) return "221 g";
-      if (t.includes("xiaomi 14 ultra")) return "219.8 g or 224 g";
-      if (t.includes("oppo reno14") || t.includes("find x9")) return "187 g";
-      if (t.includes("redmi 14") || t.includes("redmi buds")) return "205 g";
-      if (t.includes("samsung") || t.includes("galaxy s24")) return "196 g";
-      if (t.includes("iphone")) return "199 g";
-      if (t.includes("tecno") || t.includes("infinix")) return "195 g";
-      return "190 g";
-    }
-
-    window.updateAutoWeight = function(titleText) {
-      let descBox = document.getElementById('newBlogDesc');
-      if (!descBox) return;
-      let currentDesc = descBox.value;
-      let newWeight = window.getPhoneWeightByName(titleText);
-
-      if (currentDesc.includes("Weight")) {
-        let updatedDesc = currentDesc.replace(/(<tr>\s*<td[^>]*>Weight<\/td>\s*<td[^>]*>)(.*?)(<\/td>\s*<\/tr>)/i, `$1${newWeight}$3`);
-        descBox.value = updatedDesc;
       }
     }
 
@@ -964,7 +997,7 @@
           title: title,
           content: desc,
           date: dateVal,
-          imageUrl: uploadedImageUrls[0] || 'https://via.placeholder.com/80',
+          imageUrl: uploadedImageUrls[0] || 'https://placehold.co/80x80/eee/333?text=Img',
           allImages: uploadedImageUrls,
           authorEmail: auth.currentUser.email,
           createdAt: new Date().toISOString()
@@ -1103,126 +1136,6 @@
     <td style="width: 35%; font-weight: bold;">Technology</td>
     <td style="width: 65%;">GSM / HSPA / LTE / 5G</td>
   </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Launch</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Announced</td>
-    <td>2026, August</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Status</td>
-    <td>Available. Released 2026</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Body</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Dimensions</td>
-    <td>163 x 78 x 8.6 mm</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Weight</td>
-    <td>190 g</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Display</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Type</td>
-    <td>AMOLED, 120Hz</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Size</td>
-    <td>6.78 inches</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Platform</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">OS</td>
-    <td>Android 16</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Chipset</td>
-    <td>Octa-core processor</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Memory</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Card slot</td>
-    <td>No</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Internal</td>
-    <td>128GB 8GB RAM, 256GB 12GB RAM</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Main Camera</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Dual</td>
-    <td>50 MP + 8 MP</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Features</td>
-    <td>LED flash, HDR, panorama</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Selfie Camera</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Single</td>
-    <td>32 MP, f/2.4</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Sound</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Loudspeaker</td>
-    <td>Yes, with stereo speakers</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">3.5mm jack</td>
-    <td>No</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Comms</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">WLAN</td>
-    <td>Wi-Fi 802.11 a/b/g/n/ac, dual-band</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Bluetooth</td>
-    <td>5.3, A2DP, LE</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Features</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Sensors</td>
-    <td>Fingerprint (under display, optical), accelerometer, gyro, proximity</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Battery</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Type</td>
-    <td>5000 mAh, non-removable</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Charging</td>
-    <td>67W wired</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Misc</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Colors</td>
-    <td>Black, Blue, White</td>
-  </tr>
 </table>`;
       
       const priceInput = document.getElementById('newBlogPrice');
@@ -1262,181 +1175,155 @@
       if(targetItem) {
         currentActiveItem = targetItem;
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
-        bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
+        
+        let adminEditButtonHtml = window.isAdmin ? `
+          <div style="margin-bottom: 12px;">
+            <button onclick="closeBlogModal(); editItem('${targetItem.collection}', '${itemKey}')" class="btn btn-call" style="background-color: #ffc107; color: #000; width: auto; padding: 6px 14px; font-weight: bold; font-size: 0.85rem;">✏️ এই ডিটেইল বা স্পেসিফিকেশন এডিট করুন</button>
+          </div>
+        ` : '';
+
+        bodyElem.innerHTML = adminEditButtonHtml + (targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।');
+        
+        document.getElementById('tableFontSizeSelect').value = "0.85rem";
+        document.getElementById('tableLineHeightSelect').value = "1.6";
+        document.getElementById('tableHeaderColorPicker').value = "#c00";
+        document.getElementById('tablePaddingSelect').value = "8px";
+        
         modal.style.display = 'flex';
       }
     }
 
     window.closeBlogModal = function() { 
-      document.getElementById('blogModal').style.display = 'none'; 
+      document.getElementById('blogModal').style.display = 'none';
     }
 
-    window.changeTableStyle = function(type, value) {
-      const modalBody = document.getElementById('modalBody');
-      if (!modalBody) return;
+    window.openImageModal = function(imgUrl) {
+      let modal = document.getElementById('imageModal');
+      let modalImg = document.getElementById('modalImg');
+      modal.style.display = "block";
+      modalImg.src = imgUrl;
+    }
 
-      if (type === 'fontSize') {
-        modalBody.style.setProperty('--table-font-size', value);
-      } else if (type === 'lineHeight') {
-        modalBody.style.setProperty('--table-line-height', value);
-      } else if (type === 'headerColor') {
-        modalBody.style.setProperty('--table-header-color', value);
-      } else if (type === 'padding') {
-        modalBody.style.setProperty('--table-padding', value);
+    window.closeImageModal = function() {
+      document.getElementById('imageModal').style.display = "none";
+    }
+
+    window.openNav = function() {
+      document.getElementById("mySidebar").style.left = "0";
+    }
+
+    window.closeNav = function() {
+      document.getElementById("mySidebar").style.left = "-280px";
+    }
+
+    window.toggleTheme = function() {
+      const body = document.body;
+      const themeBtn = document.getElementById('themeToggleBtn');
+      if (body.getAttribute("data-theme") === "dark") {
+        body.setAttribute("data-theme", "light");
+        themeBtn.textContent = "🌙";
+      } else {
+        body.setAttribute("data-theme", "dark");
+        themeBtn.textContent = "☀️";
+      }
+    }
+
+    window.calculateCost = function() {
+      let device = document.getElementById('calcDevice').value;
+      let servicePrice = parseInt(document.getElementById('calcService').value);
+      let multiplier = 1;
+      if (device === 'smartphone') multiplier = 1.3;
+      if (device === 'flagship') multiplier = 1.8;
+      
+      let total = Math.round(servicePrice * multiplier);
+      let resBox = document.getElementById('calcResult');
+      resBox.style.display = 'block';
+      resBox.innerHTML = `আনুমানিক সার্ভিস খরচ: প্রায় ${total} ৳ (আলোচনা সাপেক্ষে)`;
+    }
+
+    window.calculateMFS = function() {
+      let amt = parseFloat(document.getElementById('mfsAmount').value);
+      let resBox = document.getElementById('mfsResult');
+      if (isNaN(amt) || amt <= 0) {
+        resBox.style.display = 'block';
+        resBox.innerHTML = "দয়া করে সঠিক টাকার পরিমাণ লিখুন।";
+        return;
+      }
+      let charge = (amt / 1000) * 14.5;
+      resBox.style.display = 'block';
+      resBox.innerHTML = `${amt} টাকায় আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)} ৳`;
+    }
+
+    window.previewMultipleImages = function(event) {
+      let files = event.target.files;
+      let container = document.getElementById('multiPreviewGrid');
+      let previewWrapper = document.getElementById('imagePreviewContainer');
+      container.innerHTML = "";
+      
+      if (files.length > 0) {
+        previewWrapper.style.display = 'block';
+        for (let i = 0; i < files.length; i++) {
+          let reader = new FileReader();
+          reader.onload = function(e) {
+            let img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = "70px";
+            img.style.height = "70px";
+            img.style.objectFit = "cover";
+            img.style.borderRadius = "6px";
+            img.style.border = "1px solid #ccc";
+            container.appendChild(img);
+          }
+          reader.readAsDataURL(files[i]);
+        }
+      } else {
+        previewWrapper.style.display = 'none';
+      }
+    }
+
+    window.sendBooking = function(e) {
+      e.preventDefault();
+      let name = document.getElementById('custName').value;
+      let phone = document.getElementById('custPhone').value;
+      let service = document.getElementById('serviceType').value;
+      
+      let msg = `হ্যালো Nadim Telecom, আমি সার্ভিস বুকিং করতে চাই।\nনাম: ${name}\nফোন: ${phone}\nসার্ভিস: ${service}`;
+      let url = `https://wa.me/8801716390762?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+    window.submitReview = function() {
+      let name = document.getElementById('revName').value;
+      let comment = document.getElementById('revComment').value;
+      if(!name || !comment) {
+        alert('দয়া করে আপনার নাম এবং মতামত লিখুন।');
+        return;
+      }
+      alert('আপনার মূল্যবান মতামতের জন্য ধন্যবাদ!');
+      document.getElementById('revName').value = "";
+      document.getElementById('revComment').value = "";
+    }
+
+    window.changeTableStyle = function(property, value) {
+      let modalBody = document.getElementById('modalBody');
+      if (!modalBody) return;
+      if (property === 'fontSize') {
+        modalBody.style.setProperty('--table-font-size', value, 'important');
+      } else if (property === 'lineHeight') {
+        modalBody.style.setProperty('--table-line-height', value, 'important');
+      } else if (property === 'headerColor') {
+        modalBody.style.setProperty('--table-header-color', value, 'important');
+      } else if (property === 'padding') {
+        modalBody.style.setProperty('--table-padding', value, 'important');
       }
     }
 
     window.shareOnWhatsApp = function() {
-      if (!currentActiveItem) return;
-      let text = `📱 *${currentActiveItem.title}*\n\nবিস্তারিত জানতে ভিজিট করুন Nadim Telecom ওয়েবসাইট।`;
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
-    }
-
-    window.openImageModal = function(imgSrc) {
-      var modal = document.getElementById("imageModal");
-      var modalImg = document.getElementById("modalImg");
-      modal.style.display = "block";
-      modalImg.src = imgSrc;
-    }
-
-    window.closeImageModal = function() { 
-      document.getElementById("imageModal").style.display = "none"; 
-    }
-
-    setTimeout(() => {
-      hideLoader();
-    }, 3000);
-
-    window.addEventListener('load', function() {
-      hideLoader();
-      fetchFirestoreBlogs();
-      fetchFirestoreAccessories();
-    });
-  </script>
-
-  <script>
-    function toggleTheme() {
-      const body = document.body;
-      const themeBtn = document.getElementById('themeToggleBtn');
-      if (body.getAttribute('data-theme') === 'light') {
-        body.setAttribute('data-theme', 'dark');
-        themeBtn.innerHTML = '☀️';
-      } else {
-        body.setAttribute('data-theme', 'light');
-        themeBtn.innerHTML = '🌙';
-      }
-    }
-
-    function openNav() { document.getElementById("mySidebar").style.left = "0"; }
-    function closeNav() { document.getElementById("mySidebar").style.left = "-280px"; }
-
-    function calculateCost() {
-      let deviceType = document.getElementById('calcDevice').value;
-      let basePrice = parseInt(document.getElementById('calcService').value);
-      let multiplier = deviceType === 'smartphone' ? 1.4 : (deviceType === 'flagship' ? 2.2 : 1);
-      let estimatedCost = Math.round(basePrice * multiplier);
-      let resultDiv = document.getElementById('calcResult');
-      resultDiv.style.display = 'block';
-      resultDiv.innerHTML = `আনুমানিক সার্ভিস খরচ: প্রায় ${estimatedCost}৳ থেকে শুরু`;
-    }
-
-    function calculateMFS() {
-      let amount = parseFloat(document.getElementById('mfsAmount').value);
-      let resultDiv = document.getElementById('mfsResult');
-      if (!amount || amount <= 0) {
-        alert('সঠিক টাকার পরিমাণ লিখুন।');
-        return;
-      }
-      let charge = (amount / 1000) * 14.50;
-      resultDiv.style.display = 'block';
-      resultDiv.innerHTML = `আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)}৳`;
-    }
-
-    async function previewMultipleImages(event) {
-      let files = event.target.files;
-      let gridContainer = document.getElementById('multiPreviewGrid');
-      let progressContainer = document.getElementById('uploadProgressContainerMain');
-      let progressBar = document.getElementById('uploadProgressBar');
-      let statusText = document.getElementById('uploadStatusText');
-
-      gridContainer.innerHTML = "";
-      if (files.length === 0) {
-        progressContainer.style.display = "none";
-        document.getElementById('imagePreviewContainer').style.display = 'none';
-        return;
-      }
-
-      progressContainer.style.display = "block";
-      document.getElementById('imagePreviewContainer').style.display = 'block';
-      
-      let totalFiles = files.length;
-      let loadedCount = 0;
-
-      progressBar.style.width = "0%";
-      statusText.innerText = "লোডিং হচ্ছে: 0%";
-
-      const readFileAsync = (file) => {
-        return new Promise((resolve, reject) => {
-          let reader = new FileReader();
-          reader.onload = (e) => resolve(e.target.result);
-          reader.onerror = (error) => reject(error);
-          reader.readAsDataURL(file);
-        });
-      };
-
-      for (let i = 0; i < totalFiles; i++) {
-        try {
-          let base64String = await readFileAsync(files[i]);
-          let img = document.createElement('img');
-          img.src = base64String;
-          img.style.cssText = "width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
-          gridContainer.appendChild(img);
-
-          , loadedCount++;
-          let currentPercent = Math.round((loadedCount / totalFiles) * 100);
-          
-          progressBar.style.width = currentPercent + "%";
-          statusText.innerText = `লোডিং হচ্ছে: ${currentPercent}% (${loadedCount}/${totalFiles})`;
-        } catch (err) {
-          console.error("File read error: ", err);
-        }
-      }
-
-      setTimeout(() => {
-        progressContainer.style.display = "none";
-      }, 500);
-    }
-
-    function sendBooking(e) {
-      e.preventDefault();
-      if (!window.auth.currentUser) {
-        alert("অনলাইন থেকে বুকিং বা ক্রয় করার জন্য অবশ্যই Sign-in বা Sign-up করে থাকতে হবে!");
-        toggleAuthModal();
-        return;
-      }
-
-      let name = document.getElementById('custName').value;
-      let phone = document.getElementById('custPhone0').value;
-      let service = document.getElementById('serviceType').value;
-      let userEmail = window.auth.currentUser.email;
-
-      let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
-      window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
-    }
-
-    function submitReview() {
-      let name = document.getElementById('revName').value.trim();
-      let comment = document.getElementById('revComment').value.trim();
-      if(name && comment) {
-        alert('আপনার পর্যালোচনার জন্য ধন্যবাদ!');
-        document.getElementById('revName').value = '';
-        document.getElementById('revComment').value = '';
-      } else {
-        alert('অনুগ্রহ করে নাম এবং মতামত লিখুন।');
-      }
+      if(!currentActiveItem) return;
+      let text = `📱 *${currentActiveItem.title}*\n\n${currentActiveItem.content ? currentActiveItem.content.replace(/<[^>]*>?/gm, '').substring(0, 300) : ''}\n\nবিস্তারিত জানতে Nadim Telecom এ ভিজিট করুন।`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     }
   </script>
-
 </body>
 </html>
 ```
