@@ -1002,7 +1002,7 @@
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
-      // GSMArena Style Default Table Template
+      // GSMArena Style Default Table Template with requested red headers and Weight: 200 g
       document.getElementById('newBlogDesc').value = `<table>
   <tr>
     <td colspan="2" class="gsm-section-header">Network</td>
@@ -1054,6 +1054,82 @@
   <tr>
     <td style="font-weight: bold;">Chipset</td>
     <td>Octa-core processor</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Memory</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Card slot</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Internal</td>
+    <td>128GB 8GB RAM, 256GB 12GB RAM</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Main Camera</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Dual</td>
+    <td>50 MP + 8 MP</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Features</td>
+    <td>LED flash, HDR, panorama</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Selfie Camera</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Single</td>
+    <td>32 MP, f/2.4</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Sound</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Loudspeaker</td>
+    <td>Yes, with stereo speakers</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">3.5mm jack</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Comms</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">WLAN</td>
+    <td>Wi-Fi 802.11 a/b/g/n/ac, dual-band</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Bluetooth</td>
+    <td>5.3, A2DP, LE</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Features</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Sensors</td>
+    <td>Fingerprint (under display, optical), accelerometer, gyro, proximity</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Battery</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Type</td>
+    <td>5000 mAh, non-removable</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Charging</td>
+    <td>67W wired</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Misc</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Colors</td>
+    <td>Black, Blue, White</td>
   </tr>
 </table>`;
       
@@ -1232,7 +1308,7 @@
         return;
       }
 
-      let name = document.getElementById('custName').value;
+      let name = document.getElementById('custName.value') || document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
       let service = document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
