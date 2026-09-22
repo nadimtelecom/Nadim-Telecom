@@ -156,6 +156,7 @@
       font-size: 0.9rem !important;
       line-height: 1.6 !important;
       color: var(--text-color) !important;
+      word-break: break-word;
     }
     #modalBody table {
       width: 100%;
@@ -163,9 +164,9 @@
       margin-bottom: 12px;
       background-color: var(--card-bg);
     }
-    #modalBody td {
-      padding: 7px 8px;
-      border-bottom: 1px solid var(--border-color);
+    #modalBody td, #modalBody th {
+      padding: 8px;
+      border: 1px solid var(--border-color);
       font-size: 0.85rem;
       vertical-align: top;
     }
@@ -499,7 +500,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app-check.js";
-    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -617,7 +618,8 @@
 
     async function fetchFirestoreBlogs() {
         try {
-            const querySnapshot = await getDocs(collection(window.db, "Blogs"));
+            const q = query(collection(window.db, "Blogs"), orderBy("createdAt", "desc"));
+            const querySnapshot = await getDocs(q);
             const container = document.getElementById("firestore-blogs-container");
             container.innerHTML = ""; 
 
@@ -666,7 +668,8 @@
 
     async function fetchFirestoreAccessories() {
         try {
-            const querySnapshot = await getDocs(collection(window.db, "Accessories"));
+            const q = query(collection(window.db, "Accessories"), orderBy("createdAt", "desc"));
+            const querySnapshot = await getDocs(q);
             const container = document.getElementById("firestore-accessories-container");
             container.innerHTML = ""; 
 
@@ -810,7 +813,6 @@
       }
     }
 
-    // স্মার্ট ওজন ফাইন্ডার (ফোন মডেল অনুযায়ী আসল ওজন সিলেক্ট করার ডাটাবেজ)
     window.getPhoneWeightByName = function(title) {
       let t = title.toLowerCase();
       if (t.includes("pixel 9 pro xl")) return "221 g";
@@ -820,19 +822,16 @@
       if (t.includes("samsung") || t.includes("galaxy s24")) return "196 g";
       if (t.includes("iphone")) return "199 g";
       if (t.includes("tecno") || t.includes("infinix")) return "195 g";
-      return "190 g"; // ডিফল্ট ওজন
+      return "190 g";
     }
 
-    // টাইপ করার সাথে সাথে লেখার ভেতরের ওজন স্বয়ংক্রিয়ভাবে আপডেট করার ফাংশন
     window.updateAutoWeight = function(titleText) {
       let descBox = document.getElementById('newBlogDesc');
       if (!descBox) return;
       let currentDesc = descBox.value;
       let newWeight = window.getPhoneWeightByName(titleText);
 
-      // যদি জিএসএমঅ্যারেন স্টাইল টেবিল থাকে, তবে ওয়ে ওজন ট্যাগ পরিবর্তন করে দেবো
       if (currentDesc.includes("Weight")) {
-        // Regex দিয়ে Weight এর পরের লাইনে বা TD তে নতুন ওজন বসিয়ে দেওয়া
         let updatedDesc = currentDesc.replace(/(<tr>\s*<td[^>]*>Weight<\/td>\s*<td[^>]*>)(.*?)(<\/td>\s*<\/tr>)/i, `$1${newWeight}$3`);
         descBox.value = updatedDesc;
       }
@@ -898,7 +897,8 @@
           date: dateVal,
           imageUrl: uploadedImageUrls[0] || 'https://via.placeholder.com/80',
           allImages: uploadedImageUrls,
-          authorEmail: auth.currentUser.email
+          authorEmail: auth.currentUser.email,
+          createdAt: new Date().toISOString() // নতুন এবং এডিট করা আইটেম সবার উপরে রাখতে এটি ব্যবহার করা হয়েছে
         };
 
         if (collectionName === "Accessories") {
@@ -910,7 +910,6 @@
           await updateDoc(docRef, dataPayload);
           alert('সফলভাবে আপডেট করা হয়েছে!');
         } else {
-          dataPayload.createdAt = new Date().toISOString();
           await addDoc(collection(window.db, collectionName), dataPayload);
           alert('সফলভাবে প্রকাশিত হয়েছে!');
         }
@@ -1027,7 +1026,6 @@
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
-      // ডিফল্ট টেমপ্লেট যেখানে ডিফল্ট ওজন রাখা হয়েছে
       document.getElementById('newBlogDesc').value = `<table>
   <tr>
     <td colspan="2" class="gsm-section-header">Network</td>
@@ -1194,8 +1192,8 @@
       const targetItem = window.allDataStore[itemKey];
       if(targetItem) {
         currentActiveItem = targetItem;
-        titleElem.textContent = targetItem.title;
-        bodyElem.innerHTML = targetItem.content;
+        titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
+        bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         modal.style.display = 'flex';
       }
     }
@@ -1333,8 +1331,8 @@
         return;
       }
 
-      let name = document.getElementById('custName.value') || document.getElementById('custName').value;
-      let phone = document.getElementById('custPhone.value') || document.getElementById('custPhone.value');
+      let name = document.getElementById('custName').value;
+      let phone = document.getElementById('custPhone').value;
       let service = document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
