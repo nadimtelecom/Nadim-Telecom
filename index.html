@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="enFUE9G2pbJwvJOqPqd8q-nIOkAh3nsFH4zTGwR_95Y" />
   <title>Nadim Telecom</title>
+
+  <!-- External CDN Links Added -->
+  <!-- FontAwesome CDN for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts CDN (SolaimanLipi & Inter/Roboto for Bengali & English styling) -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN for quick utility classes if needed -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
   <style>
     :root {
       --bg-color: #f4f7f6;
@@ -32,7 +41,7 @@
     }
 
     body, html { 
-      font-family: 'Segoe UI', Arial, sans-serif; 
+      font-family: 'Hind Siliguri', 'Inter', 'Segoe UI', Arial, sans-serif; 
       margin: 0; 
       padding: 0; 
       background-color: var(--bg-color); 
@@ -1388,7 +1397,7 @@
           let base64String = await readFileAsync(files[i]);
           let img = document.createElement('img');
           img.src = base64String;
-          img.style.cssText = "width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
+          img.style.cssText = "width: 70px; height: 70px; object-ket: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
           gridContainer.appendChild(img);
 
           loadedCount++;
