@@ -1128,7 +1128,7 @@
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
-      // নতুন আপডেট করা টেবিল কোড যেখানে আপনার চাওয়া নতুন ফিল্ডগুলো যুক্ত করা হয়েছে
+      // নতুন আপডেট করা টেবিল কোড যেখানে নতুন ফিল্ডগুলো যুক্ত করা হয়েছে
       document.getElementById('newBlogDesc').value = `<table>
   <tr>
     <td colspan="2" class="gsm-section-header">Network</td>
@@ -1228,11 +1228,19 @@
     <td>LED flash, HDR, panorama</td>
   </tr>
   <tr>
+    <td style="font-weight: bold;">Video</td>
+    <td>4K@30fps, 1080p@30/60fps</td>
+  </tr>
+  <tr>
     <td colspan="2" class="gsm-section-header">Selfie Camera</td>
   </tr>
   <tr>
     <td style="font-weight: bold;">Single</td>
     <td>32 MP, f/2.4</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Video</td>
+    <td>1080p@30fps</td>
   </tr>
   <tr>
     <td colspan="2" class="gsm-section-header">Sound</td>
@@ -1246,7 +1254,27 @@
     <td>No</td>
   </tr>
   <tr>
-    <td colspan="2" class="gsm-section-header">Comms</td>
+    <td colspan="2" class="gsm-section-header">COMMS</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Positioning</td>
+    <td>GPS, GLONASS, GALILEO, BDS</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">NFC</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Infrared port</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Radio</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">USB</td>
+    <td>USB Type-C 2.0, OTG</td>
   </tr>
   <tr>
     <td style="font-weight: bold;">WLAN</td>
@@ -1494,9 +1522,9 @@
         return;
       }
 
-      let name = document.getElementById('custName', '').value;
-      let phone = document.getElementById('custPhone', '').value;
-      let service = document.getElementById('serviceType', '').value;
+      let name = document.getElementById('custName').value;
+      let phone = document.getElementById('custPhone').value;
+      let service = document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
       let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
