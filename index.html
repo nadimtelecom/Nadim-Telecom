@@ -140,6 +140,7 @@
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     
+    /* শুধুমাত্র অ্যাডমিন দেখবে এমন বাটনসমূহের ডিফল্ট স্টাইল (শুরুতে হাইড থাকবে) */
     .btn-write-now { background-color: #198754; color: white; padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; display: none; }
     .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; display: none; }
     .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
@@ -238,9 +239,6 @@
     }
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; width: 100%; box-sizing: border-box; }
-    .footer-links { margin-top: 8px; font-size: 0.8rem; }
-    .footer-links a { color: #ffcc00; text-decoration: none; margin: 0 6px; }
-    .footer-links a:hover { text-decoration: underline; }
   </style>
 </head>
 <body data-theme="light">
@@ -282,11 +280,6 @@
     <a class="sidebar-sub" onclick="handleCategoryClick('ব্যাক কভার')">📱 ব্যাক কভার</a>
     <a class="sidebar-sub" onclick="handleCategoryClick('স্ক্রিন প্রটেক্টর')">🛡️ স্ক্রিন প্রটেক্টর গ্লাস</a>
     <a class="sidebar-sub" onclick="handleCategoryClick('ডিসপ্লে')">🖥️ ডিসপ্লে</a>
-
-    <div class="sidebar-heading">⚖️ লিগ্যাল ও পলিসি</div>
-    <a class="sidebar-sub" onclick="closeNav(); openStaticPolicyModal('privacy')">🔒 Privacy Policy</a>
-    <a class="sidebar-sub" onclick="closeNav(); openStaticPolicyModal('terms')">📄 Terms & Conditions</a>
-    <a class="sidebar-sub" onclick="closeNav(); openStaticPolicyModal('dispute')">⚠️ Dispute & Support</a>
   </div>
 
   <a href="https://wa.me/8801716390762" target="_blank" class="float-wa">💬 নক দিন</a>
@@ -529,7 +522,7 @@
       <span onclick="closeBlogModal()" style="position:absolute; top:8px; right:12px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem;"></h3>
       
-      <div class="table-customizer" id="tableCustomizerBox">
+      <div class="table-customizer">
         <div style="font-weight: bold; margin-bottom: 6px; color: #0066cc;">🛠️ টেবিল কাস্টমাইজেশন টুলবার:</div>
         <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
           <div>
@@ -567,7 +560,7 @@
       <div id="modalBody"></div>
       
       <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid var(--border-color); display: flex; gap: 8px;">
-        <button id="modalShareBtn" onclick="shareOnWhatsApp()" class="btn btn-whatsapp" style="flex:1; padding: 6px; font-size:0.8rem;">📤 WhatsApp এ শেয়ার করুন</button>
+        <button onclick="shareOnWhatsApp()" class="btn btn-whatsapp" style="flex:1; padding: 6px; font-size:0.8rem;">📤 WhatsApp এ শেয়ার করুন</button>
         <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
       </div>
     </div>
@@ -580,11 +573,6 @@
 
   <footer>
     <p style="margin:0;">Nadim Telecom - আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
-    <div class="footer-links">
-      <a href="javascript:void(0)" onclick="openStaticPolicyModal('privacy')">Privacy Policy</a> | 
-      <a href="javascript:void(0)" onclick="openStaticPolicyModal('terms')">Terms & Conditions</a> | 
-      <a href="javascript:void(0)" onclick="openStaticPolicyModal('dispute')">Dispute & Support</a>
-    </div>
     <p style="margin:4px 0 0 0;">© 2026 Nadim Telecom</p>
   </footer>
 
@@ -729,6 +717,7 @@
                 card.className = "product-card";
                 card.onclick = () => openBlogModal(itemKey);
                 
+                // শুধুমাত্র অ্যাডমিন হলে এডিট ও ডিলিট বাটন দেখাবে
                 let adminControls = window.isAdmin ? `
                   <button onclick="event.stopPropagation(); editItem('Blogs', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
                   <button onclick="event.stopPropagation(); deleteItem('Blogs', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
@@ -779,6 +768,7 @@
                 card.className = "product-card";
                 card.onclick = () => openBlogModal(itemKey);
                 
+                // শুধুমাত্র অ্যাডমিন হলে এডিট ও ডিলিট বাটন দেখাবে
                 let adminControls = window.isAdmin ? `
                   <button onclick="event.stopPropagation(); editItem('Accessories', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
                   <button onclick="event.stopPropagation(); deleteItem('Accessories', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
@@ -1114,9 +1104,138 @@
       document.getElementById('editCollectionName').value = (type === 'Accessory' ? 'Accessories' : 'Blogs');
       document.getElementById('editBlogId').value = '';
       document.getElementById('newBlogForm').reset();
+      
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
-      document.getElementById('newBlogDesc').value = `<table>...</table>`;
+      document.getElementById('newBlogDesc').value = `<table>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Network</td>
+  </tr>
+  <tr>
+    <td style="width: 35%; font-weight: bold;">Technology</td>
+    <td style="width: 65%;">GSM / HSPA / LTE / 5G</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Launch</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Announced</td>
+    <td>2026, August</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Status</td>
+    <td>Available. Released 2026</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Body</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Dimensions</td>
+    <td>163 x 78 x 8.6 mm</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Weight</td>
+    <td>190 g</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Display</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Type</td>
+    <td>AMOLED, 120Hz</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Size</td>
+    <td>6.78 inches</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Platform</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">OS</td>
+    <td>Android 16</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Chipset</td>
+    <td>Octa-core processor</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Memory</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Card slot</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Internal</td>
+    <td>128GB 8GB RAM, 256GB 12GB RAM</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Main Camera</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Dual</td>
+    <td>50 MP + 8 MP</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Features</td>
+    <td>LED flash, HDR, panorama</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Selfie Camera</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Single</td>
+    <td>32 MP, f/2.4</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Sound</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Loudspeaker</td>
+    <td>Yes, with stereo speakers</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">3.5mm jack</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Comms</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">WLAN</td>
+    <td>Wi-Fi 802.11 a/b/g/n/ac, dual-band</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Bluetooth</td>
+    <td>5.3, A2DP, LE</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Features</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Sensors</td>
+    <td>Fingerprint (under display, optical), accelerometer, gyro, proximity</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Battery</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Type</td>
+    <td>5000 mAh, non-removable</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Charging</td>
+    <td>67W wired</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Misc</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Colors</td>
+    <td>Black, Blue, White</td>
+  </tr>
+</table>`;
       
       const priceInput = document.getElementById('newBlogPrice');
       const priceLabel = document.getElementById('priceLabelContainer');
@@ -1151,9 +1270,6 @@
       let modal = document.getElementById('blogModal');
       let titleElem = document.getElementById('modalTitle');
       let bodyElem = document.getElementById('modalBody');
-      document.getElementById('tableCustomizerBox').style.display = 'block';
-      document.getElementById('modalShareBtn').style.display = 'inline-flex';
-      
       const targetItem = window.allDataStore[itemKey];
       if(targetItem) {
         currentActiveItem = targetItem;
@@ -1161,47 +1277,6 @@
         bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         modal.style.display = 'flex';
       }
-    }
-
-    // নতুন স্ট্যাটিক পলিসি এবং ডিসপিউট ম্যাল ওপেন করার ফাংশন
-    window.openStaticPolicyModal = function(type) {
-      let modal = document.getElementById('blogModal');
-      let titleElem = document.getElementById('modalTitle');
-      let bodyElem = document.getElementById('modalBody');
-      document.getElementById('tableCustomizerBox').style.display = 'none';
-      document.getElementById('modalShareBtn').style.display = 'none';
-
-      if (type === 'privacy') {
-        titleElem.textContent = "🔒 Privacy Policy (গোপনীয়তা নীতি)";
-        bodyElem.innerHTML = `
-          <p><strong>Nadim Telecom</strong>-এ আপনার গোপনীয়তা আমাদের কাছে অত্যন্ত গুরুত্বপূর্ণ।</p>
-          <p><strong>১. তথ্য সংগ্রহ:</strong> আমরা আপনার সার্ভিস বুকিং, অ্যাকাউন্ট রেজিস্ট্রেশন এবং যোগাযোগের সময় আপনার নাম, মোবাইল নম্বর এবং ইমেইল ঠিকানা সংগ্রহ করতে পারি।</p>
-          <p><strong>২. তথ্যের ব্যবহার:</strong> আপনার সংগৃহীত তথ্য কেবল আমাদের সেবা প্রদান, মোবাইল রিপেয়ারিং আপডেট এবং কাস্টমার সাপোর্টের কাজে ব্যবহার করা হয়। আমরা কোনো তৃতীয় পক্ষের কাছে আপনার তথ্য বিক্রি বা শেয়ার করি না।</p>
-          <p><strong>৩. নিরাপত্তা:</strong> আপনার ব্যক্তিগত তথ্যের নিরাপত্তা বজায় রাখতে আমরা আধুনিক ফায়ারবেস অথেনটিকেশন ও সিকিউরিটি সিস্টেম ব্যবহার করি।</p>
-        `;
-      } else if (type === 'terms') {
-        titleElem.textContent = "📄 Terms & Conditions (শর্তাবলী)";
-        bodyElem.innerHTML = `
-          <p><strong>নাদিম টেলিকম</strong>-এর সেবা গ্রহণের ক্ষেত্রে নিচের শর্তগুলো প্রযোজ্য:</p>
-          <p><strong>১. সার্ভিস ও রিপেয়ারিং:</strong> যেকোনো ডিভাইস জমা দেওয়ার সময় ডিভাইসের পূর্বের ত্রুটি যাচাই করে নেওয়া হয়। সার্ভিস চলাকালীন বা পরবর্তী শর্ত সাপেক্ষে ওয়ারেন্টি কার্যকর থাকে।</p>
-          <p><strong>২. পেমেন্ট ও বুকিং:</strong> অনলাইন পেমেন্ট বা ক্যাশ অন ডেলিভারি (COD) এবং বিকাশ/নগদ লেনদেনের ক্ষেত্রে সঠিক পরিমাণ প্রদান করতে হবে।</p>
-          <p><strong>৩. পরিবর্তন ও পরিমার্জন:</strong> Nadim Telecom কর্তৃপক্ষ যেকোনো সময় এই শর্তাবলী পরিবর্তন বা আপডেট করার অধিকার সংরক্ষণ করে।</p>
-        `;
-      } else if (type === 'dispute') {
-        titleElem.textContent = "⚠️ Dispute & Support (অভিযোগ ও সহায়তা)";
-        bodyElem.innerHTML = `
-          <p>আমাদের সেবা বা পণ্য নিয়ে কোনো ধরনের অসন্তুষ্টি, অভিযোগ বা মতবিরোধ (Dispute) দেখা দিলে আমরা তা দ্রুত সমাধানের জন্য বদ্ধপরিকর।</p>
-          <p><strong>যোগাযোগের মাধ্যম:</strong></p>
-          <ul>
-            <li>📞 সরাসরি কল: <a href="tel:01716390762" style="color:#0066cc; font-weight:bold;">01716390762</a></li>
-            <li>💬 WhatsApp সাপোর্ট: <a href="https://wa.me/8801716390762" target="_blank" style="color:#25D366; font-weight:bold;">01716390762 নম্বরে নক দিন</a></li>
-            <li>📍 ঠিকানা: Leaber Coloni, Newmoring Road, CEPZ, Chattogram - 4223</li>
-          </ul>
-          <p>আপনার যেকোনো সমস্যা সর্বোচ্চ গুরুত্ব দিয়ে সমাধান করা হবে ইনশাআল্লাহ।</p>
-        `;
-      }
-
-      modal.style.display = 'flex';
     }
 
     window.closeBlogModal = function() { 
@@ -1326,11 +1401,11 @@
           let base64String = await readFileAsync(files[i]);
           let img = document.createElement('img');
           img.src = base64String;
-          img.style.cssText = "width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
+          img.style.cssText = "width: 70px; height: 70px; object-ket: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
           gridContainer.appendChild(img);
 
           loadedCount++;
-          let currentPercent = Math.round((loadedCount / totalFiles) * 100);
+          let currentPercent = `math.round((loadedCount / totalFiles) * 100)`;
           
           progressBar.style.width = currentPercent + "%";
           statusText.innerText = `লোডিং হচ্ছে: ${currentPercent}% (${loadedCount}/${totalFiles})`;
@@ -1354,7 +1429,7 @@
 
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType5').value || document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
       let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
@@ -1363,7 +1438,7 @@
 
     function submitReview() {
       let name = document.getElementById('revName').value.trim();
-      let comment = document.getElementById('revComment.value')?.trim() || document.getElementById('revComment').value.trim();
+      let comment = document.getElementById('revComment').value.trim();
       if(name && comment) {
         alert('আপনার পর্যালোচনার জন্য ধন্যবাদ!');
         document.getElementById('revName').value = '';
