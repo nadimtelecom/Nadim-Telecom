@@ -1128,6 +1128,7 @@
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
+      // নতুন আপডেট করা টেবিল কোড যেখানে আপনার চাওয়া নতুন ফিল্ডগুলো যুক্ত করা হয়েছে
       document.getElementById('newBlogDesc').value = `<table>
   <tr>
     <td colspan="2" class="gsm-section-header">Network</td>
@@ -1151,6 +1152,14 @@
     <td colspan="2" class="gsm-section-header">Body</td>
   </tr>
   <tr>
+    <td style="font-weight: bold;">Build</td>
+    <td>Glass front, glass back, plastic frame</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Sim</td>
+    <td>Dual SIM (Nano-SIM, dual stand-by)</td>
+  </tr>
+  <tr>
     <td style="font-weight: bold;">Dimensions</td>
     <td>163 x 78 x 8.6 mm</td>
   </tr>
@@ -1162,6 +1171,14 @@
     <td colspan="2" class="gsm-section-header">Display</td>
   </tr>
   <tr>
+    <td style="font-weight: bold;">Resolution</td>
+    <td>1080 x 2400 pixels, 20:9 ratio (~395 ppi density)</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Protection</td>
+    <td>Corning Gorilla Glass</td>
+  </tr>
+  <tr>
     <td style="font-weight: bold;">Type</td>
     <td>AMOLED, 120Hz</td>
   </tr>
@@ -1171,6 +1188,14 @@
   </tr>
   <tr>
     <td colspan="2" class="gsm-section-header">Platform</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">CPU</td>
+    <td>Octa-core (2x2.2 GHz Cortex-A76 & 6x2.0 GHz Cortex-A55)</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">GPU</td>
+    <td>Mali-G57 MC2</td>
   </tr>
   <tr>
     <td style="font-weight: bold;">OS</td>
@@ -1469,9 +1494,9 @@
         return;
       }
 
-      let name = document.getElementById('custName').value;
-      let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType').value;
+      let name = document.getElementById('custName', '').value;
+      let phone = document.getElementById('custPhone', '').value;
+      let service = document.getElementById('serviceType', '').value;
       let userEmail = window.auth.currentUser.email;
 
       let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
