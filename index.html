@@ -140,6 +140,7 @@
     .btn-call { background-color: #0066cc; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; box-sizing: border-box; text-align: center; }
     
+    /* শুধুমাত্র অ্যাডমিন দেখবে এমন বাটনসমূহের ডিফল্ট স্টাইল (শুরুতে হাইড থাকবে) */
     .btn-write-now { background-color: #198754; color: white; padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; display: none; }
     .btn-edit { background-color: #ffc107; color: #000; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 5px; display: none; }
     .btn-delete { background-color: #dc3545; color: #fff; padding: 4px 8px; font-size: 0.75rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
@@ -487,7 +488,7 @@
         <input type="hidden" id="editBlogId" value="">
         
         <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">শিরোনাম / প্রডাক্টের নাম (Title):</label>
-        <input type="text" id="newBlogTitle" placeholder="নাম বা শিরোনাম লিখুন..." class="form-input" oninput="updateAutoDetails(this.value)" required>
+        <input type="text" id="newBlogTitle" placeholder="নাম বা শিরোনাম লিখুন..." class="form-input" oninput="updateAutoWeight(this.value)" required>
         
         <label id="priceLabelContainer" style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">দাম (Price):</label>
         <input type="text" id="newBlogPrice" placeholder="যেমন: ১,৮৫০৳" class="form-input">
@@ -716,6 +717,7 @@
                 card.className = "product-card";
                 card.onclick = () => openBlogModal(itemKey);
                 
+                // শুধুমাত্র অ্যাডমিন হলে এডিট ও ডিলিট বাটন দেখাবে
                 let adminControls = window.isAdmin ? `
                   <button onclick="event.stopPropagation(); editItem('Blogs', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
                   <button onclick="event.stopPropagation(); deleteItem('Blogs', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
@@ -766,6 +768,7 @@
                 card.className = "product-card";
                 card.onclick = () => openBlogModal(itemKey);
                 
+                // শুধুমাত্র অ্যাডমিন হলে এডিট ও ডিলিট বাটন দেখাবে
                 let adminControls = window.isAdmin ? `
                   <button onclick="event.stopPropagation(); editItem('Accessories', '${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
                   <button onclick="event.stopPropagation(); deleteItem('Accessories', '${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
@@ -891,93 +894,28 @@
       }
     }
 
-    // স্মার্ট ডাইনামিক বা স্বয়ংক্রিয় স্পেসিফিকেশন জেনারেটর (যেকোনো নাম লিখলেই কাজ করবে)
-    window.updateAutoDetails = function(titleText) {
+    window.getPhoneWeightByName = function(title) {
+      let t = title.toLowerCase();
+      if (t.includes("pixel 9 pro xl")) return "221 g";
+      if (t.includes("xiaomi 14 ultra")) return "219.8 g or 224 g";
+      if (t.includes("oppo reno14") || t.includes("find x9")) return "187 g";
+      if (t.includes("redmi 14") || t.includes("redmi buds")) return "205 g";
+      if (t.includes("samsung") || t.includes("galaxy s24")) return "196 g";
+      if (t.includes("iphone")) return "199 g";
+      if (t.includes("tecno") || t.includes("infinix")) return "195 g";
+      return "190 g";
+    }
+
+    window.updateAutoWeight = function(titleText) {
       let descBox = document.getElementById('newBlogDesc');
       if (!descBox) return;
-      
-      let phoneName = titleText.trim();
-      if (!phoneName) return;
+      let currentDesc = descBox.value;
+      let newWeight = window.getPhoneWeightByName(titleText);
 
-      // ব্রান্ডের ওপর ভিত্তি করে বেসিক ডিফল্ট স্পেসিফিকেশন ঠিক করা
-      let lowerTitle = phoneName.toLowerCase();
-      let networkVal = "GSM / HSPA / LTE / 5G";
-      let osVal = "Android 16";
-      let batteryVal = "5000 mAh, Fast Charging";
-      let displayVal = "AMOLED, 120Hz";
-      let cameraVal = "50 MP + 8 MP";
-      let chipsetVal = "Octa-core High Performance Processor";
-
-      if (lowerTitle.includes("iphone") || lowerTitle.includes("promax") || lowerTitle.includes("pro max")) {
-        osVal = "iOS 19 / Latest";
-        displayVal = "Super Retina XDR OLED, 120Hz";
-        chipsetVal = "Apple Bionic / A-Series Chip";
-      } else if (lowerTitle.includes("pixel")) {
-        osVal = "Google Android (Clean UI)";
-        chipsetVal = "Google Tensor Chipset";
-      } else if (lowerTitle.includes("nokia")) {
-        osVal = "Android / Symbian Series";
-        batteryVal = "Long-lasting battery backup";
+      if (currentDesc.includes("Weight")) {
+        let updatedDesc = currentDesc.replace(/(<tr>\s*<td[^>]*>Weight<\/td>\s*<td[^>]*>)(.*?)(<\/td>\s*<\/tr>)/i, `$1${newWeight}$3`);
+        descBox.value = updatedDesc;
       }
-
-      let dynamicTable = `<table>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Network</td>
-  </tr>
-  <tr>
-    <td style="width: 35%; font-weight: bold;">Technology</td>
-    <td style="width: 65%;">${networkVal}</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Launch & Build</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Model</td>
-    <td>${phoneName}</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Status</td>
-    <td>Available / Released 2026</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Display</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Type</td>
-    <td>${displayVal}</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Size</td>
-    <td>6.7 inches</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Platform</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">OS</td>
-    <td>${osVal}</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Chipset</td>
-    <td>${chipsetVal}</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Camera</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Main Camera</td>
-    <td>${cameraVal}</td>
-  </tr>
-  <tr>
-    <td colspan="2" class="gsm-section-header">Battery</td>
-  </tr>
-  <tr>
-    <td style="font-weight: bold;">Type & Charging</td>
-    <td>${batteryVal}</td>
-  </tr>
-</table>`;
-
-      descBox.value = dynamicTable;
     }
 
     window.publishNewBlog = async function(e) {
@@ -1168,7 +1106,136 @@
       document.getElementById('newBlogForm').reset();
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
-      document.getElementById('newBlogDesc').value = ""; // টাইটেল লিখলে অটো জেনারেট হবে
+      
+      document.getElementById('newBlogDesc').value = `<table>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Network</td>
+  </tr>
+  <tr>
+    <td style="width: 35%; font-weight: bold;">Technology</td>
+    <td style="width: 65%;">GSM / HSPA / LTE / 5G</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Launch</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Announced</td>
+    <td>2026, August</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Status</td>
+    <td>Available. Released 2026</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Body</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Dimensions</td>
+    <td>163 x 78 x 8.6 mm</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Weight</td>
+    <td>190 g</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Display</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Type</td>
+    <td>AMOLED, 120Hz</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Size</td>
+    <td>6.78 inches</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Platform</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">OS</td>
+    <td>Android 16</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Chipset</td>
+    <td>Octa-core processor</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Memory</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Card slot</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Internal</td>
+    <td>128GB 8GB RAM, 256GB 12GB RAM</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Main Camera</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Dual</td>
+    <td>50 MP + 8 MP</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Features</td>
+    <td>LED flash, HDR, panorama</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Selfie Camera</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Single</td>
+    <td>32 MP, f/2.4</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Sound</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Loudspeaker</td>
+    <td>Yes, with stereo speakers</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">3.5mm jack</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Comms</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">WLAN</td>
+    <td>Wi-Fi 802.11 a/b/g/n/ac, dual-band</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Bluetooth</td>
+    <td>5.3, A2DP, LE</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Features</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Sensors</td>
+    <td>Fingerprint (under display, optical), accelerometer, gyro, proximity</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Battery</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Type</td>
+    <td>5000 mAh, non-removable</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Charging</td>
+    <td>67W wired</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="gsm-section-header">Misc</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Colors</td>
+    <td>Black, Blue, White</td>
+  </tr>
+</table>`;
       
       const priceInput = document.getElementById('newBlogPrice');
       const priceLabel = document.getElementById('priceLabelContainer');
@@ -1334,11 +1401,11 @@
           let base64String = await readFileAsync(files[i]);
           let img = document.createElement('img');
           img.src = base64String;
-          img.style.cssText = "width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
+          img.style.cssText = "width: 70px; height: 70px; object-ket: cover; border-radius: 6px; border: 1px solid var(--border-color); cursor: pointer;";
           gridContainer.appendChild(img);
 
           loadedCount++;
-          let currentPercent = Math.round((loadedCount / totalFiles) * 100);
+          let currentPercent = `math.round((loadedCount / totalFiles) * 100)`;
           
           progressBar.style.width = currentPercent + "%";
           statusText.innerText = `লোডিং হচ্ছে: ${currentPercent}% (${loadedCount}/${totalFiles})`;
@@ -1362,7 +1429,7 @@
 
       let name = document.getElementById('custName').value;
       let phone = document.getElementById('custPhone').value;
-      let service = document.getElementById('serviceType').value;
+      let service = document.getElementById('serviceType5').value || document.getElementById('serviceType').value;
       let userEmail = window.auth.currentUser.email;
 
       let msg = `নতুন%20বুকিং/অর্ডার:%0Aইউজার%20মেইল:%20${encodeURIComponent(userEmail)}%0Aনাম:%20${encodeURIComponent(name)}%0Aফোন:%20${encodeURIComponent(phone)}%0Aসার্ভিস:%20${encodeURIComponent(service)}`;
