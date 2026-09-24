@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nadim Telecom - যোগাযোগ ও ঠিকানা</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-color: #f4f7f6; --card-bg: #ffffff; --text-color: #2c3e50; --text-muted: #555555; --border-color: #e2e8f0; }
+    body { font-family: 'Hind Siliguri', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+    header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 20px; }
+    .nav-menu { background: rgba(0,0,0,0.15); padding: 8px; text-align: center; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: center; gap: 15px; }
+    .nav-menu a { color: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; }
+    .nav-menu a.active { background: rgba(255,255,255,0.2); }
+    .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; }
+    .form-input, .form-select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; outline: none; background: var(--card-bg); color: var(--text-color); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: none; cursor: pointer; width: 100%; }
+    .btn-green { background-color: #198754; color: white; }
+    footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 style="margin:0; font-size: 1.3rem;">📍 যোগাযোগ ও ঠিকানা</h1>
+    <p style="margin:4px 0 0 0; font-size:0.75rem;">নাদিম টেলিকম - চট্টগ্রাম</p>
+  </header>
+
+  <div class="nav-menu">
+    <a href="index.html">🏠 হোম পেজ</a>
+    <a href="services.html">🛠️ সার্ভিস ও মূল্য</a>
+    <a href="contact.html" class="active">📍 যোগাযোগ</a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="section-title"><span>📍 দোকানের ঠিকানা</span></div>
+      <p style="margin: 4px 0; font-size: 0.9rem;"><strong>Nadim Telecom</strong></p>
+      <p style="margin: 4px 0; color: var(--text-muted); font-size: 0.85rem;">Leaber Coloni, Newmoring Road, CEPZ, Chattogram - 4223</p>
+      <p style="margin: 8px 0; font-size: 0.85rem;">📞 মোবাইল: <a href="tel:01716390762" style="color:#0066cc; font-weight:bold; text-decoration:none;">01716390762</a></p>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><span>📝 সার্ভিস বুকিং ফর্ম</span></div>
+      <form onsubmit="sendBooking(event)">
+        <input type="text" id="custName" placeholder="আপনার নাম" class="form-input" required>
+        <input type="tel" id="custPhone" placeholder="মোবাইল নম্বর" class="form-input" required>
+        <select id="serviceType" class="form-select" required>
+          <option value="">সার্ভিস নির্বাচন করুন</option>
+          <option value="ডিসপ্লে পরিবর্তন">ডিসপ্লে পরিবর্তন</option>
+          <option value="ব্যাটারি পরিবর্তন">ব্যাটারি পরিবর্তন</option>
+          <option value="চার্জিং সমস্যা">চার্জিং সমস্যা</option>
+          <option value="অন্যান্য">অন্যান্য</option>
+        </select>
+        <button type="submit" class="btn btn-green">বুকিং কনফার্ম করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p style="margin:0;">Nadim Telecom - আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
+    <p style="margin:4px 0 0 0;">© 2026 Nadim Telecom</p>
+  </footer>
+
+  <script>
+    function sendBooking(e) {
+      e.preventDefault();
+      let name = document.getElementById('custName').value;
+      let phone = document.getElementById('custPhone').value;
+      let service = document.getElementById('serviceType').value;
+
+      let msg = `নতুন বুকিং:%0Aনাম: ${encodeURIComponent(name)}%0Aফোন: ${encodeURIComponent(phone)}%0Aসার্ভিস: ${encodeURIComponent(service)}`;
+      window.open(`https://wa.me/8801716390762?text=${msg}`, '_blank');
+    }
+  </script>
+</body>
+</html>
