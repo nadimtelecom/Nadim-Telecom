@@ -1128,7 +1128,7 @@
       
       document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
       
-      // নতুন আপডেট করা টেবিল কোড যেখানে নতুন ফিল্ডগুলো যুক্ত করা হয়েছে
+      // নতুন আপডেট করা টেবিল কোড যেখানে নতুন MISC সেকশন এবং ফিল্ডগুলো যুক্ত করা হয়েছে
       document.getElementById('newBlogDesc').value = `<table>
   <tr>
     <td colspan="2" class="gsm-section-header">Network</td>
@@ -1309,6 +1309,18 @@
     <td style="font-weight: bold;">Colors</td>
     <td>Black, Blue, White</td>
   </tr>
+  <tr>
+    <td style="font-weight: bold;">Models</td>
+    <td>Model Code / Region Version</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">SAR EU</td>
+    <td>0.99 W/kg (head)    1.19 W/kg (body)</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold;">Price</td>
+    <td>About 25,000 BDT</td>
+  </tr>
 </table>`;
       
       const priceInput = document.getElementById('newBlogPrice');
@@ -1340,6 +1352,8 @@
     }
 
     let currentActiveItem = null;
+    let currentActiveItemKey = null;
+
     window.openBlogModal = function(itemKey) {
       let modal = document.getElementById('blogModal');
       let titleElem = document.getElementById('modalTitle');
@@ -1347,6 +1361,7 @@
       const targetItem = window.allDataStore[itemKey];
       if(targetItem) {
         currentActiveItem = targetItem;
+        currentActiveItemKey = itemKey;
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
         bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         modal.style.display = 'flex';
@@ -1375,11 +1390,14 @@
     window.shareOnSocial = function(platform) {
       if (!currentActiveItem) return;
       let titleText = currentActiveItem.title || 'Nadim Telecom Post';
-      let shareUrl = window.location.href;
+      
+      let baseUrl = window.location.href.split('#')[0].split('?')[0];
+      let shareUrl = currentActiveItemKey ? `${baseUrl}#post=${currentActiveItemKey}` : window.location.href;
+      
       let text = `📱 *${titleText}*\n\nবিস্তারিত জানতে ভিজিট করুন Nadim Telecom ওয়েবসাইট।`;
 
       if (platform === 'whatsapp') {
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + shareUrl)}`, '_blank');
       } else if (platform === 'facebook') {
         window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
       } else if (platform === 'youtube') {
