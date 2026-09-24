@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" id="htmlRoot">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nadim Telecom - হোম পেজ</title>
+  <title id="pageTitle">Nadim Telecom - হোম পেজ</title>
   
   <!-- FontAwesome CDN for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -51,7 +51,6 @@
     .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; overflow: hidden; white-space: nowrap; }
     .notice-bar marquee { width: 100%; }
 
-    /* আপডেট করা সবুজ রঙের নেভিগেশন মেনু বাটন */
     .nav-menu { 
       background: rgba(0,0,0,0.15); 
       padding: 10px; 
@@ -65,7 +64,7 @@
     
     .nav-menu a { 
       color: white; 
-      background-color: #198754; /* সতেজ সবুজ রঙ */
+      background-color: #198754; 
       text-decoration: none; 
       padding: 6px 14px; 
       border-radius: 6px; 
@@ -73,13 +72,8 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .nav-menu a:hover { 
-      background-color: #157347; /* হোভার করলে একটু গাঢ় সবুজ হবে */
-    }
-
-    .nav-menu a.active { 
-      background-color: #0f5132; /* বর্তমানে যে পেজে আছেন সেটি বোঝাতে গাঢ় সবুজ */
-    }
+    .nav-menu a:hover { background-color: #157347; }
+    .nav-menu a.active { background-color: #0f5132; }
 
     .settings-icon-btn {
       position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
@@ -90,7 +84,6 @@
     }
     .settings-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
-    /* পপ-আপ মডালগুলোর সাধারণ স্টাইল */
     #settingsModal, #authModal, #blogModal, #writeBlogModal, #personalModal, #phoneModal, #passwordModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
@@ -174,12 +167,12 @@
 <body data-theme="light">
 
   <div class="notice-bar">
-    <marquee scrollamount="5">⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡</marquee>
+    <marquee scrollamount="5" id="noticeText">⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡</marquee>
   </div>
 
   <header>
     <h1 style="margin:0; font-size: 1.3rem;">📱 Nadim Telecom</h1>
-    <p style="margin:4px 0 0 0; font-size:0.75rem;">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
+    <p style="margin:4px 0 0 0; font-size:0.75rem;" id="headerSub">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
     
     <button class="settings-icon-btn" onclick="toggleSettingsModal()" title="Settings">
       <i class="fas fa-gear"></i>
@@ -187,33 +180,33 @@
   </header>
 
   <div class="nav-menu">
-    <a href="index.html" class="active">🏠 হোম পেজ</a>
-    <a href="services.html">🛠️ সার্ভিস ও মূল্য</a>
-    <a href="contact.html">📍 যোগাযোগ</a>
+    <a href="index.html" class="active" id="navHome">🏠 হোম পেজ</a>
+    <a href="services.html" id="navService">🛠️ সার্ভিস ও মূল্য</a>
+    <a href="contact.html" id="navContact">📍 যোগাযোগ</a>
   </div>
 
   <div class="container">
     <div class="card">
       <div style="display: flex; gap: 6px;">
         <input type="text" id="internalSearchInput" placeholder="সাইটের ভেতর খুঁজুন..." class="search-box" style="margin-bottom:0;">
-        <button type="button" class="btn btn-call" onclick="performSearch()" style="width: auto; padding: 0 12px; margin-top:0;">🔍 খুঁজুন</button>
+        <button type="button" class="btn btn-call" onclick="performSearch()" style="width: auto; padding: 0 12px; margin-top:0;" id="searchBtn">🔍 খুঁজুন</button>
       </div>
     </div>
 
     <div class="card">
-      <div class="section-title"><span>ℹ️ আমাদের সম্পর্কে</span></div>
-      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+      <div class="section-title"><span id="aboutTitle">ℹ️ আমাদের সম্পর্কে</span></div>
+      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0;" id="aboutDesc">
         <strong>নাদিম টেলিকম</strong>-এ আপনাদের স্বাগতম! আমরা বিশ্বস্ততার সাথে দীর্ঘদিন ধরে মোবাইল রিপেয়ারিং, অরিজিনাল এক্সেসরিজ বিক্রয় এবং বিকাশ ও নগদের মতো মোবাইল ফিন্যান্সিয়াল সেবা প্রদান করে আসছে।
       </p>
     </div>
 
     <div class="card">
       <div class="section-title">
-        <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
+        <span id="blogSectionTitle">📰 মোবাইল নিউজ ও টেক ব্লগ</span>
         <button id="adminBlogBtn" onclick="openWriteModal()" class="btn-write-now" style="display:none;">✍️ Write Now</button>
       </div>
       <div id="firestore-blogs-container">
-        <p style="font-size: 0.85rem; color: var(--text-muted);">তথ্য লোড হচ্ছে...</p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);" id="loadingText">তথ্য লোড হচ্ছে...</p>
       </div>
     </div>
   </div>
@@ -222,21 +215,21 @@
   <div id="settingsModal">
     <div class="settings-modal-content">
       <span onclick="toggleSettingsModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
-      <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">⚙️ Settings (সেটিংস)</h3>
+      <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;" id="settingsHeader">⚙️ Settings (সেটিংস)</h3>
       
       <ul class="settings-list" style="margin-top: 10px;">
         <li id="authSettingsLi" onclick="toggleAuthModal(); toggleSettingsModal();">
           <span id="authMenuText">🔐 Sign In / Sign Up</span> <i class="fas fa-user-circle text-muted"></i>
         </li>
-        <li onclick="openPersonalModal(); toggleSettingsModal();"><span>👤 Personal information</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openPhoneModal(); toggleSettingsModal();"><span>📞 Phone Numbers</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="alert('Confirm E-Mail অপশন')"><span>✉️ Confirm E Mail</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="changeLanguagePrompt()"><span>🌐 Change Language (বাংলা / English)</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="alert('Manage Notification সেটিংস')"><span>🔔 Manage Notification</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openPersonalModal(); toggleSettingsModal();"><span id="setPersonal">👤 Personal information</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openPhoneModal(); toggleSettingsModal();"><span id="setPhone">📞 Phone Numbers</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="alert('Confirm E-Mail অপশন')"><span id="setEmail">✉️ Confirm E Mail</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="toggleLanguage()"><span>🌐 Change Language (<span id="langIndicator">বাংলা</span>)</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="alert('Manage Notification সেটিংস')"><span id="setNotif">🔔 Manage Notification</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="toggleDarkMode()"><span>🌙 Dark Mode <strong id="darkModeStatus" style="font-size: 0.8rem; color:#0066cc;">(Off)</strong></span> <i class="fas fa-sync text-muted"></i></li>
-        <li onclick="openPasswordModal(); toggleSettingsModal();"><span>🔑 Change Password</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="confirmDeleteAccount()" style="color: #dc3545;"><span>🗑️ Delete My Account Permanently</span> <i class="fas fa-exclamation-triangle"></i></li>
-        <li id="logoutSettingsLi" onclick="handleUserLogout()" style="color: #d9534f; font-weight: bold; display: none;"><span>🚪 Log out</span> <i class="fas fa-sign-out-alt"></i></li>
+        <li onclick="openPasswordModal(); toggleSettingsModal();"><span id="setPass">🔑 Change Password</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="confirmDeleteAccount()" style="color: #dc3545;"><span id="setDel">🗑️ Delete My Account Permanently</span> <i class="fas fa-exclamation-triangle"></i></li>
+        <li id="logoutSettingsLi" onclick="handleUserLogout()" style="color: #d9534f; font-weight: bold; display: none;"><span id="setLogout">🚪 Log out</span> <i class="fas fa-sign-out-alt"></i></li>
       </ul>
     </div>
   </div>
@@ -492,8 +485,8 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, deleteUser } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
@@ -514,7 +507,7 @@
     const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
     window.isAdmin = false;
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       const authMenuText = document.getElementById("authMenuText");
       const authSettingsLi = document.getElementById("authSettingsLi");
       const logoutSettingsLi = document.getElementById("logoutSettingsLi");
@@ -529,6 +522,21 @@
         if (window.isAdmin && adminBlogBtn) {
           adminBlogBtn.style.display = "inline-block";
         }
+
+        // ইউজারের আগের সেভ করা পার্সোনাল ইনফো বা ফোন নাম্বার ডাটাবেজ থেকে লোড করা
+        try {
+          const userDocRef = doc(db, "Users", user.uid);
+          const userSnap = await getDoc(userDocRef);
+          if (userSnap.exists()) {
+            const data = userSnap.data();
+            if(data.name) document.getElementById('perName').value = data.name;
+            if(data.address) document.getElementById('perAddress').value = data.address;
+            if(data.phone) document.getElementById('phoneNumber').value = data.phone;
+          }
+        } catch(err) {
+          console.error("ইউজার ডেটা লোড সমস্যা:", err);
+        }
+
       } else {
         window.isAdmin = false;
         authMenuText.innerHTML = "🔐 Sign In / Sign Up";
@@ -572,29 +580,46 @@
       }
     }
 
-    // সেটিংসের নতুন সাব-মডাল কন্ট্রোল ফাংশনসমূহ
+    // ফুললি ফাংশনাল পার্সোনাল ইনফরমেশন সেভ
     window.openPersonalModal = function() {
       if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
       document.getElementById('personalModal').style.display = 'flex';
     }
     window.closePersonalModal = function() { document.getElementById('personalModal').style.display = 'none'; }
-    window.savePersonal = function(e) {
+    window.savePersonal = async function(e) {
       e.preventDefault();
-      alert("পার্সোনাল ইনফরমেশন সফলভাবে সংরক্ষণ করা হয়েছে!");
-      closePersonalModal();
+      if(!auth.currentUser) return;
+      let name = document.getElementById('perName').value;
+      let address = document.getElementById('perAddress').value;
+      try {
+        await setDoc(doc(db, "Users", auth.currentUser.uid), { name, address }, { merge: true });
+        alert("পার্সোনাল ইনফরমেশন সফলভাবে ডাটাবেজে সংরক্ষণ করা হয়েছে!");
+        closePersonalModal();
+      } catch(err) {
+        alert("সংরক্ষণ করতে সমস্যা হয়েছে: " + err.message);
+      }
     }
 
+    // ফুললি ফাংশনাল ফোন নাম্বার সেভ
     window.openPhoneModal = function() {
       if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
       document.getElementById('phoneModal').style.display = 'flex';
     }
     window.closePhoneModal = function() { document.getElementById('phoneModal').style.display = 'none'; }
-    window.savePhone = function(e) {
+    window.savePhone = async function(e) {
       e.preventDefault();
-      alert("ফোন নম্বর সফলভাবে আপডেট করা হয়েছে!");
-      closePhoneModal();
+      if(!auth.currentUser) return;
+      let phone = document.getElementById('phoneNumber').value;
+      try {
+        await setDoc(doc(db, "Users", auth.currentUser.uid), { phone }, { merge: true });
+        alert("ফোন নম্বর সফলভাবে ডাটাবেজে আপডেট করা হয়েছে!");
+        closePhoneModal();
+      } catch(err) {
+        alert("আপডেট করতে সমস্যা হয়েছে: " + err.message);
+      }
     }
 
+    // ফুললি ফাংশনাল পাসওয়ার্ড চেঞ্জ
     window.openPasswordModal = function() {
       if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
       document.getElementById('passwordModal').style.display = 'flex';
@@ -608,16 +633,64 @@
         alert("পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!");
         closePasswordModal();
       } catch (error) {
-        alert("ত্রুটি (পুনরায় লগইন করে চেষ্টা করুন): " + error.message);
+        alert("ত্রুটি (নিরাপত্তার জন্য পুনরায় লগইন করে চেষ্টা করুন): " + error.message);
       }
     }
 
-    window.changeLanguagePrompt = function() {
-      let lang = prompt("Choose Language / ভাষা নির্বাচন করুন (bn / en):", "bn");
-      if (lang === 'en') {
-        alert("Language switched to English (Demo Mode).");
-      } else if (lang === 'bn') {
+    // ভাষা পরিবর্তন টগল সিস্টেম (বাংলা / ইংরেজি)
+    let currentLang = 'bn';
+    window.toggleLanguage = function() {
+      currentLang = (currentLang === 'bn') ? 'en' : 'bn';
+      document.getElementById('langIndicator').textContent = (currentLang === 'bn') ? 'বাংলা' : 'English';
+      
+      if(currentLang === 'en') {
+        document.getElementById('htmlRoot').setAttribute('lang', 'en');
+        document.getElementById('pageTitle').textContent = "Nadim Telecom - Home Page";
+        document.getElementById('noticeText').textContent = "⚡ Special Notice: Bkash & Nagad cash-out charges are very low at Nadim Telecom! Call: 01716390762 ⚡";
+        document.getElementById('headerSub').textContent = "Mobile Repairing • Bkash Service • Accessories";
+        document.getElementById('navHome').textContent = "🏠 Home";
+        document.getElementById('navService').textContent = "🛠️ Services & Pricing";
+        document.getElementById('navContact').textContent = "📍 Contact";
+        document.getElementById('internalSearchInput').placeholder = "Search inside site...";
+        document.getElementById('searchBtn').textContent = "🔍 Search";
+        document.getElementById('aboutTitle').textContent = "ℹ️ About Us";
+        document.getElementById('aboutDesc').innerHTML = "Welcome to <strong>Nadim Telecom</strong>! We have been providing reliable mobile repairing, original accessories, and MFS services.";
+        document.getElementById('blogSectionTitle').textContent = "📰 Mobile News & Tech Blog";
+        document.getElementById('loadingText').textContent = "Loading data...";
+        document.getElementById('settingsHeader').textContent = "⚙️ Settings";
+        alert("Language switched to English.");
+      } else {
+        document.getElementById('htmlRoot').setAttribute('lang', 'bn');
+        document.getElementById('pageTitle').textContent = "Nadim Telecom - হোম পেজ";
+        document.getElementById('noticeText').textContent = "⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡";
+        document.getElementById('headerSub').textContent = "মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ";
+        document.getElementById('navHome').textContent = "🏠 হোম পেজ";
+        document.getElementById('navService').textContent = "🛠️ সার্ভিস ও মূল্য";
+        document.getElementById('navContact').textContent = "📍 যোগাযোগ";
+        document.getElementById('internalSearchInput').placeholder = "সাইটের ভেতর খুঁজুন...";
+        document.getElementById('searchBtn').textContent = "🔍 খুঁজুন";
+        document.getElementById('aboutTitle').textContent = "ℹ️ আমাদের সম্পর্কে";
+        document.getElementById('aboutDesc').innerHTML = "<strong>নাদিম টেলিকম</strong>-এ আপনাদের স্বাগতম! আমরা বিশ্বস্ততার সাথে দীর্ঘদিন ধরে মোবাইল রিপেয়ারিং, অরিজিনাল এক্সেসরিজ বিক্রয় এবং বিকাশ ও নগদের মতো মোবাইল ফিন্যান্সিয়াল সেবা প্রদান করে আসছে।";
+        document.getElementById('blogSectionTitle').textContent = "📰 মোবাইল নিউজ ও টেক ব্লগ";
+        document.getElementById('loadingText').textContent = "তথ্য লোড হচ্ছে...";
+        document.getElementById('settingsHeader').textContent = "⚙️ Settings (সেটিংস)";
         alert("ভাষা বাংলায় পরিবর্তন করা হয়েছে।");
+      }
+    }
+
+    // ফুললি ফাংশনাল পার্মানেন্ট একাউন্ট ডিলিট
+    window.confirmDeleteAccount = async function() {
+      if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
+      let confirmDel = confirm("আপনি কি আপনার একাউন্ট চিরতরে মুছে ফেলতে চান? এটি রিভার্স করা যাবে না!");
+      if (confirmDel) {
+        try {
+          const user = auth.currentUser;
+          await deleteUser(user);
+          alert("আপনার একাউন্ট সফলভাবে চিরতরে মুছে ফেলা হয়েছে।");
+          location.reload();
+        } catch (error) {
+          alert("একাউন্ট ডিলিট করতে সমস্যা হয়েছে (পুনরায় লগইন করে আবার চেষ্টা করুন): " + error.message);
+        }
       }
     }
 
@@ -979,13 +1052,6 @@
       } else {
         body.setAttribute('data-theme', 'light');
         statusText.textContent = "(Off)";
-      }
-    }
-
-    window.confirmDeleteAccount = function() {
-      let confirmDel = confirm("আপনি কি আপনার একাউন্ট চিরতরে মুছে ফেলতে চান? এই কাজটি রিভার্স করা যাবে না!");
-      if (confirmDel) {
-        alert("একাউন্ট ডিলেট রিকোয়েস্ট পাঠানো হয়েছে।");
       }
     }
 
