@@ -4,35 +4,122 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nadim Telecom - হোম পেজ</title>
+  
+  <!-- FontAwesome CDN for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts CDN -->
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
   <style>
     :root {
-      --bg-color: #f4f7f6; --card-bg: #ffffff; --text-color: #2c3e50; --text-muted: #555555;
-      --header-bg: linear-gradient(135deg, #0066cc, #004080); --border-color: #e2e8f0;
+      --bg-color: #f4f7f6; 
+      --card-bg: #ffffff; 
+      --text-color: #2c3e50; 
+      --text-muted: #555555;
+      --header-bg: linear-gradient(135deg, #0066cc, #004080); 
+      --border-color: #e2e8f0;
+      --table-header-bg: #f2f2f2;
+      --table-header-color: #c00;
+      --table-font-size: 0.85rem;
+      --table-line-height: 1.6;
+      --table-padding: 8px;
     }
+    
     [data-theme="dark"] {
-      --bg-color: #121212; --card-bg: #1e1e1e; --text-color: #e0e0e0; --text-muted: #b0b0b0;
-      --header-bg: linear-gradient(135deg, #1a1a1a, #2c2c2c); --border-color: #333333;
+      --bg-color: #121212; 
+      --card-bg: #1e1e1e; 
+      --text-color: #e0e0e0; 
+      --text-muted: #b0b0b0;
+      --header-bg: linear-gradient(135deg, #1a1a1a, #2c2c2c); 
+      --border-color: #333333;
+      --table-header-bg: #2a2a2a;
+      --table-header-color: #ff4d4d;
     }
-    body, html { font-family: 'Hind Siliguri', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); box-sizing: border-box; }
+
+    body, html { 
+      font-family: 'Hind Siliguri', 'Inter', sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background-color: var(--bg-color); 
+      color: var(--text-color); 
+      box-sizing: border-box; 
+    }
+    
     header { background: var(--header-bg); color: white; text-align: center; padding: 20px; position: relative; }
-    .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; }
+    .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; overflow: hidden; white-space: nowrap; }
+    .notice-bar marquee { width: 100%; }
+
     .nav-menu { background: rgba(0,0,0,0.15); padding: 8px; text-align: center; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: center; gap: 15px; }
     .nav-menu a { color: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; transition: background 0.2s; }
     .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.2); }
+
     .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
     .card { background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: none; cursor: pointer; }
     .btn-call { background-color: #0066cc; color: white; width: 100%; text-align: center; }
+    
     .search-box { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 8px; outline: none; }
-    .product-card { display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; }
+    
+    .product-card { display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; cursor: pointer; }
+    .product-card:hover { background-color: rgba(0,102,204,0.03); }
     .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background-color: #eee; flex-shrink: 0; }
     .product-info { flex: 1; min-width: 0; }
     .product-title { font-size: 0.95rem; font-weight: bold; margin: 0 0 4px 0; }
     .product-desc { font-size: 0.85rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* ব্লগ পড়ার মডাল ও টেবিল স্টাইল */
+    #modalBody {
+      font-size: 0.9rem !important;
+      line-height: 1.6 !important;
+      color: var(--text-color) !important;
+      word-break: break-word;
+    }
+    #modalBody table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    #modalBody td, #modalBody th {
+      padding: var(--table-padding);
+      border: 1px solid var(--border-color);
+      font-size: var(--table-font-size);
+      line-height: var(--table-line-height);
+      vertical-align: middle;
+    }
+    .gsm-section-header {
+      background-color: var(--table-header-bg);
+      color: var(--table-header-color);
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: calc(var(--table-font-size) * 0.95);
+      letter-spacing: 0.5px;
+      padding: calc(var(--table-padding) * 0.8) var(--table-padding);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .table-customizer {
+      background: rgba(0, 102, 204, 0.05);
+      border: 1px dashed var(--border-color);
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 0.8rem;
+    }
+    .table-customizer label { font-weight: bold; display: inline-block; margin-right: 4px; margin-bottom: 4px; }
+    .table-customizer select, .table-customizer input {
+      padding: 4px 8px; font-size: 0.8rem; border-radius: 6px; border: 1px solid var(--border-color);
+      background: var(--card-bg); color: var(--text-color); margin-right: 10px; margin-bottom: 6px; outline: none;
+    }
+
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
   </style>
 </head>
@@ -72,6 +159,47 @@
       <div class="section-title"><span>📰 মোবাইল নিউজ ও টেক ব্লগ</span></div>
       <div id="firestore-blogs-container">
         <p style="font-size: 0.85rem; color: var(--text-muted);">তথ্য লোড হচ্ছে...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ব্লগ ডিটেইলস ও টেবিল দেখার মডাল -->
+  <div id="blogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
+    <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:600px; padding:18px; border-radius:12px; position:relative; max-height:85vh; overflow-y:auto; box-sizing: border-box;">
+      <span onclick="closeBlogModal()" style="position:absolute; top:8px; right:12px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem;"></h3>
+      
+      <!-- টেবিল কাস্টমাইজেশন টুলবার -->
+      <div class="table-customizer">
+        <div style="font-weight: bold; margin-bottom: 6px; color: #0066cc;">🛠️ টেবিল কাস্টমাইজেশন টুলবার:</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+          <div>
+            <label>টেক্সট সাইজ:</label>
+            <select id="tableFontSizeSelect" onchange="changeTableStyle('fontSize', this.value)">
+              <option value="0.75rem">ছোট</option>
+              <option value="0.85rem" selected>মাঝারি</option>
+              <option value="1rem">বড়</option>
+            </select>
+          </div>
+          <div>
+            <label>লাইন স্পেস:</label>
+            <select id="tableLineHeightSelect" onchange="changeTableStyle('lineHeight', this.value)">
+              <option value="1.3">কম</option>
+              <option value="1.6" selected>স্বাভাবিক</option>
+              <option value="2.0">বেশি</option>
+            </select>
+          </div>
+          <div>
+            <label>হেডিং কালার:</label>
+            <input type="color" id="tableHeaderColorPicker" value="#c00" onchange="changeTableStyle('headerColor', this.value)" style="width: 30px; height: 24px; vertical-align: middle; border: none; cursor: pointer; background: transparent;">
+          </div>
+        </div>
+      </div>
+
+      <div id="modalBody"></div>
+      
+      <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid var(--border-color); text-align: right;">
+        <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
       </div>
     </div>
   </div>
@@ -117,9 +245,11 @@
             querySnapshot.forEach((docSnap) => {
                 const item = docSnap.data();
                 const itemKey = docSnap.id;
+                window.allDataStore[itemKey] = item;
                 
                 const card = document.createElement("div");
                 card.className = "product-card";
+                card.onclick = () => openBlogModal(itemKey);
                 
                 card.innerHTML = `
                     <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img">
@@ -137,6 +267,35 @@
             console.error("ব্লগ লোড করতে সমস্যা:", error);
             document.getElementById("firestore-blogs-container").innerHTML = "<p style='font-size: 0.85rem; color: red;'>ডেটা লোড করতে সমস্যা হয়েছে।</p>";
         }
+    }
+
+    window.openBlogModal = function(itemKey) {
+      let modal = document.getElementById('blogModal');
+      let titleElem = document.getElementById('modalTitle');
+      let bodyElem = document.getElementById('modalBody');
+      const targetItem = window.allDataStore[itemKey];
+      if(targetItem) {
+        titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
+        bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
+        modal.style.display = 'flex';
+      }
+    }
+
+    window.closeBlogModal = function() { 
+      document.getElementById('blogModal').style.display = 'none'; 
+    }
+
+    window.changeTableStyle = function(type, value) {
+      const modalBody = document.getElementById('modalBody');
+      if (!modalBody) return;
+
+      if (type === 'fontSize') {
+        modalBody.style.setProperty('--table-font-size', value);
+      } else if (type === 'lineHeight') {
+        modalBody.style.setProperty('--table-line-height', value);
+      } else if (type === 'headerColor') {
+        modalBody.style.setProperty('--table-header-color', value);
+      }
     }
 
     window.addEventListener('load', function() {
