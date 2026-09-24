@@ -64,12 +64,13 @@
     }
     .settings-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
-    #settingsModal, #authModal, #blogModal, #writeBlogModal {
+    /* পপ-আপ মডালগুলোর সাধারণ স্টাইল */
+    #settingsModal, #authModal, #blogModal, #writeBlogModal, #personalModal, #phoneModal, #passwordModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
     }
-    .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content {
-      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 600px;
+    .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content, .sub-modal-content {
+      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 500px;
       padding: 20px; border-radius: 12px; position: relative; max-height: 85vh; overflow-y: auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box;
     }
@@ -166,7 +167,6 @@
   </div>
 
   <div class="container">
-    <!-- সার্চ বক্স ও সার্চ বাটন যেখানে onclick যুক্ত করা হয়েছে -->
     <div class="card">
       <div style="display: flex; gap: 6px;">
         <input type="text" id="internalSearchInput" placeholder="সাইটের ভেতর খুঁজুন..." class="search-box" style="margin-bottom:0;">
@@ -202,16 +202,57 @@
         <li id="authSettingsLi" onclick="toggleAuthModal(); toggleSettingsModal();">
           <span id="authMenuText">🔐 Sign In / Sign Up</span> <i class="fas fa-user-circle text-muted"></i>
         </li>
-        <li onclick="alert('Personal information অপশনটি শীঘ্রই আসছে!')"><span>👤 Personal information</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="alert('Phone Numbers আপডেট অপশন')"><span>📞 Phone Numbers</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openPersonalModal(); toggleSettingsModal();"><span>👤 Personal information</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openPhoneModal(); toggleSettingsModal();"><span>📞 Phone Numbers</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="alert('Confirm E-Mail অপশন')"><span>✉️ Confirm E Mail</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="changeLanguagePrompt()"><span>🌐 Change Language (বাংলা / English)</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="alert('Manage Notification সেটিংস')"><span>🔔 Manage Notification</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="toggleDarkMode()"><span>🌙 Dark Mode <strong id="darkModeStatus" style="font-size: 0.8rem; color:#0066cc;">(Off)</strong></span> <i class="fas fa-sync text-muted"></i></li>
-        <li onclick="alert('Change Password অপশন')"><span>🔑 Change Password</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openPasswordModal(); toggleSettingsModal();"><span>🔑 Change Password</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="confirmDeleteAccount()" style="color: #dc3545;"><span>🗑️ Delete My Account Permanently</span> <i class="fas fa-exclamation-triangle"></i></li>
         <li id="logoutSettingsLi" onclick="handleUserLogout()" style="color: #d9534f; font-weight: bold; display: none;"><span>🚪 Log out</span> <i class="fas fa-sign-out-alt"></i></li>
       </ul>
+    </div>
+  </div>
+
+  <!-- পারসোনাল ইনফরমেশন মডাল -->
+  <div id="personalModal">
+    <div class="sub-modal-content">
+      <span onclick="closePersonalModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">👤 Personal Information</h3>
+      <form onsubmit="savePersonal(event)">
+        <label style="font-size:0.8rem; font-weight:bold;">আপনার নাম:</label>
+        <input type="text" id="perName" placeholder="MD Nadim Khan" class="form-input" required>
+        <label style="font-size:0.8rem; font-weight:bold;">ঠিকানা:</label>
+        <input type="text" id="perAddress" placeholder="Chattogram, Bangladesh" class="form-input" required>
+        <button type="submit" class="btn btn-green" style="width:100%; margin-top:8px;">তথ্য সংরক্ষণ করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ফোন নম্বর মডাল -->
+  <div id="phoneModal">
+    <div class="sub-modal-content">
+      <span onclick="closePhoneModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📞 Phone Numbers</h3>
+      <form onsubmit="savePhone(event)">
+        <label style="font-size:0.8rem; font-weight:bold;">মোবাইল নম্বর:</label>
+        <input type="text" id="phoneNumber" placeholder="01716390762" class="form-input" required>
+        <button type="submit" class="btn btn-green" style="width:100%; margin-top:8px;">নম্বর আপডেট করুন</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- পাসওয়ার্ড পরিবর্তন মডাল -->
+  <div id="passwordModal">
+    <div class="sub-modal-content">
+      <span onclick="closePasswordModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">🔑 Change Password</h3>
+      <form onsubmit="changePasswordAction(event)">
+        <label style="font-size:0.8rem; font-weight:bold;">নতুন পাসওয়ার্ড:</label>
+        <input type="password" id="newPassword" placeholder="কমপক্ষে ৬ ডিজিট" class="form-input" required>
+        <button type="submit" class="btn btn-green" style="width:100%; margin-top:8px;">পাসওয়ার্ড পরিবর্তন করুন</button>
+      </form>
     </div>
   </div>
 
@@ -426,7 +467,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
@@ -442,7 +483,7 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     window.allDataStore = {};
-    window.allPostsList = []; // সার্চ করার জন্য ব্লগ পোস্টগুলো এখানে সংরক্ষণ করা হবে
+    window.allPostsList = [];
 
     const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
     window.isAdmin = false;
@@ -505,6 +546,55 @@
       }
     }
 
+    // সেটিংসের নতুন সাব-মডাল কন্ট্রোল ফাংশনসমূহ
+    window.openPersonalModal = function() {
+      if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
+      document.getElementById('personalModal').style.display = 'flex';
+    }
+    window.closePersonalModal = function() { document.getElementById('personalModal').style.display = 'none'; }
+    window.savePersonal = function(e) {
+      e.preventDefault();
+      alert("পার্সোনাল ইনফরমেশন সফলভাবে সংরক্ষণ করা হয়েছে!");
+      closePersonalModal();
+    }
+
+    window.openPhoneModal = function() {
+      if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
+      document.getElementById('phoneModal').style.display = 'flex';
+    }
+    window.closePhoneModal = function() { document.getElementById('phoneModal').style.display = 'none'; }
+    window.savePhone = function(e) {
+      e.preventDefault();
+      alert("ফোন নম্বর সফলভাবে আপডেট করা হয়েছে!");
+      closePhoneModal();
+    }
+
+    window.openPasswordModal = function() {
+      if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
+      document.getElementById('passwordModal').style.display = 'flex';
+    }
+    window.closePasswordModal = function() { document.getElementById('passwordModal').style.display = 'none'; }
+    window.changePasswordAction = async function(e) {
+      e.preventDefault();
+      let newPass = document.getElementById('newPassword').value;
+      try {
+        await updatePassword(auth.currentUser, newPass);
+        alert("পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!");
+        closePasswordModal();
+      } catch (error) {
+        alert("ত্রুটি (পুনরায় লগইন করে চেষ্টা করুন): " + error.message);
+      }
+    }
+
+    window.changeLanguagePrompt = function() {
+      let lang = prompt("Choose Language / ভাষা নির্বাচন করুন (bn / en):", "bn");
+      if (lang === 'en') {
+        alert("Language switched to English (Demo Mode).");
+      } else if (lang === 'bn') {
+        alert("ভাষা বাংলায় পরিবর্তন করা হয়েছে।");
+      }
+    }
+
     function getCurrentFormattedDateTime() {
       const now = new Date();
       const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -540,7 +630,6 @@
         }
     }
 
-    // ব্লগ কার্ড রেন্ডার করার ফাংশন
     function renderBlogCards(posts) {
         const container = document.getElementById("firestore-blogs-container");
         container.innerHTML = ""; 
@@ -580,7 +669,6 @@
         });
     }
 
-    // নতুন সার্চ ফাংশন যা বাটনে ক্লিক করলে ফিল্টার করে দেখাবে
     window.performSearch = function() {
         const queryText = document.getElementById('internalSearchInput').value.toLowerCase().trim();
         if (!queryText) {
@@ -865,15 +953,6 @@
       } else {
         body.setAttribute('data-theme', 'light');
         statusText.textContent = "(Off)";
-      }
-    }
-
-    window.changeLanguagePrompt = function() {
-      let lang = prompt("Choose Language / ভাষা নির্বাচন করুন (bn / en):", "bn");
-      if (lang === 'en') {
-        alert("Language switched to English (Demo Mode).");
-      } else if (lang === 'bn') {
-        alert("ভাষা বাংলায় পরিবর্তন করা হয়েছে।");
       }
     }
 
