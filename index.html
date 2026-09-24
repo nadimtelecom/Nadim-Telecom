@@ -167,7 +167,7 @@
       <div class="section-title">
         <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
         <!-- অ্যাডমিন হলে Write Now বাটন দেখাবে -->
-        <button id="adminBlogBtn" onclick="openWriteModal('Blog')" class="btn-write-now" style="display:none;">✍️ Write Now</button>
+        <button id="adminBlogBtn" onclick="openWriteModal()" class="btn-write-now" style="display:none;">✍️ Write Now</button>
       </div>
       <div id="firestore-blogs-container">
         <p style="font-size: 0.85rem; color: var(--text-muted);">তথ্য লোড হচ্ছে...</p>
@@ -221,7 +221,7 @@
     </div>
   </div>
 
-  <!-- নতুন মোবাইল স্পেসিফিকেশন ফর্ম মডাল (আপনার দেওয়া তালিকা অনুযায়ী সাজানো) -->
+  <!-- নতুন মোবাইল স্পেসিফিকেশন ফর্ম মডাল -->
   <div id="writeBlogModal">
     <div class="write-modal-content">
       <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
@@ -272,7 +272,7 @@
 
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Main Camera</div>
         <div class="form-group-grid">
-          <input type="text" id="specTriple" placeholder="Triple / Dual" class="form-input">
+          <input type="text" id="specTriple" placeholder="Triple" class="form-input">
           <input type="text" id="specCamFeatures" placeholder="Features" class="form-input">
         </div>
         <input type="text" id="specCamVideo" placeholder="Video" class="form-input">
@@ -567,7 +567,7 @@
       let sarEu = document.getElementById('specSarEu').value;
       let price = document.getElementById('specPrice').value;
 
-      // জেনারেটেড এইচটিএমএল টেবিল
+      // আপনার দেওয়া সম্পূর্ণ তালিকা অনুযায়ী নিখুঁত এইচটিএমএল টেবিল জেনারেটর
       let generatedHtmlTable = `<table>
         <tr><td colspan="2" class="gsm-section-header">Body</td></tr>
         <tr><td style="width:35%; font-weight:bold;">Build</td><td>${build || '-'}</td></tr>
@@ -587,7 +587,7 @@
         <tr><td style="font-weight:bold;">Internal</td><td>${internal || '-'}</td></tr>
         
         <tr><td colspan="2" class="gsm-section-header">Main Camera</td></tr>
-        <tr><td style="font-weight:bold;">Triple / Dual</td><td>${triple || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Triple</td><td>${triple || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Features</td><td>${camFeatures || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Video</td><td>${camVideo || '-'}</td></tr>
         
@@ -608,7 +608,7 @@
         <tr><td style="font-weight:bold;">USB</td><td>${usb || '-'}</td></tr>
         
         <tr><td colspan="2" class="gsm-section-header">Features</td></tr>
-        <tr><td style="font-weight:bold;">Sensors</td><td>${sensor || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Sensor</td><td>${sensor || '-'}</td></tr>
         
         <tr><td colspan="2" class="gsm-section-header">Battery</td></tr>
         <tr><td style="font-weight:bold;">Type</td><td>${batteryType || '-'}</td></tr>
@@ -671,7 +671,6 @@
       document.getElementById('specTitle').value = item.title || '';
       document.getElementById('specDate').value = item.date || getCurrentFormattedDateTime();
       
-      // টেবিল থেকে টেক্সটগুলো আবার ইনপুট বক্সে বসানোর প্রয়োজন হলে সরাসরি পুরোটা দেখানোর ব্যবস্থা রাখা হয়েছে
       document.getElementById('modalBlogHeader').textContent = "✍️ স্পেসিফিকেশন এডিট করুন";
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
