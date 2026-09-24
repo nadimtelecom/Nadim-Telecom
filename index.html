@@ -65,12 +65,12 @@
     }
     .settings-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
-    /* সেটিংস পপ-আপ মডাল স্টাইল */
-    #settingsModal {
+    /* পপ-আপ মডাল স্টাইল */
+    #settingsModal, #authModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
     }
-    .settings-modal-content {
+    .settings-modal-content, .auth-modal-content {
       background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 400px;
       padding: 20px; border-radius: 12px; position: relative; max-height: 90vh; overflow-y: auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box;
@@ -91,8 +91,9 @@
     
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: none; cursor: pointer; }
     .btn-call { background-color: #0066cc; color: white; width: 100%; text-align: center; }
+    .btn-green { background-color: #198754; color: white; width: 100%; text-align: center; }
     
-    .search-box { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 8px; outline: none; }
+    .search-box, .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 8px; outline: none; margin-bottom: 10px; font-size: 0.9rem; }
     
     .product-card { display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; cursor: pointer; }
     .product-card:hover { background-color: rgba(0,102,204,0.03); }
@@ -133,6 +134,13 @@
   </div>
 
   <div class="container">
+    <div class="card" style="text-align: center; padding: 8px; background: rgba(0,102,204,0.05);">
+      <div id="authStatusContainer" style="font-size: 0.85rem; font-weight: bold;">
+        <span id="userInfoText">লগইন করা নেই</span>
+        <button id="authActionBtn" onclick="toggleAuthModal()" class="btn btn-call" style="width: auto; padding: 4px 10px; margin-top: 4px; font-size: 0.75rem;">Signin / Signup</button>
+      </div>
+    </div>
+
     <div class="card">
       <div style="display: flex; gap: 6px;">
         <input type="text" id="internalSearchInput" placeholder="সাইটের ভেতর খুঁজুন..." class="search-box">
@@ -162,6 +170,7 @@
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">⚙️ Settings (সেটিংস)</h3>
       
       <ul class="settings-list" style="margin-top: 10px;">
+        <li onclick="toggleAuthModal(); toggleSettingsModal();"><span>🔐 Sign In / Sign Up (সাইন-ইন / সাইন-আপ)</span> <i class="fas fa-user-circle text-muted"></i></li>
         <li onclick="alert('Personal information অপশনটি শীঘ্রই আসছে!')"><span>👤 Personal information</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="alert('Phone Numbers আপডেট অপশন')"><span>📞 Phone Numbers</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="alert('Confirm E-Mail অপশন')"><span>✉️ Confirm E Mail</span> <i class="fas fa-chevron-right text-muted"></i></li>
@@ -172,6 +181,29 @@
         <li onclick="confirmDeleteAccount()" style="color: #dc3545;"><span>🗑️ Delete My Account Permanently</span> <i class="fas fa-exclamation-triangle"></i></li>
         <li onclick="handleUserLogout()" style="color: #d9534f; font-weight: bold;"><span>🚪 Log out</span> <i class="fas fa-sign-out-alt"></i></li>
       </ul>
+    </div>
+  </div>
+
+  <!-- সাইন-ইন / সাইন-আপ পপ-আপ মডাল -->
+  <div id="authModal">
+    <div class="auth-modal-content">
+      <span onclick="toggleAuthModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 id="authModalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; text-align:center;">🔐 ইউজার সাইন-ইন / সাইন-আপ</h3>
+      
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
+        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">ইমেইল (Email):</label>
+        <input type="email" id="authEmail" placeholder="example@gmail.com" class="form-input" required>
+        
+        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">পাসওয়ার্ড (Password):</label>
+        <input type="password" id="authPassword" placeholder="কমপক্ষে ৬ ডিজিট" class="form-input" required>
+        
+        <button type="submit" class="btn btn-green" id="authSubmitBtn" style="width:100%; margin-top:8px;">লগইন করুন</button>
+      </form>
+
+      <div style="text-align: center; margin-top: 12px; font-size: 0.8rem;">
+        <span id="authSwitchText">একাউন্ট নেই?</span> 
+        <a href="javascript:void(0)" onclick="switchAuthMode()" id="authSwitchLink" style="color: #0066cc; font-weight: bold; text-decoration: none;">রেজিস্ট্রেশন করুন (Sign Up)</a>
+      </div>
     </div>
   </div>
 
@@ -195,7 +227,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
@@ -211,6 +243,55 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     window.allDataStore = {};
+
+    // ইউজার অথেন্টিকেশন স্টেট ট্র্যাকিং
+    onAuthStateChanged(auth, (user) => {
+      const userInfoText = document.getElementById("userInfoText");
+      const authActionBtn = document.getElementById("authActionBtn");
+      
+      if (user) {
+        userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b>`;
+        authActionBtn.textContent = "লগআউট";
+        authActionBtn.setAttribute("onclick", "handleUserLogout()");
+      } else {
+        userInfoText.innerHTML = "লগইন করা নেই";
+        authActionBtn.textContent = "Signin / Signup";
+        authActionBtn.setAttribute("onclick", "toggleAuthModal()");
+      }
+    });
+
+    let isSignUpMode = false;
+    window.toggleAuthModal = function() {
+      let modal = document.getElementById('authModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    window.switchAuthMode = function() {
+      isSignUpMode = !isSignUpMode;
+      document.getElementById('authModalTitle').textContent = isSignUpMode ? "🔐 ইউজার সাইন-আপ (Registration)" : "🔐 ইউজার সাইন-ইন";
+      document.getElementById('authSubmitBtn').textContent = isSignUpMode ? "রেজিস্ট্রেশন করুন" : "লগইন করুন";
+      document.getElementById('authSwitchText').textContent = isSignUpMode ? "ইতিমধ্যে একাউন্ট আছে?" : "একাউন্ট নেই?";
+      document.getElementById('authSwitchLink').textContent = isSignUpMode ? "লগইন করুন (Sign In)" : "রেজিস্ট্রেশন করুন (Sign Up)";
+    }
+
+    window.handleAuthSubmit = async function(e) {
+      e.preventDefault();
+      let email = document.getElementById('authEmail').value;
+      let password = document.getElementById('authPassword').value;
+
+      try {
+        if (isSignUpMode) {
+          await createUserWithEmailAndPassword(auth, email, password);
+          alert("সফলভাবে একাউন্ট তৈরি এবং লগইন হয়েছে!");
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          alert("সফলভাবে লগইন হয়েছে!");
+        }
+        toggleAuthModal();
+      } catch (error) {
+        alert("ত্রুটি: " + error.message);
+      }
+    }
 
     async function fetchFirestoreBlogs() {
         try {
@@ -267,7 +348,6 @@
       document.getElementById('blogModal').style.display = 'none'; 
     }
 
-    // সেটিংস পপ-আপ টগল ফাংশন
     window.toggleSettingsModal = function() {
       let modal = document.getElementById('settingsModal');
       modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
