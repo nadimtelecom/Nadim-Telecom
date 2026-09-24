@@ -55,7 +55,7 @@
     .nav-menu a { color: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; transition: background 0.2s; }
     .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.2); }
 
-    /* হেডার বা ডান কোণায় সেটিংস আইকন বাটন */
+    /* হেডারের ডান কোণায় সেটিংস আইকন বাটন */
     .settings-icon-btn {
       position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.2); border: none; color: white;
@@ -66,13 +66,13 @@
     .settings-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
     /* পপ-আপ মডাল স্টাইল */
-    #settingsModal, #authModal {
+    #settingsModal, #authModal, #blogModal, #writeBlogModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
     }
-    .settings-modal-content, .auth-modal-content {
-      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 400px;
-      padding: 20px; border-radius: 12px; position: relative; max-height: 90vh; overflow-y: auto;
+    .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content {
+      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 550px;
+      padding: 20px; border-radius: 12px; position: relative; max-height: 85vh; overflow-y: auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box;
     }
 
@@ -93,20 +93,34 @@
     .btn-call { background-color: #0066cc; color: white; width: 100%; text-align: center; }
     .btn-green { background-color: #198754; color: white; width: 100%; text-align: center; }
     
-    .search-box, .form-input { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 8px; outline: none; margin-bottom: 10px; font-size: 0.9rem; }
+    .btn-write-now { background-color: #198754; color: white; padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; display: none; }
+    .btn-edit { background-color: #ffc107; color: #000; padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 4px; display: none; }
+    .btn-delete { background-color: #dc3545; color: #fff; padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
+
+    .search-box, .form-input, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 8px; outline: none; margin-bottom: 10px; font-size: 0.9rem; }
     
     .product-card { display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; cursor: pointer; }
     .product-card:hover { background-color: rgba(0,102,204,0.03); }
     .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background-color: #eee; flex-shrink: 0; }
     .product-info { flex: 1; min-width: 0; }
     .product-title { font-size: 0.95rem; font-weight: bold; margin: 0 0 4px 0; }
-    .product-desc { font-size: 0.85rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-desc { font-size: 0.82rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-    /* ব্লগ পড়ার মডাল ও টেবিল স্টাইল */
-    #modalBody { font-size: 0.9rem !important; line-height: 1.6 !important; color: var(--text-color) !important; word-break: break-word; }
+    /* ব্লগ মডালের ভেতর টেবিল ও কাস্টমাইজেশন টুলবার স্টাইল */
+    #modalBody { font-size: var(--table-font-size) !important; line-height: var(--table-line-height) !important; color: var(--text-color) !important; word-break: break-word; }
     #modalBody table { width: 100%; border-collapse: collapse; margin-bottom: 12px; background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
     #modalBody td, #modalBody th { padding: var(--table-padding); border: 1px solid var(--border-color); font-size: var(--table-font-size); line-height: var(--table-line-height); vertical-align: middle; }
     .gsm-section-header { background-color: var(--table-header-bg); color: var(--table-header-color); font-weight: bold; text-transform: uppercase; font-size: calc(var(--table-font-size) * 0.95); padding: calc(var(--table-padding) * 0.8) var(--table-padding); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+
+    .table-customizer {
+      background: rgba(0, 102, 204, 0.05); border: 1px dashed var(--border-color);
+      padding: 8px; border-radius: 8px; margin-bottom: 12px; font-size: 0.8rem;
+    }
+    .table-customizer label { font-weight: bold; display: inline-block; margin-right: 4px; margin-bottom: 4px; }
+    .table-customizer select, .table-customizer input {
+      padding: 4px 6px; font-size: 0.75rem; border-radius: 6px; border: 1px solid var(--border-color);
+      background: var(--card-bg); color: var(--text-color); margin-right: 8px; margin-bottom: 4px; outline: none;
+    }
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
   </style>
@@ -134,17 +148,10 @@
   </div>
 
   <div class="container">
-    <div class="card" style="text-align: center; padding: 8px; background: rgba(0,102,204,0.05);">
-      <div id="authStatusContainer" style="font-size: 0.85rem; font-weight: bold;">
-        <span id="userInfoText">লগইন করা নেই</span>
-        <button id="authActionBtn" onclick="toggleAuthModal()" class="btn btn-call" style="width: auto; padding: 4px 10px; margin-top: 4px; font-size: 0.75rem;">Signin / Signup</button>
-      </div>
-    </div>
-
     <div class="card">
       <div style="display: flex; gap: 6px;">
-        <input type="text" id="internalSearchInput" placeholder="সাইটের ভেতর খুঁজুন..." class="search-box">
-        <button type="button" class="btn btn-call" style="width: auto; padding: 0 12px;">🔍 খুঁজুন</button>
+        <input type="text" id="internalSearchInput" placeholder="সাইটের ভেতর খুঁজুন..." class="search-box" style="margin-bottom:0;">
+        <button type="button" class="btn btn-call" style="width: auto; padding: 0 12px; margin-top:0;">🔍 খুঁজুন</button>
       </div>
     </div>
 
@@ -156,21 +163,27 @@
     </div>
 
     <div class="card">
-      <div class="section-title"><span>📰 মোবাইল নিউজ ও টেক ব্লগ</span></div>
+      <div class="section-title">
+        <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
+        <!-- অ্যাডমিন হলে Write Now বাটন দেখাবে -->
+        <button id="adminBlogBtn" onclick="openWriteModal('Blog')" class="btn-write-now" style="display:none;">✍️ Write Now</button>
+      </div>
       <div id="firestore-blogs-container">
         <p style="font-size: 0.85rem; color: var(--text-muted);">তথ্য লোড হচ্ছে...</p>
       </div>
     </div>
   </div>
 
-  <!-- সেটিংস পপ-আপ মডাল (Settings Pop-up Modal) -->
+  <!-- সেটিংস পপ-আপ মডাল -->
   <div id="settingsModal">
     <div class="settings-modal-content">
       <span onclick="toggleSettingsModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">⚙️ Settings (সেটিংস)</h3>
       
       <ul class="settings-list" style="margin-top: 10px;">
-        <li onclick="toggleAuthModal(); toggleSettingsModal();"><span>🔐 Sign In / Sign Up (সাইন-ইন / সাইন-আপ)</span> <i class="fas fa-user-circle text-muted"></i></li>
+        <li id="authSettingsLi" onclick="toggleAuthModal(); toggleSettingsModal();">
+          <span id="authMenuText">🔐 Sign In / Sign Up</span> <i class="fas fa-user-circle text-muted"></i>
+        </li>
         <li onclick="alert('Personal information অপশনটি শীঘ্রই আসছে!')"><span>👤 Personal information</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="alert('Phone Numbers আপডেট অপশন')"><span>📞 Phone Numbers</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="alert('Confirm E-Mail অপশন')"><span>✉️ Confirm E Mail</span> <i class="fas fa-chevron-right text-muted"></i></li>
@@ -179,7 +192,7 @@
         <li onclick="toggleDarkMode()"><span>🌙 Dark Mode <strong id="darkModeStatus" style="font-size: 0.8rem; color:#0066cc;">(Off)</strong></span> <i class="fas fa-sync text-muted"></i></li>
         <li onclick="alert('Change Password অপশন')"><span>🔑 Change Password</span> <i class="fas fa-chevron-right text-muted"></i></li>
         <li onclick="confirmDeleteAccount()" style="color: #dc3545;"><span>🗑️ Delete My Account Permanently</span> <i class="fas fa-exclamation-triangle"></i></li>
-        <li onclick="handleUserLogout()" style="color: #d9534f; font-weight: bold;"><span>🚪 Log out</span> <i class="fas fa-sign-out-alt"></i></li>
+        <li id="logoutSettingsLi" onclick="handleUserLogout()" style="color: #d9534f; font-weight: bold; display: none;"><span>🚪 Log out</span> <i class="fas fa-sign-out-alt"></i></li>
       </ul>
     </div>
   </div>
@@ -207,12 +220,71 @@
     </div>
   </div>
 
-  <!-- ব্লগ ডিটেইলস ও টেবিল দেখার মডাল -->
-  <div id="blogModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center; padding: 15px; box-sizing: border-box;">
-    <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:600px; padding:18px; border-radius:12px; position:relative; max-height:85vh; overflow-y:auto; box-sizing: border-box;">
-      <span onclick="closeBlogModal()" style="position:absolute; top:8px; right:12px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
-      <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem;"></h3>
-      <div id="modalBody"></div>
+  <!-- নতুন ব্লগ বা ফোনের ডিটেইলস লেখার পপ-আপ ফর্ম মডাল -->
+  <div id="writeBlogModal">
+    <div class="write-modal-content">
+      <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">✍️ নতুন মোবাইল স্পেসিফিকেশন ও ব্লগ</h3>
+      
+      <form id="newBlogForm" onsubmit="publishNewBlog(event)">
+        <input type="hidden" id="editCollectionName" value="Blogs">
+        <input type="hidden" id="editBlogId" value="">
+        
+        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">ফোনের নাম / শিরোনাম (Title):</label>
+        <input type="text" id="newBlogTitle" placeholder="যেমন: Samsung Galaxy A08 4G" class="form-input" required>
+
+        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">কভার ছবি (Image File / URL):</label>
+        <input type="file" id="newBlogImage" accept="image/*" class="form-input">
+
+        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">তারিখ ও সময়:</label>
+        <input type="text" id="newBlogDate" class="form-input" required>
+
+        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">জিএসএম স্পেসিফিকেশন টেবিল কোড (HTML Table):</label>
+        <textarea id="newBlogDesc" rows="10" class="form-textarea" required style="font-family: monospace; font-size: 0.8rem;"></textarea>
+        
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <button type="button" onclick="closeWriteModal()" class="btn" style="background-color:#6c757d; color:#fff; flex:1;">বাতিল</button>
+          <button type="submit" id="publishBtn" class="btn btn-green" style="flex:1;">Accept & Publish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ব্লগ ডিটেইলস ও টেবিল দেখার পপ-আপ মডাল -->
+  <div id="blogModal">
+    <div class="blog-modal-content">
+      <span onclick="closeBlogModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
+      
+      <!-- টেবিল কাস্টমাইজেশন টুলবার -->
+      <div class="table-customizer" style="margin-top: 10px;">
+        <div style="font-weight: bold; margin-bottom: 4px; color: #0066cc;">🛠️ টেবিল কাস্টমাইজেশন টুলবার:</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+          <div>
+            <label>টেক্সট সাইজ:</label>
+            <select id="tableFontSizeSelect" onchange="changeTableStyle('fontSize', this.value)">
+              <option value="0.75rem">ছোট</option>
+              <option value="0.85rem" selected>মাঝারি</option>
+              <option value="1rem">বড়</option>
+            </select>
+          </div>
+          <div>
+            <label>লাইন স্পেস:</label>
+            <select id="tableLineHeightSelect" onchange="changeTableStyle('lineHeight', this.value)">
+              <option value="1.3">কম</option>
+              <option value="1.6" selected>স্বাভাবিক</option>
+              <option value="2.0">বেশি</option>
+            </select>
+          </div>
+          <div>
+            <label>হেডিং কালার:</label>
+            <input type="color" id="tableHeaderColorPicker" value="#c00" onchange="changeTableStyle('headerColor', this.value)" style="width: 25px; height: 20px; vertical-align: middle; border: none; cursor: pointer; background: transparent;">
+          </div>
+        </div>
+      </div>
+
+      <div id="modalBody" style="margin-top: 10px;"></div>
+      
       <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid var(--border-color); text-align: right;">
         <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
       </div>
@@ -226,7 +298,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -244,20 +316,32 @@
     const auth = getAuth(app);
     window.allDataStore = {};
 
-    // ইউজার অথেন্টিকেশন স্টেট ট্র্যাকিং
+    const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
+    window.isAdmin = false;
+
     onAuthStateChanged(auth, (user) => {
-      const userInfoText = document.getElementById("userInfoText");
-      const authActionBtn = document.getElementById("authActionBtn");
+      const authMenuText = document.getElementById("authMenuText");
+      const authSettingsLi = document.getElementById("authSettingsLi");
+      const logoutSettingsLi = document.getElementById("logoutSettingsLi");
+      const adminBlogBtn = document.getElementById("adminBlogBtn");
       
       if (user) {
-        userInfoText.innerHTML = `লগইন আছে: <b>${user.email}</b>`;
-        authActionBtn.textContent = "লগআউট";
-        authActionBtn.setAttribute("onclick", "handleUserLogout()");
+        window.isAdmin = (user.email === ADMIN_EMAIL);
+        authMenuText.innerHTML = `লগইন আছে: <b>${user.email}</b> ${window.isAdmin ? '(🛡️ Admin)' : ''}`;
+        authSettingsLi.onclick = null;
+        logoutSettingsLi.style.display = "flex";
+
+        if (window.isAdmin && adminBlogBtn) {
+          adminBlogBtn.style.display = "inline-block";
+        }
       } else {
-        userInfoText.innerHTML = "লগইন করা নেই";
-        authActionBtn.textContent = "Signin / Signup";
-        authActionBtn.setAttribute("onclick", "toggleAuthModal()");
+        window.isAdmin = false;
+        authMenuText.innerHTML = "🔐 Sign In / Sign Up";
+        authSettingsLi.onclick = () => { toggleAuthModal(); toggleSettingsModal(); };
+        logoutSettingsLi.style.display = "none";
+        if (adminBlogBtn) adminBlogBtn.style.display = "none";
       }
+      fetchFirestoreBlogs();
     });
 
     let isSignUpMode = false;
@@ -293,6 +377,12 @@
       }
     }
 
+    function getCurrentFormattedDateTime() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return now.toLocaleDateString('bn-BD', options);
+    }
+
     async function fetchFirestoreBlogs() {
         try {
             const q = query(collection(db, "Blogs"), orderBy("createdAt", "desc"));
@@ -314,14 +404,22 @@
                 card.className = "product-card";
                 card.onclick = () => openBlogModal(itemKey);
                 
+                let adminControls = window.isAdmin ? `
+                  <div style="margin-top:6px;">
+                    <button onclick="event.stopPropagation(); editItem('${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+                    <button onclick="event.stopPropagation(); deleteItem('${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                  </div>
+                ` : '';
+
                 card.innerHTML = `
                     <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img">
                     <div class="product-info">
                         <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
-                        <div class="product-desc">${item.content || ''}</div>
+                        <div class="product-desc">${item.content || 'বিস্তারিত পড়তে ক্লিক করুন...'}</div>
                         <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-top: 4px;">
                             <span>তারিখ: ${item.date || ''}</span>
                         </div>
+                        ${adminControls}
                     </div>
                 `;
                 container.appendChild(card);
@@ -330,6 +428,120 @@
             console.error("ব্লগ লোড করতে সমস্যা:", error);
             document.getElementById("firestore-blogs-container").innerHTML = "<p style='font-size: 0.85rem; color: red;'>ডেটা লোড করতে সমস্যা হয়েছে।</p>";
         }
+    }
+
+    window.openWriteModal = function(type) {
+      if (!window.isAdmin) {
+        alert("দুঃখিত, শুধুমাত্র অ্যাডমিন নতুন পোস্ট বা স্পেসিফিকেশন যোগ করতে পারবেন!");
+        return;
+      }
+      document.getElementById('editBlogId').value = '';
+      document.getElementById('newBlogForm').reset();
+      document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
+      
+      // ডিফল্ট জিএসএম টেবিল স্ট্রাকচার
+      document.getElementById('newBlogDesc').value = `<table>
+  <tr><td colspan="2" class="gsm-section-header">Network</td></tr>
+  <tr><td style="width:35%; font-weight:bold;">Technology</td><td>GSM / HSPA / LTE / 5G</td></tr>
+  <tr><td colspan="2" class="gsm-section-header">Launch</td></tr>
+  <tr><td style="font-weight:bold;">Announced</td><td>2026, August</td></tr>
+  <tr><td style="font-weight:bold;">Status</td><td>Available. Released 2026</td></tr>
+  <tr><td colspan="2" class="gsm-section-header">Body</td></tr>
+  <tr><td style="font-weight:bold;">Dimensions</td><td>163 x 78 x 8.6 mm</td></tr>
+  <tr><td style="font-weight:bold;">Weight</td><td>190 g</td></tr>
+  <tr><td colspan="2" class="gsm-section-header">Display</td></tr>
+  <tr><td style="font-weight:bold;">Type</td><td>AMOLED, 120Hz</td></tr>
+  <tr><td style="font-weight:bold;">Size</td><td>6.78 inches</td></tr>
+  <tr><td colspan="2" class="gsm-section-header">Platform</td></tr>
+  <tr><td style="font-weight:bold;">OS</td><td>Android 16</td></tr>
+  <tr><td colspan="2" class="gsm-section-header">Battery</td></tr>
+  <tr><td style="font-weight:bold;">Type</td><td>5000 mAh, 67W wired</td></tr>
+</table>`;
+
+      document.getElementById('modalBlogHeader').textContent = "✍️ নতুন মোবাইল স্পেসিফিকেশন ও ব্লগ";
+      document.getElementById('writeBlogModal').style.display = 'flex';
+    }
+
+    window.closeWriteModal = function() {
+      document.getElementById('writeBlogModal').style.display = 'none';
+    }
+
+    window.publishNewBlog = async function(e) {
+      e.preventDefault();
+      if (!window.isAdmin) return;
+
+      let editId = document.getElementById('editBlogId').value;
+      let title = document.getElementById('newBlogTitle').value.trim();
+      let dateVal = document.getElementById('newBlogDate').value.trim();
+      let desc = document.getElementById('newBlogDesc').value.trim();
+      let imageFile = document.getElementById('newBlogImage').files[0];
+
+      let imageUrl = "https://via.placeholder.com/80";
+      if (editId && window.allDataStore[editId]) {
+        imageUrl = window.allDataStore[editId].imageUrl;
+      }
+
+      try {
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append("image", imageFile);
+          let response = await fetch("https://api.imgbb.com/1/upload?key=d5693b675b41a08c9a6698ddebc782d7", {
+            method: "POST",
+            body: formData
+          });
+          let result = await response.json();
+          if (result.success) {
+            imageUrl = result.data.url;
+          }
+        }
+
+        let dataPayload = {
+          title: title,
+          content: desc,
+          date: dateVal,
+          imageUrl: imageUrl,
+          createdAt: new Date().toISOString()
+        };
+
+        if (editId) {
+          await updateDoc(doc(db, "Blogs", editId), dataPayload);
+          alert("সফলভাবে আপডেট করা হয়েছে!");
+        } else {
+          await addDoc(collection(db, "Blogs"), dataPayload);
+          alert("সফলভাবে প্রকাশিত হয়েছে!");
+        }
+
+        closeWriteModal();
+        fetchFirestoreBlogs();
+      } catch (error) {
+        alert("ত্রুটি: " + error.message);
+      }
+    }
+
+    window.editItem = function(itemKey) {
+      let item = window.allDataStore[itemKey];
+      if (!item) return;
+
+      document.getElementById('editBlogId').value = itemKey;
+      document.getElementById('newBlogTitle').value = item.title || '';
+      document.getElementById('newBlogDate').value = item.date || getCurrentFormattedDateTime();
+      document.getElementById('newBlogDesc').value = item.content || '';
+      
+      document.getElementById('modalBlogHeader').textContent = "✍️ স্পেসিফিকেশন এডিট করুন";
+      document.getElementById('writeBlogModal').style.display = 'flex';
+    }
+
+    window.deleteItem = async function(itemKey) {
+      if (!window.isAdmin) return;
+      if (confirm("আপনি কি নিশ্চিতভাবে এটি মুছে ফেলতে চান?")) {
+        try {
+          await deleteDoc(doc(db, "Blogs", itemKey));
+          alert("সফলভাবে মুছে ফেলা হয়েছে!");
+          fetchFirestoreBlogs();
+        } catch (error) {
+          alert("মুছে ফেলতে সমস্যা হয়েছে: " + error.message);
+        }
+      }
     }
 
     window.openBlogModal = function(itemKey) {
@@ -346,6 +558,19 @@
 
     window.closeBlogModal = function() { 
       document.getElementById('blogModal').style.display = 'none'; 
+    }
+
+    window.changeTableStyle = function(type, value) {
+      const modalBody = document.getElementById('modalBody');
+      if (!modalBody) return;
+
+      if (type === 'fontSize') {
+        modalBody.style.setProperty('--table-font-size', value);
+      } else if (type === 'lineHeight') {
+        modalBody.style.setProperty('--table-line-height', value);
+      } else if (type === 'headerColor') {
+        document.documentElement.style.setProperty('--table-header-color', value);
+      }
     }
 
     window.toggleSettingsModal = function() {
