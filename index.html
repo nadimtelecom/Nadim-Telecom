@@ -51,9 +51,35 @@
     .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; overflow: hidden; white-space: nowrap; }
     .notice-bar marquee { width: 100%; }
 
-    .nav-menu { background: rgba(0,0,0,0.15); padding: 8px; text-align: center; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: center; gap: 15px; }
-    .nav-menu a { color: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; transition: background 0.2s; }
-    .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.2); }
+    /* আপডেট করা সবুজ রঙের নেভিগেশন মেনু বাটন */
+    .nav-menu { 
+      background: rgba(0,0,0,0.15); 
+      padding: 10px; 
+      text-align: center; 
+      font-size: 0.9rem; 
+      font-weight: bold; 
+      display: flex; 
+      justify-content: center; 
+      gap: 12px; 
+    }
+    
+    .nav-menu a { 
+      color: white; 
+      background-color: #198754; /* সতেজ সবুজ রঙ */
+      text-decoration: none; 
+      padding: 6px 14px; 
+      border-radius: 6px; 
+      transition: background 0.2s; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .nav-menu a:hover { 
+      background-color: #157347; /* হোভার করলে একটু গাঢ় সবুজ হবে */
+    }
+
+    .nav-menu a.active { 
+      background-color: #0f5132; /* বর্তমানে যে পেজে আছেন সেটি বোঝাতে গাঢ় সবুজ */
+    }
 
     .settings-icon-btn {
       position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
