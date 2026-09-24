@@ -245,31 +245,57 @@
         </div>
 
         <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
-        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc;">Body</div>
+        
+        <!-- Network -->
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc;">Network</div>
+        <input type="text" id="specTechnology" placeholder="Technology" class="form-input">
+
+        <!-- Launch -->
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Launch</div>
+        <div class="form-group-grid">
+          <input type="text" id="specAnnounced" placeholder="Announced" class="form-input">
+          <input type="text" id="specStatus" placeholder="Status" class="form-input">
+        </div>
+
+        <!-- Body -->
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Body</div>
+        <div class="form-group-grid">
+          <input type="text" id="specDimensions" placeholder="Dimensions" class="form-input">
+          <input type="text" id="specWeight" placeholder="Weight" class="form-input">
+        </div>
         <div class="form-group-grid">
           <input type="text" id="specBuild" placeholder="Build" class="form-input">
           <input type="text" id="specSim" placeholder="Sim" class="form-input">
         </div>
 
+        <!-- Display -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Display</div>
+        <div class="form-group-grid">
+          <input type="text" id="specDisplayType" placeholder="Type" class="form-input">
+          <input type="text" id="specSize" placeholder="Size" class="form-input">
+        </div>
         <div class="form-group-grid">
           <input type="text" id="specResolution" placeholder="Resolution" class="form-input">
           <input type="text" id="specProtection" placeholder="Protection" class="form-input">
         </div>
 
+        <!-- Platform -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Platform</div>
+        <input type="text" id="specOs" placeholder="OS" class="form-input">
         <div class="form-group-grid">
           <input type="text" id="specChipset" placeholder="Chipset" class="form-input">
           <input type="text" id="specCpu" placeholder="CPU" class="form-input">
         </div>
         <input type="text" id="specGpu" placeholder="GPU" class="form-input">
 
+        <!-- Memory -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Memory</div>
         <div class="form-group-grid">
           <input type="text" id="specCardSlot" placeholder="Card Slot" class="form-input">
           <input type="text" id="specInternal" placeholder="Internal" class="form-input">
         </div>
 
+        <!-- Main Camera -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Main Camera</div>
         <div class="form-group-grid">
           <input type="text" id="specTriple" placeholder="Triple" class="form-input">
@@ -277,18 +303,21 @@
         </div>
         <input type="text" id="specCamVideo" placeholder="Video" class="form-input">
 
+        <!-- Selfie Camera -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Selfie Camera</div>
         <div class="form-group-grid">
           <input type="text" id="specSelfieSingle" placeholder="Single" class="form-input">
           <input type="text" id="specSelfieVideo" placeholder="Video" class="form-input">
         </div>
 
+        <!-- Sound -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Sound</div>
         <div class="form-group-grid">
           <input type="text" id="specLoudspeaker" placeholder="Loudspeaker" class="form-input">
           <input type="text" id="specJack" placeholder="3.5mm jack" class="form-input">
         </div>
 
+        <!-- Comms -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Comms</div>
         <div class="form-group-grid">
           <input type="text" id="specWlan" placeholder="WLAN" class="form-input">
@@ -303,15 +332,18 @@
           <input type="text" id="specUsb" placeholder="USB" class="form-input">
         </div>
 
+        <!-- Features -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Features</div>
         <input type="text" id="specSensor" placeholder="Sensor" class="form-input">
 
+        <!-- Battery -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Battery</div>
         <div class="form-group-grid">
           <input type="text" id="specBatteryType" placeholder="Type" class="form-input">
           <input type="text" id="specCharging" placeholder="Charging" class="form-input">
         </div>
 
+        <!-- Misc -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Misc</div>
         <div class="form-group-grid">
           <input type="text" id="specColors" placeholder="Colors" class="form-input">
@@ -537,10 +569,18 @@
       let dateVal = document.getElementById('specDate').value.trim();
       let imageFile = document.getElementById('specImage').files[0];
 
+      let technology = document.getElementById('specTechnology').value;
+      let announced = document.getElementById('specAnnounced').value;
+      let status = document.getElementById('specStatus').value;
+      let dimensions = document.getElementById('specDimensions').value;
+      let weight = document.getElementById('specWeight').value;
       let build = document.getElementById('specBuild').value;
       let sim = document.getElementById('specSim').value;
+      let displayType = document.getElementById('specDisplayType').value;
+      let size = document.getElementById('specSize').value;
       let resolution = document.getElementById('specResolution').value;
       let protection = document.getElementById('specProtection').value;
+      let os = document.getElementById('specOs').value;
       let chipset = document.getElementById('specChipset').value;
       let cpu = document.getElementById('specCpu').value;
       let gpu = document.getElementById('specGpu').value;
@@ -567,17 +607,29 @@
       let sarEu = document.getElementById('specSarEu').value;
       let price = document.getElementById('specPrice').value;
 
-      // আপনার দেওয়া সম্পূর্ণ তালিকা অনুযায়ী নিখুঁত এইচটিএমএল টেবিল জেনারেটর
+      // সম্পূর্ণ তালিকা অনুযায়ী এইচটিএমএল টেবিল জেনারেটর
       let generatedHtmlTable = `<table>
+        <tr><td colspan="2" class="gsm-section-header">Network</td></tr>
+        <tr><td style="width:35%; font-weight:bold;">Technology</td><td>${technology || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Launch</td></tr>
+        <tr><td style="font-weight:bold;">Announced</td><td>${announced || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Status</td><td>${status || '-'}</td></tr>
+
         <tr><td colspan="2" class="gsm-section-header">Body</td></tr>
-        <tr><td style="width:35%; font-weight:bold;">Build</td><td>${build || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Dimensions</td><td>${dimensions || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Weight</td><td>${weight || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Build</td><td>${build || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Sim</td><td>${sim || '-'}</td></tr>
         
         <tr><td colspan="2" class="gsm-section-header">Display</td></tr>
+        <tr><td style="font-weight:bold;">Type</td><td>${displayType || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Size</td><td>${size || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Resolution</td><td>${resolution || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Protection</td><td>${protection || '-'}</td></tr>
         
         <tr><td colspan="2" class="gsm-section-header">Platform</td></tr>
+        <tr><td style="font-weight:bold;">OS</td><td>${os || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Chipset</td><td>${chipset || '-'}</td></tr>
         <tr><td style="font-weight:bold;">CPU</td><td>${cpu || '-'}</td></tr>
         <tr><td style="font-weight:bold;">GPU</td><td>${gpu || '-'}</td></tr>
