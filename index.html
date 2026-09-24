@@ -596,6 +596,15 @@
                 `;
                 container.appendChild(card);
             });
+
+            // পেজ লোড হওয়ার পর লিংকে হ্যাশ (#post-id) থাকলে স্বয়ংক্রিয়ভাবে সেই পোস্ট ওপেন করা
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#post-')) {
+              const postId = hash.replace('#post-', '');
+              if (window.allDataStore[postId]) {
+                openBlogModal(postId);
+              }
+            }
         } catch (error) {
             console.error("ব্লগ লোড করতে সমস্যা:", error);
             document.getElementById("firestore-blogs-container").innerHTML = "<p style='font-size: 0.85rem; color: red;'>ডেটা লোড করতে সমস্যা হয়েছে।</p>";
@@ -797,26 +806,38 @@
       }
     }
 
+    // নির্দিষ্ট ব্লগ মডাল ওপেন ও URL এ ইউনিক আইডি (#post-id) সেট করার ফাংশন
     window.openBlogModal = function(itemKey) {
       let modal = document.getElementById('blogModal');
       let titleElem = document.getElementById('modalTitle');
       let bodyElem = document.getElementById('modalBody');
       const targetItem = window.allDataStore[itemKey];
+      
       if(targetItem) {
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
         bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         modal.style.display = 'flex';
 
-        // শেয়ার লিংকগুলোর সাথে ডাইনামিক পেজ বা ডেটা লিংক সেটআপ করার জন্য
+        // ব্রাউজারের লিংকে ইউনিক আইডি যুক্ত করা
+        window.location.hash = `post-${itemKey}`;
+
+        // নির্দিষ্ট পোস্টের লিংকসহ শেয়ার বাটনগুলো আপডেট করা
         updateShareLinks(targetItem.title);
       }
     }
 
     window.closeBlogModal = function() { 
       document.getElementById('blogModal').style.display = 'none'; 
+      
+      // মডাল বন্ধ করলে লিংক থেকে হ্যাশ সরিয়ে হোম পেজের লিংকে ফিরিয়ে আনা
+      if (history.pushState) {
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+      } else {
+        window.location.hash = '';
+      }
     }
 
-    // ডাইনামিক শেয়ার লিংক আপডেট ফাংশন
+    // নির্দিষ্ট পোস্টের ডাইনামিক লিংক তৈরি করার ফাংশন
     function updateShareLinks(postTitle) {
       const currentUrl = encodeURIComponent(window.location.href);
       const titleText = encodeURIComponent(postTitle || document.title);
@@ -826,7 +847,7 @@
       document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${titleText}%20-%20${currentUrl}`;
     }
 
-    // ডিভাইসের নেটিভ শেয়ার ফাংশন (Device Share)
+    // ডিভাইসের নেটিভ শেয়ার ফাংশন
     window.shareViaDevice = function() {
       if (navigator.share) {
         navigator.share({
