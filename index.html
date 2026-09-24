@@ -55,7 +55,6 @@
     .nav-menu a { color: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; transition: background 0.2s; }
     .nav-menu a:hover, .nav-menu a.active { background: rgba(255,255,255,0.2); }
 
-    /* হেডারের ডান কোণায় সেটিংস আইকন বাটন */
     .settings-icon-btn {
       position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.2); border: none; color: white;
@@ -65,7 +64,6 @@
     }
     .settings-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
-    /* পপ-আপ মডাল স্টাইল */
     #settingsModal, #authModal, #blogModal, #writeBlogModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
@@ -107,7 +105,6 @@
     .product-title { font-size: 1rem; font-weight: bold; color: #0066cc; margin: 0 0 6px 0; }
     .product-title:hover { text-decoration: underline; }
 
-    /* ব্লগ মডালের ভেতর টেবিল ও কাস্টমাইজেশন টুলবার স্টাইল */
     #modalBody { font-size: var(--table-font-size) !important; line-height: var(--table-line-height) !important; color: var(--text-color) !important; word-break: break-word; }
     #modalBody table { width: 100%; border-collapse: collapse; margin-bottom: 12px; background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
     #modalBody td, #modalBody th { padding: var(--table-padding); border: 1px solid var(--border-color); font-size: var(--table-font-size); line-height: var(--table-line-height); vertical-align: middle; }
@@ -123,7 +120,6 @@
       background: var(--card-bg); color: var(--text-color); margin-right: 8px; margin-bottom: 4px; outline: none;
     }
 
-    /* শেয়ার সেকশন স্টাইল */
     .share-buttons-container {
         margin-top: 20px;
         padding: 12px;
@@ -131,33 +127,13 @@
         background-color: rgba(0, 102, 204, 0.02);
         border-radius: 8px;
     }
-    .share-title {
-        font-size: 13px;
-        font-weight: bold;
-        margin-bottom: 8px;
-        color: var(--text-color);
-    }
-    .share-icons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
+    .share-title { font-size: 13px; font-weight: bold; margin-bottom: 8px; color: var(--text-color); }
+    .share-icons { display: flex; flex-wrap: wrap; gap: 6px; }
     .share-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        padding: 5px 10px;
-        color: #fff;
-        font-size: 12px;
-        border-radius: 4px;
-        text-decoration: none;
-        cursor: pointer;
-        border: none;
-        transition: opacity 0.2s;
+        display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px;
+        color: #fff; font-size: 12px; border-radius: 4px; text-decoration: none; cursor: pointer; border: none; transition: opacity 0.2s;
     }
-    .share-btn:hover {
-        opacity: 0.85;
-    }
+    .share-btn:hover { opacity: 0.85; }
     .facebook { background-color: #1877f2; }
     .twitter { background-color: #1da1f2; }
     .whatsapp { background-color: #25d366; }
@@ -190,10 +166,11 @@
   </div>
 
   <div class="container">
+    <!-- সার্চ বক্স ও সার্চ বাটন যেখানে onclick যুক্ত করা হয়েছে -->
     <div class="card">
       <div style="display: flex; gap: 6px;">
         <input type="text" id="internalSearchInput" placeholder="সাইটের ভেতর খুঁজুন..." class="search-box" style="margin-bottom:0;">
-        <button type="button" class="btn btn-call" style="width: auto; padding: 0 12px; margin-top:0;">🔍 খুঁজুন</button>
+        <button type="button" class="btn btn-call" onclick="performSearch()" style="width: auto; padding: 0 12px; margin-top:0;">🔍 খুঁজুন</button>
       </div>
     </div>
 
@@ -395,7 +372,6 @@
       <span onclick="closeBlogModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
       
-      <!-- টেবিল কাস্টমাইজেশন টুলবার -->
       <div class="table-customizer" style="margin-top: 10px;">
         <div style="font-weight: bold; margin-bottom: 4px; color: #0066cc;">🛠️ টেবিল কাস্টমাইজেশন টুলবার:</div>
         <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
@@ -424,34 +400,15 @@
 
       <div id="modalBody" style="margin-top: 10px;"></div>
 
-      <!-- ব্লগ ডিটেইলসের একেবারে নিচে সোশ্যাল মিডিয়া শেয়ার অপশন -->
       <div class="share-buttons-container">
           <p class="share-title">এই পোস্টটি শেয়ার করুন:</p>
           <div class="share-icons">
-              <!-- ফেসবুক শেয়ার -->
-              <a href="#" id="share-fb" target="_blank" class="share-btn facebook">
-                  <i class="fab fa-facebook-f"></i> Facebook
-              </a>
-              <!-- টুইটার/এক্স শেয়ার -->
-              <a href="#" id="share-twitter" target="_blank" class="share-btn twitter">
-                  <i class="fab fa-twitter"></i> Twitter
-              </a>
-              <!-- হোয়াটসঅ্যাপ শেয়ার -->
-              <a href="#" id="share-wa" target="_blank" class="share-btn whatsapp">
-                  <i class="fab fa-whatsapp"></i> WhatsApp
-              </a>
-              <!-- টিকটক লিংক -->
-              <a href="https://www.tiktok.com/" target="_blank" class="share-btn tiktok">
-                  <i class="fab fa-tiktok"></i> TikTok
-              </a>
-              <!-- ইউটিউব লিংক -->
-              <a href="https://www.youtube.com/" target="_blank" class="share-btn youtube">
-                  <i class="fab fa-youtube"></i> YouTube
-              </a>
-              <!-- ডিভাইস বা ফোনের নেটিভ শেয়ার অপশন -->
-              <button onclick="shareViaDevice()" class="share-btn device">
-                  <i class="fas fa-share-alt"></i> Device
-              </button>
+              <a href="#" id="share-fb" target="_blank" class="share-btn facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+              <a href="#" id="share-twitter" target="_blank" class="share-btn twitter"><i class="fab fa-twitter"></i> Twitter</a>
+              <a href="#" id="share-wa" target="_blank" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+              <a href="https://www.tiktok.com/" target="_blank" class="share-btn tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
+              <a href="https://www.youtube.com/" target="_blank" class="share-btn youtube"><i class="fab fa-youtube"></i> YouTube</a>
+              <button onclick="shareViaDevice()" class="share-btn device"><i class="fas fa-share-alt"></i> Device</button>
           </div>
       </div>
       
@@ -485,6 +442,7 @@
     const db = getFirestore(app);
     const auth = getAuth(app);
     window.allDataStore = {};
+    window.allPostsList = []; // সার্চ করার জন্য ব্লগ পোস্টগুলো এখানে সংরক্ষণ করা হবে
 
     const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
     window.isAdmin = false;
@@ -557,47 +515,18 @@
         try {
             const q = query(collection(db, "Blogs"), orderBy("createdAt", "desc"));
             const querySnapshot = await getDocs(q);
-            const container = document.getElementById("firestore-blogs-container");
-            container.innerHTML = ""; 
-
-            if (querySnapshot.empty) {
-                container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>ফায়ারস্টোরে কোনো ব্লগ পাওয়া যায়নি।</p>";
-                return;
-            }
+            window.allDataStore = {};
+            window.allPostsList = [];
 
             querySnapshot.forEach((docSnap) => {
                 const item = docSnap.data();
                 const itemKey = docSnap.id;
                 window.allDataStore[itemKey] = item;
-                
-                const card = document.createElement("div");
-                card.className = "product-card";
-                card.onclick = () => openBlogModal(itemKey);
-                
-                let adminControls = window.isAdmin ? `
-                  <div style="margin-top:6px;" onclick="event.stopPropagation()">
-                    <button onclick="editItem('${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
-                    <button onclick="deleteItem('${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
-                  </div>
-                ` : '';
-
-                card.innerHTML = `
-                    <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img">
-                    <div class="product-info">
-                        <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
-                        <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">
-                            <span>তারিখ: ${item.date || ''}</span>
-                        </div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
-                            👉 বিস্তারিত দেখতে ক্লিক করুন...
-                        </div>
-                        ${adminControls}
-                    </div>
-                `;
-                container.appendChild(card);
+                window.allPostsList.push({ id: itemKey, ...item });
             });
 
-            // পেজ লোড হওয়ার পর লিংকে হ্যাশ (#post-id) থাকলে স্বয়ংক্রিয়ভাবে সেই পোস্ট ওপেন করা
+            renderBlogCards(window.allPostsList);
+
             const hash = window.location.hash;
             if (hash && hash.startsWith('#post-')) {
               const postId = hash.replace('#post-', '');
@@ -609,6 +538,60 @@
             console.error("ব্লগ লোড করতে সমস্যা:", error);
             document.getElementById("firestore-blogs-container").innerHTML = "<p style='font-size: 0.85rem; color: red;'>ডেটা লোড করতে সমস্যা হয়েছে।</p>";
         }
+    }
+
+    // ব্লগ কার্ড রেন্ডার করার ফাংশন
+    function renderBlogCards(posts) {
+        const container = document.getElementById("firestore-blogs-container");
+        container.innerHTML = ""; 
+
+        if (posts.length === 0) {
+            container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>কোনো ব্লগ পাওয়া যায়নি।</p>";
+            return;
+        }
+
+        posts.forEach((item) => {
+            const itemKey = item.id;
+            const card = document.createElement("div");
+            card.className = "product-card";
+            card.onclick = () => openBlogModal(itemKey);
+            
+            let adminControls = window.isAdmin ? `
+              <div style="margin-top:6px;" onclick="event.stopPropagation()">
+                <button onclick="editItem('${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+                <button onclick="deleteItem('${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+              </div>
+            ` : '';
+
+            card.innerHTML = `
+                <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img">
+                <div class="product-info">
+                    <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
+                    <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">
+                        <span>তারিখ: ${item.date || ''}</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+                        👉 বিস্তারিত দেখতে ক্লিক করুন...
+                    </div>
+                    ${adminControls}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // নতুন সার্চ ফাংশন যা বাটনে ক্লিক করলে ফিল্টার করে দেখাবে
+    window.performSearch = function() {
+        const queryText = document.getElementById('internalSearchInput').value.toLowerCase().trim();
+        if (!queryText) {
+            renderBlogCards(window.allPostsList);
+            return;
+        }
+
+        const filtered = window.allPostsList.filter(post => 
+            (post.title && post.title.toLowerCase().includes(queryText))
+        );
+        renderBlogCards(filtered);
     }
 
     window.openWriteModal = function() {
@@ -806,7 +789,6 @@
       }
     }
 
-    // নির্দিষ্ট ব্লগ মডাল ওপেন ও URL এ ইউনিক আইডি (#post-id) সেট করার ফাংশন
     window.openBlogModal = function(itemKey) {
       let modal = document.getElementById('blogModal');
       let titleElem = document.getElementById('modalTitle');
@@ -818,18 +800,13 @@
         bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         modal.style.display = 'flex';
 
-        // ব্রাউজারের লিংকে ইউনিক আইডি যুক্ত করা
         window.location.hash = `post-${itemKey}`;
-
-        // নির্দিষ্ট পোস্টের লিংকসহ শেয়ার বাটনগুলো আপডেট করা
         updateShareLinks(targetItem.title);
       }
     }
 
     window.closeBlogModal = function() { 
       document.getElementById('blogModal').style.display = 'none'; 
-      
-      // মডাল বন্ধ করলে লিংক থেকে হ্যাশ সরিয়ে হোম পেজের লিংকে ফিরিয়ে আনা
       if (history.pushState) {
         history.pushState("", document.title, window.location.pathname + window.location.search);
       } else {
@@ -837,7 +814,6 @@
       }
     }
 
-    // নির্দিষ্ট পোস্টের ডাইনামিক লিংক তৈরি করার ফাংশন
     function updateShareLinks(postTitle) {
       const currentUrl = encodeURIComponent(window.location.href);
       const titleText = encodeURIComponent(postTitle || document.title);
@@ -847,7 +823,6 @@
       document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${titleText}%20-%20${currentUrl}`;
     }
 
-    // ডিভাইসের নেটিভ শেয়ার ফাংশন
     window.shareViaDevice = function() {
       if (navigator.share) {
         navigator.share({
