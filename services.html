@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nadim Telecom - সার্ভিস ও মূল্য</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-color: #f4f7f6; --card-bg: #ffffff; --text-color: #2c3e50; --text-muted: #555555; --border-color: #e2e8f0; }
+    body { font-family: 'Hind Siliguri', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
+    header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 20px; }
+    .nav-menu { background: rgba(0,0,0,0.15); padding: 8px; text-align: center; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: center; gap: 15px; }
+    .nav-menu a { color: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; }
+    .nav-menu a.active { background: rgba(255,255,255,0.2); }
+    .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; }
+    .form-select, .form-input { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; outline: none; background: var(--card-bg); color: var(--text-color); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: none; cursor: pointer; width: 100%; }
+    .btn-call { background-color: #0066cc; color: white; }
+    .service-list { list-style: none; padding: 0; margin: 0; }
+    .service-list li { padding: 8px 0; border-bottom: 1px dashed var(--border-color); display: flex; justify-content: space-between; font-size: 0.9rem; }
+    .service-list li::before { content: "✔"; color: #198754; font-weight: bold; margin-right: 8px; }
+    footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 style="margin:0; font-size: 1.3rem;">🛠️ সার্ভিস ও মূল্য তালিকা</h1>
+    <p style="margin:4px 0 0 0; font-size:0.75rem;">নাদিম টেলিকম সার্ভিস ও এক্সেসরিজ</p>
+  </header>
+
+  <div class="nav-menu">
+    <a href="index.html">🏠 হোম পেজ</a>
+    <a href="services.html" class="active">🛠️ সার্ভিস ও মূল্য</a>
+    <a href="contact.html">📍 যোগাযোগ</a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="section-title"><span>🛠️ মোবাইল রিপেয়ারিং সার্ভিস ও রেট</span></div>
+      <ul class="service-list">
+        <li><span>ডিসপ্লে পরিবর্তন</span> <strong>৮০০৳ থেকে শুরু</strong></li>
+        <li><span>ব্যাটারি পরিবর্তন</span> <strong>৫০০৳ থেকে শুরু</strong></li>
+        <li><span>চার্জিং সমস্যা সমাধান</span> <strong>৩০০৳ থেকে শুরু</strong></li>
+        <li><span>সফটওয়্যার ও আনলক কাজ</span> <strong>৩০০৳ থেকে শুরু</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><span>🧮 সার্ভিস কস্ট ক্যালকুলেটর</span></div>
+      <select id="calcDevice" class="form-select">
+        <option value="normal">সাধারণ অ্যান্ড্রয়েড / বাটন ফোন</option>
+        <option value="smartphone">স্মার্টফোন / মিড-রেঞ্জ ফোন</option>
+        <option value="flagship">ফ্ল্যাগশিপ / প্রিমিয়াম ফোন</option>
+      </select>
+      <select id="calcService" class="form-select">
+        <option value="800">ডিসপ্লে পরিবর্তন</option>
+        <option value="500">ব্যাটারি পরিবর্তন</option>
+        <option value="300">চার্জিং সমস্যা সমাধান</option>
+      </select>
+      <button type="button" onclick="calculateCost()" class="btn btn-call">খরচ হিসাব করুন</button>
+      <div id="calcResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #e6f4ea; border-radius: 6px; text-align: center; font-weight: bold; color: #137333; font-size: 0.85rem;"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><span>💸 বিকাশ/নগদ চার্জ ক্যালকুলেটর</span></div>
+      <input type="number" id="mfsAmount" placeholder="টাকার পরিমাণ লিখুন (যেমন: ১০০০)" class="form-input">
+      <button type="button" onclick="calculateMFS()" class="btn btn-call" style="background-color: #e2136e;">চার্জ হিসাব করুন</button>
+      <div id="mfsResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #fdf2f8; border-radius: 6px; text-align: center; font-weight: bold; color: #e2136e; font-size: 0.85rem;"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p style="margin:0;">Nadim Telecom - আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
+    <p style="margin:4px 0 0 0;">© 2026 Nadim Telecom</p>
+  </footer>
+
+  <script>
+    function calculateCost() {
+      let deviceType = document.getElementById('calcDevice').value;
+      let basePrice = parseInt(document.getElementById('calcService').value);
+      let multiplier = deviceType === 'smartphone' ? 1.4 : (deviceType === 'flagship' ? 2.2 : 1);
+      let estimatedCost = Math.round(basePrice * multiplier);
+      let resultDiv = document.getElementById('calcResult');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `আনুমানিক সার্ভিস খরচ: প্রায় ${estimatedCost}৳ থেকে শুরু`;
+    }
+
+    function calculateMFS() {
+      let amount = parseFloat(document.getElementById('mfsAmount').value);
+      let resultDiv = document.getElementById('mfsResult');
+      if (!amount || amount <= 0) { alert('সঠিক টাকার পরিমাণ লিখুন।'); return; }
+      let charge = (amount / 1000) * 14.50;
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)}৳`;
+    }
+  </script>
+</body>
+</html>
