@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nadim Telecom - হোম পেজ</title>
+  <title>Nadim Telecom - সেটিংস ও হোম পেজ</title>
   
   <!-- FontAwesome CDN for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -71,54 +71,26 @@
     .product-title { font-size: 0.95rem; font-weight: bold; margin: 0 0 4px 0; }
     .product-desc { font-size: 0.85rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-    /* ব্লগ পড়ার মডাল ও টেবিল স্টাইল */
-    #modalBody {
-      font-size: 0.9rem !important;
-      line-height: 1.6 !important;
-      color: var(--text-color) !important;
-      word-break: break-word;
-    }
-    #modalBody table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 12px;
-      background-color: var(--card-bg);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    }
-    #modalBody td, #modalBody th {
-      padding: var(--table-padding);
-      border: 1px solid var(--border-color);
-      font-size: var(--table-font-size);
-      line-height: var(--table-line-height);
-      vertical-align: middle;
-    }
-    .gsm-section-header {
-      background-color: var(--table-header-bg);
-      color: var(--table-header-color);
-      font-weight: bold;
-      text-transform: uppercase;
-      font-size: calc(var(--table-font-size) * 0.95);
-      letter-spacing: 0.5px;
-      padding: calc(var(--table-padding) * 0.8) var(--table-padding);
-      border-top: 1px solid var(--border-color);
+    /* সেটিংস অপশন লিস্ট স্টাইল */
+    .settings-list { list-style: none; padding: 0; margin: 0; }
+    .settings-list li {
+      padding: 12px 10px;
       border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
     }
+    .settings-list li:hover { background-color: rgba(0,102,204,0.05); border-radius: 6px; }
+    .settings-list li:last-child { border-bottom: none; }
 
-    .table-customizer {
-      background: rgba(0, 102, 204, 0.05);
-      border: 1px dashed var(--border-color);
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      font-size: 0.8rem;
-    }
-    .table-customizer label { font-weight: bold; display: inline-block; margin-right: 4px; margin-bottom: 4px; }
-    .table-customizer select, .table-customizer input {
-      padding: 4px 8px; font-size: 0.8rem; border-radius: 6px; border: 1px solid var(--border-color);
-      background: var(--card-bg); color: var(--text-color); margin-right: 10px; margin-bottom: 6px; outline: none;
-    }
+    /* ব্লগ পড়ার মডাল ও টেবিল স্টাইল */
+    #modalBody { font-size: 0.9rem !important; line-height: 1.6 !important; color: var(--text-color) !important; word-break: break-word; }
+    #modalBody table { width: 100%; border-collapse: collapse; margin-bottom: 12px; background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    #modalBody td, #modalBody th { padding: var(--table-padding); border: 1px solid var(--border-color); font-size: var(--table-font-size); line-height: var(--table-line-height); vertical-align: middle; }
+    .gsm-section-header { background-color: var(--table-header-bg); color: var(--table-header-color); font-weight: bold; text-transform: uppercase; font-size: calc(var(--table-font-size) * 0.95); padding: calc(var(--table-padding) * 0.8) var(--table-padding); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
   </style>
@@ -148,6 +120,22 @@
       </div>
     </div>
 
+    <!-- সেটিংস (Settings) প্যানেল -->
+    <div class="card">
+      <div class="section-title"><span>⚙️ Settings (সেটিংস)</span></div>
+      <ul class="settings-list">
+        <li onclick="alert('Personal information অপশনটি শীঘ্রই আসছে!')"><span>👤 Personal information</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="alert('Phone Numbers আপডেট অপশন')"><span>📞 Phone Numbers</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="alert('Confirm E-Mail অপশন')"><span>✉️ Confirm E Mail</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="changeLanguagePrompt()"><span>🌐 Change Language (বাংলা / English)</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="alert('Manage Notification সেটিংস')"><span>🔔 Manage Notification</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="toggleDarkMode()"><span>🌙 Dark Mode <strong id="darkModeStatus" style="font-size: 0.8rem; color:#0066cc;">(Off)</strong></span> <i class="fas fa-sync text-muted"></i></li>
+        <li onclick="alert('Change Password অপশন')"><span>🔑 Change Password</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="confirmDeleteAccount()" style="color: #dc3545;"><span>🗑️ Delete My Account Permanently</span> <i class="fas fa-exclamation-triangle"></i></li>
+        <li onclick="handleUserLogout()" style="color: #d9534f; font-weight: bold;"><span>🚪 Log out</span> <i class="fas fa-sign-out-alt"></i></li>
+      </ul>
+    </div>
+
     <div class="card">
       <div class="section-title"><span>ℹ️ আমাদের সম্পর্কে</span></div>
       <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
@@ -168,36 +156,7 @@
     <div style="background:var(--card-bg); color:var(--text-color); width:100%; max-width:600px; padding:18px; border-radius:12px; position:relative; max-height:85vh; overflow-y:auto; box-sizing: border-box;">
       <span onclick="closeBlogModal()" style="position:absolute; top:8px; right:12px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem;"></h3>
-      
-      <!-- টেবিল কাস্টমাইজেশন টুলবার -->
-      <div class="table-customizer">
-        <div style="font-weight: bold; margin-bottom: 6px; color: #0066cc;">🛠️ টেবিল কাস্টমাইজেশন টুলবার:</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
-          <div>
-            <label>টেক্সট সাইজ:</label>
-            <select id="tableFontSizeSelect" onchange="changeTableStyle('fontSize', this.value)">
-              <option value="0.75rem">ছোট</option>
-              <option value="0.85rem" selected>মাঝারি</option>
-              <option value="1rem">বড়</option>
-            </select>
-          </div>
-          <div>
-            <label>লাইন স্পেস:</label>
-            <select id="tableLineHeightSelect" onchange="changeTableStyle('lineHeight', this.value)">
-              <option value="1.3">কম</option>
-              <option value="1.6" selected>স্বাভাবিক</option>
-              <option value="2.0">বেশি</option>
-            </select>
-          </div>
-          <div>
-            <label>হেডিং কালার:</label>
-            <input type="color" id="tableHeaderColorPicker" value="#c00" onchange="changeTableStyle('headerColor', this.value)" style="width: 30px; height: 24px; vertical-align: middle; border: none; cursor: pointer; background: transparent;">
-          </div>
-        </div>
-      </div>
-
       <div id="modalBody"></div>
-      
       <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid var(--border-color); text-align: right;">
         <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
       </div>
@@ -211,9 +170,8 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app-check.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCTs9wAT4LB-KEbj6rcZm_plavIhl2b61w",
@@ -285,16 +243,42 @@
       document.getElementById('blogModal').style.display = 'none'; 
     }
 
-    window.changeTableStyle = function(type, value) {
-      const modalBody = document.getElementById('modalBody');
-      if (!modalBody) return;
+    // সেটিংস এবং একাউন্ট ফিচার ফাংশনসমূহ
+    window.toggleDarkMode = function() {
+      const body = document.body;
+      const statusText = document.getElementById('darkModeStatus');
+      if (body.getAttribute('data-theme') === 'light') {
+        body.setAttribute('data-theme', 'dark');
+        statusText.textContent = "(On)";
+      } else {
+        body.setAttribute('data-theme', 'light');
+        statusText.textContent = "(Off)";
+      }
+    }
 
-      if (type === 'fontSize') {
-        modalBody.style.setProperty('--table-font-size', value);
-      } else if (type === 'lineHeight') {
-        modalBody.style.setProperty('--table-line-height', value);
-      } else if (type === 'headerColor') {
-        modalBody.style.setProperty('--table-header-color', value);
+    window.changeLanguagePrompt = function() {
+      let lang = prompt("Choose Language / ভাষা নির্বাচন করুন (bn / en):", "bn");
+      if (lang === 'en') {
+        alert("Language switched to English (Demo Mode).");
+      } else if (lang === 'bn') {
+        alert("ভাষা বাংলায় পরিবর্তন করা হয়েছে।");
+      }
+    }
+
+    window.confirmDeleteAccount = function() {
+      let confirmDel = confirm("আপনি কি আপনার একাউন্ট চিরতরে মুছে ফেলতে চান? এই কাজটি রিভার্স করা যাবে না!");
+      if (confirmDel) {
+        alert("একাউন্ট ডিলেট রিকোয়েস্ট পাঠানো হয়েছে।");
+      }
+    }
+
+    window.handleUserLogout = async function() {
+      try {
+        await signOut(auth);
+        alert("সফলভাবে লগআউট করা হয়েছে।");
+        location.reload();
+      } catch (error) {
+        alert("লগআউট করতে সমস্যা হয়েছে: " + error.message);
       }
     }
 
