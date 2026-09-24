@@ -71,7 +71,7 @@
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
     }
     .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content {
-      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 550px;
+      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 600px;
       padding: 20px; border-radius: 12px; position: relative; max-height: 85vh; overflow-y: auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box;
     }
@@ -97,14 +97,15 @@
     .btn-edit { background-color: #ffc107; color: #000; padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; margin-right: 4px; display: none; }
     .btn-delete { background-color: #dc3545; color: #fff; padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; border: none; cursor: pointer; font-weight: bold; display: none; }
 
-    .search-box, .form-input, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 8px; outline: none; margin-bottom: 10px; font-size: 0.9rem; }
+    .search-box, .form-input, .form-textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-color); border-radius: 6px; outline: none; margin-bottom: 8px; font-size: 0.85rem; box-sizing: border-box; }
+    .form-group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     
-    .product-card { display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; cursor: pointer; }
+    .product-card { display: flex; gap: 12px; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; cursor: pointer; }
     .product-card:hover { background-color: rgba(0,102,204,0.03); }
     .product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; background-color: #eee; flex-shrink: 0; }
     .product-info { flex: 1; min-width: 0; }
-    .product-title { font-size: 0.95rem; font-weight: bold; margin: 0 0 4px 0; }
-    .product-desc { font-size: 0.82rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .product-title { font-size: 1rem; font-weight: bold; color: #0066cc; margin: 0 0 6px 0; }
+    .product-title:hover { text-decoration: underline; }
 
     /* ব্লগ মডালের ভেতর টেবিল ও কাস্টমাইজেশন টুলবার স্টাইল */
     #modalBody { font-size: var(--table-font-size) !important; line-height: var(--table-line-height) !important; color: var(--text-color) !important; word-break: break-word; }
@@ -220,29 +221,108 @@
     </div>
   </div>
 
-  <!-- নতুন ব্লগ বা ফোনের ডিটেইলস লেখার পপ-আপ ফর্ম মডাল -->
+  <!-- নতুন মোবাইল স্পেসিফিকেশন ফর্ম মডাল (আপনার দেওয়া তালিকা অনুযায়ী সাজানো) -->
   <div id="writeBlogModal">
     <div class="write-modal-content">
       <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
-      <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">✍️ নতুন মোবাইল স্পেসিফিকেশন ও ব্লগ</h3>
+      <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">✍️ নতুন মোবাইল স্পেসিফিকেশন ফর্ম</h3>
       
       <form id="newBlogForm" onsubmit="publishNewBlog(event)">
-        <input type="hidden" id="editCollectionName" value="Blogs">
         <input type="hidden" id="editBlogId" value="">
         
-        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">ফোনের নাম / শিরোনাম (Title):</label>
-        <input type="text" id="newBlogTitle" placeholder="যেমন: Samsung Galaxy A08 4G" class="form-input" required>
+        <label style="font-size: 0.75rem; font-weight: bold; display: block;">ফোনের নাম / শিরোনাম (Title):</label>
+        <input type="text" id="specTitle" placeholder="যেমন: Samsung Galaxy A08 4G" class="form-input" required>
 
-        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">কভার ছবি (Image File / URL):</label>
-        <input type="file" id="newBlogImage" accept="image/*" class="form-input">
+        <div class="form-group-grid">
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">কভার ছবি (Image):</label>
+            <input type="file" id="specImage" accept="image/*" class="form-input">
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">তারিখ:</label>
+            <input type="text" id="specDate" class="form-input" required>
+          </div>
+        </div>
 
-        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">তারিখ ও সময়:</label>
-        <input type="text" id="newBlogDate" class="form-input" required>
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc;">Body</div>
+        <div class="form-group-grid">
+          <input type="text" id="specBuild" placeholder="Build" class="form-input">
+          <input type="text" id="specSim" placeholder="Sim" class="form-input">
+        </div>
 
-        <label style="font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 4px;">জিএসএম স্পেসিফিকেশন টেবিল কোড (HTML Table):</label>
-        <textarea id="newBlogDesc" rows="10" class="form-textarea" required style="font-family: monospace; font-size: 0.8rem;"></textarea>
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Display</div>
+        <div class="form-group-grid">
+          <input type="text" id="specResolution" placeholder="Resolution" class="form-input">
+          <input type="text" id="specProtection" placeholder="Protection" class="form-input">
+        </div>
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Platform</div>
+        <div class="form-group-grid">
+          <input type="text" id="specChipset" placeholder="Chipset" class="form-input">
+          <input type="text" id="specCpu" placeholder="CPU" class="form-input">
+        </div>
+        <input type="text" id="specGpu" placeholder="GPU" class="form-input">
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Memory</div>
+        <div class="form-group-grid">
+          <input type="text" id="specCardSlot" placeholder="Card Slot" class="form-input">
+          <input type="text" id="specInternal" placeholder="Internal" class="form-input">
+        </div>
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Main Camera</div>
+        <div class="form-group-grid">
+          <input type="text" id="specTriple" placeholder="Triple / Dual" class="form-input">
+          <input type="text" id="specCamFeatures" placeholder="Features" class="form-input">
+        </div>
+        <input type="text" id="specCamVideo" placeholder="Video" class="form-input">
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Selfie Camera</div>
+        <div class="form-group-grid">
+          <input type="text" id="specSelfieSingle" placeholder="Single" class="form-input">
+          <input type="text" id="specSelfieVideo" placeholder="Video" class="form-input">
+        </div>
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Sound</div>
+        <div class="form-group-grid">
+          <input type="text" id="specLoudspeaker" placeholder="Loudspeaker" class="form-input">
+          <input type="text" id="specJack" placeholder="3.5mm jack" class="form-input">
+        </div>
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Comms</div>
+        <div class="form-group-grid">
+          <input type="text" id="specWlan" placeholder="WLAN" class="form-input">
+          <input type="text" id="specBluetooth" placeholder="Bluetooth" class="form-input">
+        </div>
+        <div class="form-group-grid">
+          <input type="text" id="specPositioning" placeholder="Positioning" class="form-input">
+          <input type="text" id="specRadio" placeholder="Radio" class="form-input">
+        </div>
+        <div class="form-group-grid">
+          <input type="text" id="specNfc" placeholder="NFC" class="form-input">
+          <input type="text" id="specUsb" placeholder="USB" class="form-input">
+        </div>
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Features</div>
+        <input type="text" id="specSensor" placeholder="Sensor" class="form-input">
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Battery</div>
+        <div class="form-group-grid">
+          <input type="text" id="specBatteryType" placeholder="Type" class="form-input">
+          <input type="text" id="specCharging" placeholder="Charging" class="form-input">
+        </div>
+
+        <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Misc</div>
+        <div class="form-group-grid">
+          <input type="text" id="specColors" placeholder="Colors" class="form-input">
+          <input type="text" id="specModels" placeholder="Models" class="form-input">
+        </div>
+        <div class="form-group-grid">
+          <input type="text" id="specSarEu" placeholder="SAR EU" class="form-input">
+          <input type="text" id="specPrice" placeholder="Price" class="form-input">
+        </div>
         
-        <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
           <button type="button" onclick="closeWriteModal()" class="btn" style="background-color:#6c757d; color:#fff; flex:1;">বাতিল</button>
           <button type="submit" id="publishBtn" class="btn btn-green" style="flex:1;">Accept & Publish</button>
         </div>
@@ -405,9 +485,9 @@
                 card.onclick = () => openBlogModal(itemKey);
                 
                 let adminControls = window.isAdmin ? `
-                  <div style="margin-top:6px;">
-                    <button onclick="event.stopPropagation(); editItem('${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
-                    <button onclick="event.stopPropagation(); deleteItem('${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+                  <div style="margin-top:6px;" onclick="event.stopPropagation()">
+                    <button onclick="editItem('${itemKey}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+                    <button onclick="deleteItem('${itemKey}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
                   </div>
                 ` : '';
 
@@ -415,9 +495,11 @@
                     <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Blog Image" class="product-img">
                     <div class="product-info">
                         <div class="product-title">${item.title || 'শিরোনাম নেই'}</div>
-                        <div class="product-desc">${item.content || 'বিস্তারিত পড়তে ক্লিক করুন...'}</div>
-                        <div style="font-size: 0.7rem; color: #0066cc; font-weight: bold; margin-top: 4px;">
+                        <div style="font-size: 0.75rem; color: #0066cc; font-weight: bold;">
                             <span>তারিখ: ${item.date || ''}</span>
+                        </div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+                            👉 বিস্তারিত দেখতে ক্লিক করুন...
                         </div>
                         ${adminControls}
                     </div>
@@ -430,35 +512,15 @@
         }
     }
 
-    window.openWriteModal = function(type) {
+    window.openWriteModal = function() {
       if (!window.isAdmin) {
-        alert("দুঃখিত, শুধুমাত্র অ্যাডমিন নতুন পোস্ট বা স্পেসিফিকেশন যোগ করতে পারবেন!");
+        alert("দুঃখিত, শুধুমাত্র অ্যাডমিন নতুন পোস্ট যোগ করতে পারবেন!");
         return;
       }
       document.getElementById('editBlogId').value = '';
       document.getElementById('newBlogForm').reset();
-      document.getElementById('newBlogDate').value = getCurrentFormattedDateTime();
-      
-      // ডিফল্ট জিএসএম টেবিল স্ট্রাকচার
-      document.getElementById('newBlogDesc').value = `<table>
-  <tr><td colspan="2" class="gsm-section-header">Network</td></tr>
-  <tr><td style="width:35%; font-weight:bold;">Technology</td><td>GSM / HSPA / LTE / 5G</td></tr>
-  <tr><td colspan="2" class="gsm-section-header">Launch</td></tr>
-  <tr><td style="font-weight:bold;">Announced</td><td>2026, August</td></tr>
-  <tr><td style="font-weight:bold;">Status</td><td>Available. Released 2026</td></tr>
-  <tr><td colspan="2" class="gsm-section-header">Body</td></tr>
-  <tr><td style="font-weight:bold;">Dimensions</td><td>163 x 78 x 8.6 mm</td></tr>
-  <tr><td style="font-weight:bold;">Weight</td><td>190 g</td></tr>
-  <tr><td colspan="2" class="gsm-section-header">Display</td></tr>
-  <tr><td style="font-weight:bold;">Type</td><td>AMOLED, 120Hz</td></tr>
-  <tr><td style="font-weight:bold;">Size</td><td>6.78 inches</td></tr>
-  <tr><td colspan="2" class="gsm-section-header">Platform</td></tr>
-  <tr><td style="font-weight:bold;">OS</td><td>Android 16</td></tr>
-  <tr><td colspan="2" class="gsm-section-header">Battery</td></tr>
-  <tr><td style="font-weight:bold;">Type</td><td>5000 mAh, 67W wired</td></tr>
-</table>`;
-
-      document.getElementById('modalBlogHeader').textContent = "✍️ নতুন মোবাইল স্পেসিফিকেশন ও ব্লগ";
+      document.getElementById('specDate').value = getCurrentFormattedDateTime();
+      document.getElementById('modalBlogHeader').textContent = "✍️ নতুন মোবাইল স্পেসিফিকেশন ফর্ম";
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
 
@@ -471,10 +533,93 @@
       if (!window.isAdmin) return;
 
       let editId = document.getElementById('editBlogId').value;
-      let title = document.getElementById('newBlogTitle').value.trim();
-      let dateVal = document.getElementById('newBlogDate').value.trim();
-      let desc = document.getElementById('newBlogDesc').value.trim();
-      let imageFile = document.getElementById('newBlogImage').files[0];
+      let title = document.getElementById('specTitle').value.trim();
+      let dateVal = document.getElementById('specDate').value.trim();
+      let imageFile = document.getElementById('specImage').files[0];
+
+      let build = document.getElementById('specBuild').value;
+      let sim = document.getElementById('specSim').value;
+      let resolution = document.getElementById('specResolution').value;
+      let protection = document.getElementById('specProtection').value;
+      let chipset = document.getElementById('specChipset').value;
+      let cpu = document.getElementById('specCpu').value;
+      let gpu = document.getElementById('specGpu').value;
+      let cardSlot = document.getElementById('specCardSlot').value;
+      let internal = document.getElementById('specInternal').value;
+      let triple = document.getElementById('specTriple').value;
+      let camFeatures = document.getElementById('specCamFeatures').value;
+      let camVideo = document.getElementById('specCamVideo').value;
+      let selfieSingle = document.getElementById('specSelfieSingle').value;
+      let selfieVideo = document.getElementById('specSelfieVideo').value;
+      let loudspeaker = document.getElementById('specLoudspeaker').value;
+      let jack = document.getElementById('specJack').value;
+      let wlan = document.getElementById('specWlan').value;
+      let bluetooth = document.getElementById('specBluetooth').value;
+      let positioning = document.getElementById('specPositioning').value;
+      let radio = document.getElementById('specRadio').value;
+      let nfc = document.getElementById('specNfc').value;
+      let usb = document.getElementById('specUsb').value;
+      let sensor = document.getElementById('specSensor').value;
+      let batteryType = document.getElementById('specBatteryType').value;
+      let charging = document.getElementById('specCharging').value;
+      let colors = document.getElementById('specColors').value;
+      let models = document.getElementById('specModels').value;
+      let sarEu = document.getElementById('specSarEu').value;
+      let price = document.getElementById('specPrice').value;
+
+      // জেনারেটেড এইচটিএমএল টেবিল
+      let generatedHtmlTable = `<table>
+        <tr><td colspan="2" class="gsm-section-header">Body</td></tr>
+        <tr><td style="width:35%; font-weight:bold;">Build</td><td>${build || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Sim</td><td>${sim || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Display</td></tr>
+        <tr><td style="font-weight:bold;">Resolution</td><td>${resolution || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Protection</td><td>${protection || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Platform</td></tr>
+        <tr><td style="font-weight:bold;">Chipset</td><td>${chipset || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">CPU</td><td>${cpu || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">GPU</td><td>${gpu || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Memory</td></tr>
+        <tr><td style="font-weight:bold;">Card Slot</td><td>${cardSlot || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Internal</td><td>${internal || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Main Camera</td></tr>
+        <tr><td style="font-weight:bold;">Triple / Dual</td><td>${triple || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Features</td><td>${camFeatures || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Video</td><td>${camVideo || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Selfie Camera</td></tr>
+        <tr><td style="font-weight:bold;">Single</td><td>${selfieSingle || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Video</td><td>${selfieVideo || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Sound</td></tr>
+        <tr><td style="font-weight:bold;">Loudspeaker</td><td>${loudspeaker || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">3.5mm jack</td><td>${jack || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Comms</td></tr>
+        <tr><td style="font-weight:bold;">WLAN</td><td>${wlan || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Bluetooth</td><td>${bluetooth || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Positioning</td><td>${positioning || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Radio</td><td>${radio || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">NFC</td><td>${nfc || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">USB</td><td>${usb || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Features</td></tr>
+        <tr><td style="font-weight:bold;">Sensors</td><td>${sensor || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Battery</td></tr>
+        <tr><td style="font-weight:bold;">Type</td><td>${batteryType || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Charging</td><td>${charging || '-'}</td></tr>
+        
+        <tr><td colspan="2" class="gsm-section-header">Misc</td></tr>
+        <tr><td style="font-weight:bold;">Colors</td><td>${colors || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Models</td><td>${models || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">SAR EU</td><td>${sarEu || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">Price</td><td>${price || '-'}</td></tr>
+      </table>`;
 
       let imageUrl = "https://via.placeholder.com/80";
       if (editId && window.allDataStore[editId]) {
@@ -497,7 +642,7 @@
 
         let dataPayload = {
           title: title,
-          content: desc,
+          content: generatedHtmlTable,
           date: dateVal,
           imageUrl: imageUrl,
           createdAt: new Date().toISOString()
@@ -523,10 +668,10 @@
       if (!item) return;
 
       document.getElementById('editBlogId').value = itemKey;
-      document.getElementById('newBlogTitle').value = item.title || '';
-      document.getElementById('newBlogDate').value = item.date || getCurrentFormattedDateTime();
-      document.getElementById('newBlogDesc').value = item.content || '';
+      document.getElementById('specTitle').value = item.title || '';
+      document.getElementById('specDate').value = item.date || getCurrentFormattedDateTime();
       
+      // টেবিল থেকে টেক্সটগুলো আবার ইনপুট বক্সে বসানোর প্রয়োজন হলে সরাসরি পুরোটা দেখানোর ব্যবস্থা রাখা হয়েছে
       document.getElementById('modalBlogHeader').textContent = "✍️ স্পেসিফিকেশন এডিট করুন";
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
