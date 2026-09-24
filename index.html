@@ -123,6 +123,48 @@
       background: var(--card-bg); color: var(--text-color); margin-right: 8px; margin-bottom: 4px; outline: none;
     }
 
+    /* শেয়ার সেকশন স্টাইল */
+    .share-buttons-container {
+        margin-top: 20px;
+        padding: 12px;
+        border-top: 1px solid var(--border-color);
+        background-color: rgba(0, 102, 204, 0.02);
+        border-radius: 8px;
+    }
+    .share-title {
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: var(--text-color);
+    }
+    .share-icons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .share-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px 10px;
+        color: #fff;
+        font-size: 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: opacity 0.2s;
+    }
+    .share-btn:hover {
+        opacity: 0.85;
+    }
+    .facebook { background-color: #1877f2; }
+    .twitter { background-color: #1da1f2; }
+    .whatsapp { background-color: #25d366; }
+    .tiktok { background-color: #010101; }
+    .youtube { background-color: #ff0000; }
+    .device { background-color: #6c757d; }
+
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
   </style>
 </head>
@@ -136,7 +178,6 @@
     <h1 style="margin:0; font-size: 1.3rem;">📱 Nadim Telecom</h1>
     <p style="margin:4px 0 0 0; font-size:0.75rem;">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
     
-    <!-- হেডারের ডান কোণায় সেটিংস পপ-আপ আইকন -->
     <button class="settings-icon-btn" onclick="toggleSettingsModal()" title="Settings">
       <i class="fas fa-gear"></i>
     </button>
@@ -166,7 +207,6 @@
     <div class="card">
       <div class="section-title">
         <span>📰 মোবাইল নিউজ ও টেক ব্লগ</span>
-        <!-- অ্যাডমিন হলে Write Now বাটন দেখাবে -->
         <button id="adminBlogBtn" onclick="openWriteModal()" class="btn-write-now" style="display:none;">✍️ Write Now</button>
       </div>
       <div id="firestore-blogs-container">
@@ -246,18 +286,15 @@
 
         <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 8px 0;">
         
-        <!-- Network -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc;">Network</div>
         <input type="text" id="specTechnology" placeholder="Technology" class="form-input">
 
-        <!-- Launch -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Launch</div>
         <div class="form-group-grid">
           <input type="text" id="specAnnounced" placeholder="Announced" class="form-input">
           <input type="text" id="specStatus" placeholder="Status" class="form-input">
         </div>
 
-        <!-- Body -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Body</div>
         <div class="form-group-grid">
           <input type="text" id="specDimensions" placeholder="Dimensions" class="form-input">
@@ -268,7 +305,6 @@
           <input type="text" id="specSim" placeholder="Sim" class="form-input">
         </div>
 
-        <!-- Display -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Display</div>
         <div class="form-group-grid">
           <input type="text" id="specDisplayType" placeholder="Type" class="form-input">
@@ -279,7 +315,6 @@
           <input type="text" id="specProtection" placeholder="Protection" class="form-input">
         </div>
 
-        <!-- Platform -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Platform</div>
         <input type="text" id="specOs" placeholder="OS" class="form-input">
         <div class="form-group-grid">
@@ -288,14 +323,12 @@
         </div>
         <input type="text" id="specGpu" placeholder="GPU" class="form-input">
 
-        <!-- Memory -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Memory</div>
         <div class="form-group-grid">
           <input type="text" id="specCardSlot" placeholder="Card Slot" class="form-input">
           <input type="text" id="specInternal" placeholder="Internal" class="form-input">
         </div>
 
-        <!-- Main Camera -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Main Camera</div>
         <div class="form-group-grid">
           <input type="text" id="specTriple" placeholder="Triple" class="form-input">
@@ -303,21 +336,18 @@
         </div>
         <input type="text" id="specCamVideo" placeholder="Video" class="form-input">
 
-        <!-- Selfie Camera -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Selfie Camera</div>
         <div class="form-group-grid">
           <input type="text" id="specSelfieSingle" placeholder="Single" class="form-input">
           <input type="text" id="specSelfieVideo" placeholder="Video" class="form-input">
         </div>
 
-        <!-- Sound -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Sound</div>
         <div class="form-group-grid">
           <input type="text" id="specLoudspeaker" placeholder="Loudspeaker" class="form-input">
           <input type="text" id="specJack" placeholder="3.5mm jack" class="form-input">
         </div>
 
-        <!-- Comms -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Comms</div>
         <div class="form-group-grid">
           <input type="text" id="specWlan" placeholder="WLAN" class="form-input">
@@ -332,18 +362,15 @@
           <input type="text" id="specUsb" placeholder="USB" class="form-input">
         </div>
 
-        <!-- Features -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Features</div>
         <input type="text" id="specSensor" placeholder="Sensor" class="form-input">
 
-        <!-- Battery -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Battery</div>
         <div class="form-group-grid">
           <input type="text" id="specBatteryType" placeholder="Type" class="form-input">
           <input type="text" id="specCharging" placeholder="Charging" class="form-input">
         </div>
 
-        <!-- Misc -->
         <div style="font-weight: bold; font-size: 0.85rem; color: #0066cc; margin-top: 4px;">Misc</div>
         <div class="form-group-grid">
           <input type="text" id="specColors" placeholder="Colors" class="form-input">
@@ -396,6 +423,37 @@
       </div>
 
       <div id="modalBody" style="margin-top: 10px;"></div>
+
+      <!-- ব্লগ ডিটেইলসের একেবারে নিচে সোশ্যাল মিডিয়া শেয়ার অপশন -->
+      <div class="share-buttons-container">
+          <p class="share-title">এই পোস্টটি শেয়ার করুন:</p>
+          <div class="share-icons">
+              <!-- ফেসবুক শেয়ার -->
+              <a href="#" id="share-fb" target="_blank" class="share-btn facebook">
+                  <i class="fab fa-facebook-f"></i> Facebook
+              </a>
+              <!-- টুইটার/এক্স শেয়ার -->
+              <a href="#" id="share-twitter" target="_blank" class="share-btn twitter">
+                  <i class="fab fa-twitter"></i> Twitter
+              </a>
+              <!-- হোয়াটসঅ্যাপ শেয়ার -->
+              <a href="#" id="share-wa" target="_blank" class="share-btn whatsapp">
+                  <i class="fab fa-whatsapp"></i> WhatsApp
+              </a>
+              <!-- টিকটক লিংক -->
+              <a href="https://www.tiktok.com/" target="_blank" class="share-btn tiktok">
+                  <i class="fab fa-tiktok"></i> TikTok
+              </a>
+              <!-- ইউটিউব লিংক -->
+              <a href="https://www.youtube.com/" target="_blank" class="share-btn youtube">
+                  <i class="fab fa-youtube"></i> YouTube
+              </a>
+              <!-- ডিভাইস বা ফোনের নেটিভ শেয়ার অপশন -->
+              <button onclick="shareViaDevice()" class="share-btn device">
+                  <i class="fas fa-share-alt"></i> Device
+              </button>
+          </div>
+      </div>
       
       <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid var(--border-color); text-align: right;">
         <button onclick="closeBlogModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
@@ -607,7 +665,6 @@
       let sarEu = document.getElementById('specSarEu').value;
       let price = document.getElementById('specPrice').value;
 
-      // সম্পূর্ণ তালিকা অনুযায়ী এইচটিএমএল টেবিল জেনারেটর
       let generatedHtmlTable = `<table>
         <tr><td colspan="2" class="gsm-section-header">Network</td></tr>
         <tr><td style="width:35%; font-weight:bold;">Technology</td><td>${technology || '-'}</td></tr>
@@ -749,11 +806,40 @@
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
         bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         modal.style.display = 'flex';
+
+        // শেয়ার লিংকগুলোর সাথে ডাইনামিক পেজ বা ডেটা লিংক সেটআপ করার জন্য
+        updateShareLinks(targetItem.title);
       }
     }
 
     window.closeBlogModal = function() { 
       document.getElementById('blogModal').style.display = 'none'; 
+    }
+
+    // ডাইনামিক শেয়ার লিংক আপডেট ফাংশন
+    function updateShareLinks(postTitle) {
+      const currentUrl = encodeURIComponent(window.location.href);
+      const titleText = encodeURIComponent(postTitle || document.title);
+
+      document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+      document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${titleText}`;
+      document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${titleText}%20-%20${currentUrl}`;
+    }
+
+    // ডিভাইসের নেটিভ শেয়ার ফাংশন (Device Share)
+    window.shareViaDevice = function() {
+      if (navigator.share) {
+        navigator.share({
+          title: document.title,
+          text: 'এই পোস্টটি পড়ে দেখতে পারেন:',
+          url: window.location.href,
+        })
+        .catch((error) => console.log('শেয়ার করতে সমস্যা হয়েছে:', error));
+      } else {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          alert('লিংকটি ক্লিপবোর্ডে কপি করা হয়েছে!');
+        });
+      }
     }
 
     window.changeTableStyle = function(type, value) {
