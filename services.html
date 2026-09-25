@@ -16,9 +16,8 @@
     .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
     .card { background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; }
-    .form-select, .form-input { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; outline: none; background: var(--card-bg); color: var(--text-color); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: none; cursor: pointer; width: 100%; }
-    .btn-call { background-color: #0066cc; color: white; }
+    .form-select, .form-input, .form-textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; outline: none; background: var(--card-bg); color: var(--text-color); font-family: 'Hind Siliguri', sans-serif; box-sizing: border-box; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: none; cursor: pointer; width: 100%; background-color: #198754; color: white; }
     .service-list { list-style: none; padding: 0; margin: 0; }
     .service-list li { padding: 8px 0; border-bottom: 1px dashed var(--border-color); display: flex; justify-content: space-between; font-size: 0.9rem; }
     .service-list li::before { content: "✔"; color: #198754; font-weight: bold; margin-right: 8px; }
@@ -61,15 +60,45 @@
         <option value="500">ব্যাটারি পরিবর্তন</option>
         <option value="300">চার্জিং সমস্যা সমাধান</option>
       </select>
-      <button type="button" onclick="calculateCost()" class="btn btn-call">খরচ হিসাব করুন</button>
+      <button type="button" onclick="calculateCost()" class="btn">খরচ হিসাব করুন</button>
       <div id="calcResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #e6f4ea; border-radius: 6px; text-align: center; font-weight: bold; color: #137333; font-size: 0.85rem;"></div>
     </div>
 
     <div class="card">
       <div class="section-title"><span>💸 বিকাশ/নগদ চার্জ ক্যালকুলেটর</span></div>
       <input type="number" id="mfsAmount" placeholder="টাকার পরিমাণ লিখুন (যেমন: ১০০০)" class="form-input">
-      <button type="button" onclick="calculateMFS()" class="btn btn-call" style="background-color: #e2136e;">চার্জ হিসাব করুন</button>
+      <button type="button" onclick="calculateMFS()" class="btn">চার্জ হিসাব করুন</button>
       <div id="mfsResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #fdf2f8; border-radius: 6px; text-align: center; font-weight: bold; color: #e2136e; font-size: 0.85rem;"></div>
+    </div>
+
+    <!-- নতুন যুক্ত করা সার্ভিস ডিসপিউট / অভিযোগ ফর্ম প্রোগ্রাম -->
+    <div class="card">
+      <div class="section-title"><span>⚠️ সার্ভিস বা অভিযোগ ফর্ম (Dispute / Grievance)</span></div>
+      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">আপনার ভূমিকা</label>
+      <select id="disputeRole" class="form-select">
+        <option value="Customer">গ্রাহক (Customer)</option>
+        <option value="Dealer">ডিলার (Dealer)</option>
+      </select>
+
+      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">আপনার নাম</label>
+      <input type="text" id="disputeName" placeholder="আপনার নাম লিখুন" class="form-input">
+
+      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">ফোন নম্বর</label>
+      <input type="text" id="disputePhone" placeholder="01XXXXXXXXX" class="form-input">
+
+      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">সমস্যার কারণ</label>
+      <select id="disputeReason" class="form-select">
+        <option value="Defective Service">ত্রুটিপূর্ণ সার্ভিস বা কাজ</option>
+        <option value="High Pricing">অতিরিক্ত মূল্য রাখা হয়েছে</option>
+        <option value="Delayed Delivery">সময়মতো ডেলিভারি দেওয়া হয়নি</option>
+        <option value="Other">অন্যান্য সমস্যা</option>
+      </select>
+
+      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">বিস্তারিত বিবরণ</label>
+      <textarea id="disputeDesc" rows="3" placeholder="আপনার সমস্যাটি বিস্তারিত লিখুন..." class="form-textarea"></textarea>
+
+      <button type="button" onclick="submitDispute()" class="btn">অভিযোগ জমা দিন</button>
+      <div id="disputeResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #e6f4ea; border-radius: 6px; text-align: center; font-weight: bold; color: #137333; font-size: 0.85rem;"></div>
     </div>
   </div>
 
@@ -96,6 +125,20 @@
       let charge = (amount / 1000) * 14.50;
       resultDiv.style.display = 'block';
       resultDiv.innerHTML = `আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)}৳`;
+    }
+
+    function submitDispute() {
+      let name = document.getElementById('disputeName').value.trim();
+      let phone = document.getElementById('disputePhone').value.trim();
+      let resultDiv = document.getElementById('disputeResult');
+
+      if (!name || !phone) {
+        alert('দয়া করে আপনার নাম এবং ফোন নম্বর লিখুন।');
+        return;
+      }
+
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `ধন্যবাদ ${name}! আপনার অভিযোগটি সফলভাবে জমা হয়েছে। খুব শীঘ্রই আমরা আপনার সাথে যোগাযোগ করব।`;
     }
   </script>
 </body>
