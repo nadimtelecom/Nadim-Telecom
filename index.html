@@ -101,7 +101,7 @@
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
     }
     .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content, .sub-modal-content, .policy-modal-content, .sidebar-modal-content, .accessory-modal-content {
-      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 600px;
+      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 800px;
       padding: 20px; border-radius: 12px; position: relative; max-height: 85vh; overflow-y: auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
     }
@@ -138,8 +138,8 @@
     .product-title:hover { text-decoration: underline; }
 
     #modalBody { font-size: var(--table-font-size) !important; line-height: var(--table-line-height) !important; color: var(--text-color) !important; word-break: break-word; }
-    #modalBody table, #productDetailBody table { width: 100%; border-collapse: collapse; margin-bottom: 12px; background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-    #modalBody td, #modalBody th, #productDetailBody td, #productDetailBody th { padding: var(--table-padding); border: 1px solid var(--border-color); font-size: var(--table-font-size); line-height: var(--table-line-height); vertical-align: middle; }
+    #modalBody table, #productDetailBody table { width: 100% !important; max-width: 100% !important; border-collapse: collapse; margin-bottom: 12px; background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    #modalBody td, #modalBody th, #productDetailBody td, #productDetailBody th { padding: 10px 14px; border: 1px solid var(--border-color); font-size: var(--table-font-size); line-height: var(--table-line-height); vertical-align: middle; }
     .gsm-section-header { background-color: var(--table-header-bg); color: var(--table-header-color); font-weight: bold; text-transform: uppercase; font-size: calc(var(--table-font-size) * 0.95); padding: calc(var(--table-padding) * 0.8) var(--table-padding); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
 
     .table-customizer {
@@ -242,22 +242,32 @@
     </div>
   </div>
 
-  <!-- থ্রি-লাইন সাইডবার / মেনু পপ-আপ মডাল -->
+  <!-- থ্রি-লাইন সাইডবার / মেনু পপ-আপ মডাল (ড্রপডাউন সহ) -->
   <div id="sidebarModal">
     <div class="sidebar-modal-content">
       <span onclick="toggleSidebarModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📂 মেনু ও ক্যাটাগরি</h3>
       
-      <div style="font-weight: bold; color: #0066cc; margin: 12px 0 6px 0; font-size: 0.95rem;">📱 মোবাইল অ্যাক্সেসরিজ</div>
       <ul class="settings-list">
-        <li onclick="openAccessoryCategory('হেডফোন')"><span>🎧 হেডফোন</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openAccessoryCategory('চার্জার')"><span>🔌 চার্জার</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openAccessoryCategory('মোবাইল কাভার')"><span>📱 মোবাইল কাভার</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openAccessoryCategory('স্ক্রিনপ্রোটেক্টর গ্লাস')"><span>🛡️ স্ক্রিনপ্রোটেক্টর গ্লাস</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openAccessoryCategory('ইয়ারবাডস')"><span>🎵 ইয়ারবাডস</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openAccessoryCategory('ইয়ারপোডস')"><span>🎶 ইয়ারপোডস</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openAccessoryCategory('ডাটা কেবল')"><span>⚡ ডাটা কেবল</span> <i class="fas fa-chevron-right text-muted"></i></li>
-        <li onclick="openAccessoryCategory('নিকবেন্ড')"><span>🎧 নিকবেন্ড</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <!-- মোবাইল অ্যাক্সেসরিজ ড্রপডাউন হেডার -->
+        <li onclick="toggleSubMenu('accessoryDropdown')" style="flex-direction: column; align-items: stretch; cursor: pointer;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <span style="font-weight: bold; color: #0066cc;"><i class="fas fa-mobile-alt"></i> মোবাইল অ্যাক্সেসরিজ</span> 
+            <i id="dropdownArrow" class="fas fa-chevron-down text-muted" style="transition: transform 0.3s;"></i>
+          </div>
+          
+          <!-- ড্রপডাউন সাব-লিস্ট -->
+          <ul id="accessoryDropdown" style="list-style: none; padding-left: 15px; margin: 8px 0 0 0; display: none; width: 100%;">
+            <li onclick="event.stopPropagation(); openAccessoryCategory('হেডফোন')"><span>🎧 হেডফোন</span> <i class="fas fa-chevron-right text-muted"></i></li>
+            <li onclick="event.stopPropagation(); openAccessoryCategory('চার্জার')"><span>🔌 চার্জার</span> <i class="fas fa-chevron-right text-muted"></i></li>
+            <li onclick="event.stopPropagation(); openAccessoryCategory('মোবাইল কাভার')"><span>📱 মোবাইল কাভার</span> <i class="fas fa-chevron-right text-muted"></i></li>
+            <li onclick="event.stopPropagation(); openAccessoryCategory('স্ক্রিনপ্রোটেক্টর গ্লাস')"><span>🛡️ স্ক্রিনপ্রোটেক্টর গ্লাস</span> <i class="fas fa-chevron-right text-muted"></i></li>
+            <li onclick="event.stopPropagation(); openAccessoryCategory('ইয়ারবাডস')"><span>🎵 ইয়ারবাডস</span> <i class="fas fa-chevron-right text-muted"></i></li>
+            <li onclick="event.stopPropagation(); openAccessoryCategory('ইয়ারপোডস')"><span>🎶 ইয়ারপোডস</span> <i class="fas fa-chevron-right text-muted"></i></li>
+            <li onclick="event.stopPropagation(); openAccessoryCategory('ডাটা কেবল')"><span>⚡ ডাটা কেবল</span> <i class="fas fa-chevron-right text-muted"></i></li>
+            <li onclick="event.stopPropagation(); openAccessoryCategory('নিকবেন্ড')"><span>🎧 নিকবেন্ড</span> <i class="fas fa-chevron-right text-muted"></i></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
@@ -377,7 +387,7 @@
       <p><strong>সর্বশেষ আপডেট:</strong> সেপ্টেম্বর ২০২৬</p>
       <p>নদীম টেলিকম-এর ওয়েবসাইটে আপনাকে স্বাগতম। আমাদের ওয়েবসাইট ব্যবহার করার মাধ্যমে আপনি নিচের শর্তাবলীতে সম্মত হচ্ছেন।</p>
       <h4 style="color:#0066cc; margin-top:10px;">১. সেবা গ্রহণ</h4>
-      <p>আমাদের ওয়েবসাইট বা দোকান থেকে মোবাইল সার্ভিসিং, এক্সেসরিজ বা অন্যান্য সেবা নেওয়ার সময় সঠিক তথ্য প্রদান করা বাধ্যতামূলক।</p>
+      <p>আমাদের ওয়েবসাইট বা দোকান থেকে মোবাইল সার্ভিসিং, এক্সেসরিজ বা অন্যান্য সেবা নেওয়ার সময় সঠিক তথ্য প্রদান করা বাধ্যতামূলক।</h4>
       <h4 style="color:#0066cc; margin-top:10px;">২. মূল্য ও পেমেন্ট</h4>
       <p>পণ্য বা সেবার মূল্য পরিবর্তন করার অধিকার নদীম টেলিকম সংরক্ষণ করে। সকল লেনদেন নির্ধারিত নিয়মে সম্পন্ন করতে হবে।</p>
       <h4 style="color:#0066cc; margin-top:10px;">৩. বুদ্ধিবৃত্তিক সম্পত্তি</h4>
@@ -736,6 +746,19 @@
     window.toggleSidebarModal = function() {
       let modal = document.getElementById('sidebarModal');
       modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    // ড্রপডাউন টোগল ফাংশন
+    window.toggleSubMenu = function(id) {
+      let subMenu = document.getElementById(id);
+      let arrow = document.getElementById('dropdownArrow');
+      if (subMenu.style.display === 'block') {
+        subMenu.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+      } else {
+        subMenu.style.display = 'block';
+        arrow.style.transform = 'rotate(180deg)';
+      }
     }
 
     window.openAccessoryCategory = async function(categoryName) {
