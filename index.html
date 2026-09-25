@@ -106,7 +106,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
     }
 
-    /* পাশাপাশি স্ক্রোল করার স্লাইডার স্টাইল (ImgBB মাল্টিপল ইমেজ) */
+    /* পাশাপাশি স্ক্রোল করার স্লাইডার স্টাইল (সংশোধিত - ছবি কাটা পড়া রোধ করতে) */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
@@ -129,14 +129,16 @@
       border-radius: 10px;
     }
     .nadim-slider-container img {
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
+      height: 250px;              /* উচ্চতা নির্দিষ্ট থাকবে */
+      width: auto;                /* চওড়া ছবির অনুপাতে অটো অ্যাডজাস্ট হবে, ফলে কাটবে না */
+      max-width: 100%;
+      object-fit: contain;        /* ছবি যেন কোনোভাবেই কেটে না যায় */
       border-radius: 10px;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
       scroll-snap-align: start;
       border: 1px solid var(--border-color);
+      background-color: #000;     /* ছবির পেছনের ফাঁকা জায়গায় কালো ব্যাকগ্রাউন্ড দেখাবে */
       transition: transform 0.3s ease;
     }
     .nadim-slider-container img:hover {
@@ -322,7 +324,7 @@
     </div>
   </div>
 
-  <!-- প্রডাক্ট ডিটেইলস টেবিল দেখার মডাল (একাধিক ছবির পাশাপাশি স্ক্রোল স্লাইডার সহ) -->
+  <!-- প্রডাক্ট ডিটেইলস টেবিল দেখার মডাল -->
   <div id="productDetailModal">
     <div class="blog-modal-content">
       <span onclick="closeProductDetailModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
@@ -840,7 +842,6 @@
           </div>
         ` : '';
 
-        // প্রথম ছবি বা থাম্বনেইল দেখানো
         let firstImg = (Array.isArray(prod.imageUrls) && prod.imageUrls.length > 0) ? prod.imageUrls[0] : (prod.imageUrl || 'https://via.placeholder.com/80');
 
         card.innerHTML = `
@@ -900,7 +901,7 @@
 
       try {
         if (imageFiles && imageFiles.length > 0) {
-          imageUrls = []; // নতুন ছবি আপলোড করলে আপডেট হবে
+          imageUrls = [];
           for (let i = 0; i < imageFiles.length; i++) {
             const formData = new FormData();
             formData.append("image", imageFiles[i]);
@@ -930,7 +931,7 @@
           warranty,
           returnPolicy,
           imageUrls: imageUrls,
-          imageUrl: imageUrls[0], // ব্যাকওয়ার্ড কম্পাট্যাবিলিটির জন্য
+          imageUrl: imageUrls[0],
           createdAt: new Date().toISOString()
         };
 
@@ -983,7 +984,6 @@
     window.openProductDetailModal = function(prod) {
       document.getElementById('productDetailTitle').textContent = prod.title || 'প্রোডাক্ট বিবরণ';
       
-      // পাশাপাশি স্ক্রোল স্লাইডারে ছবিগুলো রেন্ডার করা
       let sliderContainer = document.getElementById('productGallerySlider');
       sliderContainer.innerHTML = "";
       
@@ -1394,7 +1394,6 @@
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
         bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         
-        // ব্লগ/স্পেসিফিকেশন মডালেও একাধিক ছবির পাশাপাশি স্ক্রোল স্লাইডার রেন্ডার করা
         sliderContainer.innerHTML = "";
         let imgs = (Array.isArray(targetItem.imageUrls) && targetItem.imageUrls.length > 0) ? targetItem.imageUrls : [targetItem.imageUrl || 'https://via.placeholder.com/220'];
         imgs.forEach(url => {
