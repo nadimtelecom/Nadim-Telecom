@@ -163,6 +163,20 @@
     .device { background-color: #6c757d; }
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
+    
+    /* ফুটারের নিচে ছোট টেক্সট লিংকের স্টাইল */
+    .footer-links {
+      margin-top: 8px;
+      font-size: 0.75rem;
+    }
+    .footer-links a {
+      color: #e0f0ff;
+      text-decoration: underline;
+      margin: 0 8px;
+    }
+    .footer-links a:hover {
+      color: #ffffff;
+    }
   </style>
 </head>
 <body data-theme="light">
@@ -184,8 +198,6 @@
     <a href="index.html" class="active" id="navHome">🏠 হোম পেজ</a>
     <a href="services.html" id="navService">🛠️ সার্ভিস ও মূল্য</a>
     <a href="contact.html" id="navContact">📍 যোগাযোগ</a>
-    <a href="javascript:void(0)" onclick="openPrivacyModal()" id="navPrivacy">🛡️ প্রাইভেসি পলিসি</a>
-    <a href="javascript:void(0)" onclick="openTermsModal()" id="navTerms">📄 শর্তাবলী</a>
   </div>
 
   <div class="container">
@@ -521,6 +533,10 @@
 
   <footer>
     <p style="margin:0;">Nadim Telecom - আপনার বিশ্বস্ত মোবাইল সার্ভিস সেন্টার</p>
+    <div class="footer-links">
+      <a href="javascript:void(0)" onclick="openPrivacyModal()">Privacy Policy</a> | 
+      <a href="javascript:void(0)" onclick="openTermsModal()">Terms & Conditions</a>
+    </div>
     <p style="margin:4px 0 0 0;">© 2026 Nadim Telecom</p>
   </footer>
 
@@ -702,8 +718,6 @@
         document.getElementById('navHome').textContent = "🏠 Home";
         document.getElementById('navService').textContent = "🛠️ Services & Pricing";
         document.getElementById('navContact').textContent = "📍 Contact";
-        document.getElementById('navPrivacy').textContent = "🛡️ Privacy Policy";
-        document.getElementById('navTerms').textContent = "📄 Terms & Conditions";
         document.getElementById('internalSearchInput').placeholder = "Search inside site...";
         document.getElementById('searchBtn').textContent = "🔍 Search";
         document.getElementById('aboutTitle').textContent = "ℹ️ About Us";
@@ -720,8 +734,6 @@
         document.getElementById('navHome').textContent = "🏠 হোম পেজ";
         document.getElementById('navService').textContent = "🛠️ সার্ভিস ও মূল্য";
         document.getElementById('navContact').textContent = "📍 যোগাযোগ";
-        document.getElementById('navPrivacy').textContent = "🛡️ প্রাইভেসি পলিসি";
-        document.getElementById('navTerms').textContent = "📄 শর্তাবলী";
         document.getElementById('internalSearchInput').placeholder = "সাইটের ভেতর খুঁজুন...";
         document.getElementById('searchBtn').textContent = "🔍 খুঁজুন";
         document.getElementById('aboutTitle').textContent = "ℹ️ আমাদের সম্পর্কে";
