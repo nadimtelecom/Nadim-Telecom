@@ -51,6 +51,26 @@
     .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; overflow: hidden; white-space: nowrap; }
     .notice-bar marquee { width: 100%; }
 
+    /* থ্রি-লাইন মেনু বাটন (বাম পাশে) */
+    .menu-icon-btn {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.2); border: none; color: white;
+      width: 38px; height: 38px; border-radius: 50%; font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .menu-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+    /* সেটিংস বাটন (ডান পাশে) */
+    .settings-icon-btn {
+      position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.2); border: none; color: white;
+      width: 38px; height: 38px; border-radius: 50%; font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .settings-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
     .nav-menu { 
       background: rgba(0,0,0,0.15); 
       padding: 10px; 
@@ -76,20 +96,11 @@
     .nav-menu a:hover { background-color: #157347; }
     .nav-menu a.active { background-color: #0f5132; }
 
-    .settings-icon-btn {
-      position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.2); border: none; color: white;
-      width: 38px; height: 38px; border-radius: 50%; font-size: 1.1rem;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-    }
-    .settings-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
-
-    #settingsModal, #authModal, #blogModal, #writeBlogModal, #personalModal, #phoneModal, #passwordModal, #privacyModal, #termsModal {
+    #settingsModal, #authModal, #blogModal, #writeBlogModal, #personalModal, #phoneModal, #passwordModal, #privacyModal, #termsModal, #sidebarModal, #accessoryModal, #writeProductModal, #productDetailModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
     }
-    .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content, .sub-modal-content, .policy-modal-content {
+    .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content, .sub-modal-content, .policy-modal-content, .sidebar-modal-content, .accessory-modal-content {
       background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 600px;
       padding: 20px; border-radius: 12px; position: relative; max-height: 85vh; overflow-y: auto;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
@@ -127,8 +138,8 @@
     .product-title:hover { text-decoration: underline; }
 
     #modalBody { font-size: var(--table-font-size) !important; line-height: var(--table-line-height) !important; color: var(--text-color) !important; word-break: break-word; }
-    #modalBody table { width: 100%; border-collapse: collapse; margin-bottom: 12px; background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
-    #modalBody td, #modalBody th { padding: var(--table-padding); border: 1px solid var(--border-color); font-size: var(--table-font-size); line-height: var(--table-line-height); vertical-align: middle; }
+    #modalBody table, #productDetailBody table { width: 100%; border-collapse: collapse; margin-bottom: 12px; background-color: var(--card-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+    #modalBody td, #modalBody th, #productDetailBody td, #productDetailBody th { padding: var(--table-padding); border: 1px solid var(--border-color); font-size: var(--table-font-size); line-height: var(--table-line-height); vertical-align: middle; }
     .gsm-section-header { background-color: var(--table-header-bg); color: var(--table-header-color); font-weight: bold; text-transform: uppercase; font-size: calc(var(--table-font-size) * 0.95); padding: calc(var(--table-padding) * 0.8) var(--table-padding); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
 
     .table-customizer {
@@ -164,7 +175,6 @@
 
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
     
-    /* ফুটারের নিচে ছোট টেক্সট লিংকের স্টাইল */
     .footer-links {
       margin-top: 8px;
       font-size: 0.75rem;
@@ -186,9 +196,15 @@
   </div>
 
   <header>
+    <!-- বাম পাশের থ্রি-লাইন মেনু বাটন -->
+    <button class="menu-icon-btn" onclick="toggleSidebarModal()" title="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+
     <h1 style="margin:0; font-size: 1.3rem;">📱 Nadim Telecom</h1>
     <p style="margin:4px 0 0 0; font-size:0.75rem;" id="headerSub">মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ</p>
     
+    <!-- ডান পাশের সেটিংস বাটন -->
     <button class="settings-icon-btn" onclick="toggleSettingsModal()" title="Settings">
       <i class="fas fa-gear"></i>
     </button>
@@ -223,6 +239,114 @@
       <div id="firestore-blogs-container">
         <p style="font-size: 0.85rem; color: var(--text-muted);" id="loadingText">তথ্য লোড হচ্ছে...</p>
       </div>
+    </div>
+  </div>
+
+  <!-- থ্রি-লাইন সাইডবার / মেনু পপ-আপ মডাল -->
+  <div id="sidebarModal">
+    <div class="sidebar-modal-content">
+      <span onclick="toggleSidebarModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📂 মেনু ও ক্যাটাগরি</h3>
+      
+      <div style="font-weight: bold; color: #0066cc; margin: 12px 0 6px 0; font-size: 0.95rem;">📱 মোবাইল অ্যাক্সেসরিজ</div>
+      <ul class="settings-list">
+        <li onclick="openAccessoryCategory('হেডফোন')"><span>🎧 হেডফোন</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openAccessoryCategory('চার্জার')"><span>🔌 চার্জার</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openAccessoryCategory('মোবাইল কাভার')"><span>📱 মোবাইল কাভার</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openAccessoryCategory('স্ক্রিনপ্রোটেক্টর গ্লাস')"><span>🛡️ স্ক্রিনপ্রোটেক্টর গ্লাস</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openAccessoryCategory('ইয়ারবাডস')"><span>🎵 ইয়ারবাডস</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openAccessoryCategory('ইয়ারপোডস')"><span>🎶 ইয়ারপোডস</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openAccessoryCategory('ডাটা কেবল')"><span>⚡ ডাটা কেবল</span> <i class="fas fa-chevron-right text-muted"></i></li>
+        <li onclick="openAccessoryCategory('নিকবেন্ড')"><span>🎧 নিকবেন্ড</span> <i class="fas fa-chevron-right text-muted"></i></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- অ্যাক্সেসরিজ প্রোডাক্ট লিস্ট পপ-আপ মডাল -->
+  <div id="accessoryModal">
+    <div class="accessory-modal-content">
+      <span onclick="closeAccessoryModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px;">
+        <h3 id="accessoryModalTitle" style="color:#0066cc; margin:0; font-size:1.1rem;"></h3>
+        <button id="adminAddProductBtn" onclick="openWriteProductModal()" class="btn-write-now" style="display:none;">➕ Add Product</button>
+      </div>
+      <div id="accessoryProductsContainer">
+        <p style="font-size: 0.85rem; color: var(--text-muted);">প্রোডাক্ট লোড হচ্ছে...</p>
+      </div>
+      <div style="margin-top: 15px; text-align: right;">
+        <button onclick="closeAccessoryModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- প্রডাক্ট ডিটেইলস টেবিল দেখার মডাল -->
+  <div id="productDetailModal">
+    <div class="blog-modal-content">
+      <span onclick="closeProductDetailModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 id="productDetailTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
+      <div id="productDetailBody" style="margin-top: 10px;"></div>
+      <div style="margin-top: 15px; text-align: right;">
+        <button onclick="closeProductDetailModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px; font-size: 0.8rem;">বন্ধ করুন</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- নতুন প্রডাক্ট এড করার ফর্ম মডাল (Admin) -->
+  <div id="writeProductModal">
+    <div class="write-modal-content">
+      <span onclick="closeWriteProductModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <h3 id="productModalHeader" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">➕ নতুন প্রডাক্ট যোগ করুন</h3>
+      
+      <form id="newProductForm" onsubmit="publishNewProduct(event)">
+        <input type="hidden" id="editProductId" value="">
+        
+        <label style="font-size: 0.75rem; font-weight: bold; display: block;">প্রডাক্ট এর নাম (Title):</label>
+        <input type="text" id="prodTitle" placeholder="যেমন: Remax RM-510 In-Ear Earphone" class="form-input" required>
+
+        <div class="form-group-grid">
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">ব্র্যান্ড (Brand):</label>
+            <input type="text" id="prodBrand" placeholder="যেমন: Remax" class="form-input" required>
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">কালার (Color):</label>
+            <input type="text" id="prodColor" placeholder="যেমন: Black / White" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="form-group-grid">
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">রেগুলার প্রাইস (Regular Price):</label>
+            <input type="text" id="prodRegularPrice" placeholder="যেমন: ৫০০ টাকা" class="form-input" required>
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">অফার প্রাইস (Offer Price):</label>
+            <input type="text" id="prodOfferPrice" placeholder="যেমন: ৩৫০ টাকা" class="form-input" required>
+          </div>
+        </div>
+
+        <div class="form-group-grid">
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">ওজন (Weight):</label>
+            <input type="text" id="prodWeight" placeholder="যেমন: ৫০ গ্রাম" class="form-input" required>
+          </div>
+          <div>
+            <label style="font-size: 0.75rem; font-weight: bold; display: block;">ওয়ারেন্টি (Warranty):</label>
+            <input type="text" id="prodWarranty" placeholder="যেমন: ৬ মাস রিপ্লেসমেন্ট" class="form-input" required>
+          </div>
+        </div>
+
+        <label style="font-size: 0.75rem; font-weight: bold; display: block;">রিটার্ন পলিসি (Return Policy):</label>
+        <input type="text" id="prodReturnPolicy" placeholder="যেমন: ৭ দিনের মধ্যে পরিবর্তন যোগ্য" class="form-input" required>
+
+        <label style="font-size: 0.75rem; font-weight: bold; display: block;">প্রোডাক্ট ছবি (Image):</label>
+        <input type="file" id="prodImage" accept="image/*" class="form-input">
+        
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          <button type="button" onclick="closeWriteProductModal()" class="btn" style="background-color:#6c757d; color:#fff; flex:1;">বাতিল</button>
+          <button type="submit" id="productPublishBtn" class="btn btn-green" style="flex:1;">সংরক্ষণ ও প্রকাশ করুন</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -351,7 +475,7 @@
     </div>
   </div>
 
-  <!-- নতুন মোবাইল স্পেসিফিকেশন ফর্ম মডাল -->
+  <!-- নতুন মোবাইল স্পেসিফিকেশন ফর্ম মডাল (টেক ব্লগ) -->
   <div id="writeBlogModal">
     <div class="write-modal-content">
       <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
@@ -542,7 +666,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, addDoc, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, addDoc, doc, setDoc, getDoc, updateDoc, deleteDoc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, deleteUser } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -560,6 +684,8 @@
     const auth = getAuth(app);
     window.allDataStore = {};
     window.allPostsList = [];
+    window.currentCategory = "";
+    window.allProductsList = [];
 
     const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
     window.isAdmin = false;
@@ -569,6 +695,7 @@
       const authSettingsLi = document.getElementById("authSettingsLi");
       const logoutSettingsLi = document.getElementById("logoutSettingsLi");
       const adminBlogBtn = document.getElementById("adminBlogBtn");
+      const adminAddProductBtn = document.getElementById("adminAddProductBtn");
       
       if (user) {
         window.isAdmin = (user.email === ADMIN_EMAIL);
@@ -576,8 +703,9 @@
         authSettingsLi.onclick = null;
         logoutSettingsLi.style.display = "flex";
 
-        if (window.isAdmin && adminBlogBtn) {
-          adminBlogBtn.style.display = "inline-block";
+        if (window.isAdmin) {
+          if (adminBlogBtn) adminBlogBtn.style.display = "inline-block";
+          if (adminAddProductBtn) adminAddProductBtn.style.display = "inline-block";
         }
 
         try {
@@ -599,9 +727,219 @@
         authSettingsLi.onclick = () => { toggleAuthModal(); toggleSettingsModal(); };
         logoutSettingsLi.style.display = "none";
         if (adminBlogBtn) adminBlogBtn.style.display = "none";
+        if (adminAddProductBtn) adminAddProductBtn.style.display = "none";
       }
       fetchFirestoreBlogs();
     });
+
+    // সাইডবার ও ক্যাটাগরি পপ-আপ হ্যান্ডলার
+    window.toggleSidebarModal = function() {
+      let modal = document.getElementById('sidebarModal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    window.openAccessoryCategory = async function(categoryName) {
+      window.currentCategory = categoryName;
+      toggleSidebarModal(); // সাইডবার বন্ধ করুন
+      
+      document.getElementById('accessoryModalTitle').textContent = `📂 ${categoryName} তালিকা`;
+      document.getElementById('accessoryProductsContainer').innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>প্রোডাক্ট লোড হচ্ছে...</p>";
+      document.getElementById('accessoryModal').style.display = 'flex';
+
+      await fetchProductsByCategory(categoryName);
+    }
+
+    window.closeAccessoryModal = function() {
+      document.getElementById('accessoryModal').style.display = 'none';
+    }
+
+    async function fetchProductsByCategory(category) {
+      try {
+        const q = query(collection(db, "Products"), where("category", "==", category));
+        const querySnapshot = await getDocs(q);
+        window.allProductsList = [];
+
+        querySnapshot.forEach((docSnap) => {
+          window.allProductsList.push({ id: docSnap.id, ...docSnap.data() });
+        });
+
+        renderProductCards(window.allProductsList);
+      } catch (error) {
+        console.error("প্রোডাক্ট লোড সমস্যা:", error);
+        document.getElementById('accessoryProductsContainer').innerHTML = "<p style='font-size: 0.85rem; color: red;'>প্রোডাক্ট লোড করতে সমস্যা হয়েছে।</p>";
+      }
+    }
+
+    function renderProductCards(products) {
+      const container = document.getElementById('accessoryProductsContainer');
+      container.innerHTML = "";
+
+      if (products.length === 0) {
+        container.innerHTML = "<p style='font-size: 0.85rem; color: var(--text-muted);'>এই ক্যাটাগরিতে এখনো কোনো প্রডাক্ট নেই।</p>";
+        return;
+      }
+
+      products.forEach((prod) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.onclick = () => openProductDetailModal(prod);
+
+        let adminControls = window.isAdmin ? `
+          <div style="margin-top:6px;" onclick="event.stopPropagation()">
+            <button onclick="editProduct('${prod.id}')" class="btn-edit" style="display:inline-block;">এডিট</button>
+            <button onclick="deleteProduct('${prod.id}')" class="btn-delete" style="display:inline-block;">মুছে ফেলুন</button>
+          </div>
+        ` : '';
+
+        card.innerHTML = `
+          <img src="${prod.imageUrl || 'https://via.placeholder.com/80'}" alt="Product Image" class="product-img">
+          <div class="product-info">
+              <div class="product-title">${prod.title || 'নাম নেই'}</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">
+                ব্র্যান্ড: <b>${prod.brand || '-'}</b> | কালার: <b>${prod.color || '-'}</b>
+              </div>
+              <div style="font-size: 0.8rem; color: #198754; font-weight: bold; margin-top: 2px;">
+                মূল্য: <span style="text-decoration: line-through; color: #888; font-weight: normal;">${prod.regularPrice}</span> ${prod.offerPrice}
+              </div>
+              ${adminControls}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.openWriteProductModal = function() {
+      if (!window.isAdmin) {
+        alert("শুধুমাত্র অ্যাডমিন নতুন প্রডাক্ট যোগ করতে পারবেন!");
+        return;
+      }
+      document.getElementById('editProductId').value = '';
+      document.getElementById('newProductForm').reset();
+      document.getElementById('productModalHeader').textContent = `➕ ${window.currentCategory} - নতুন প্রডাক্ট যোগ করুন`;
+      document.getElementById('writeProductModal').style.display = 'flex';
+    }
+
+    window.closeWriteProductModal = function() {
+      document.getElementById('writeProductModal').style.display = 'none';
+    }
+
+    window.publishNewProduct = async function(e) {
+      e.preventDefault();
+      if (!window.isAdmin) return;
+
+      let editId = document.getElementById('editProductId').value;
+      let title = document.getElementById('prodTitle').value.trim();
+      let brand = document.getElementById('prodBrand').value.trim();
+      let color = document.getElementById('prodColor').value.trim();
+      let regularPrice = document.getElementById('prodRegularPrice').value.trim();
+      let offerPrice = document.getElementById('prodOfferPrice').value.trim();
+      let weight = document.getElementById('prodWeight').value.trim();
+      let warranty = document.getElementById('prodWarranty').value.trim();
+      let returnPolicy = document.getElementById('prodReturnPolicy').value.trim();
+      let imageFile = document.getElementById('prodImage').files[0];
+
+      let imageUrl = "https://via.placeholder.com/80";
+      if (editId) {
+        let existing = window.allProductsList.find(p => p.id === editId);
+        if (existing) imageUrl = existing.imageUrl;
+      }
+
+      try {
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append("image", imageFile);
+          let response = await fetch("https://api.imgbb.com/1/upload?key=d5693b675b41a08c9a6698ddebc782d7", {
+            method: "POST",
+            body: formData
+          });
+          let result = await response.json();
+          if (result.success) {
+            imageUrl = result.data.url;
+          }
+        }
+
+        let productPayload = {
+          category: window.currentCategory,
+          title,
+          brand,
+          color,
+          regularPrice,
+          offerPrice,
+          weight,
+          warranty,
+          returnPolicy,
+          imageUrl,
+          createdAt: new Date().toISOString()
+        };
+
+        if (editId) {
+          await updateDoc(doc(db, "Products", editId), productPayload);
+          alert("প্রডাক্ট সফলভাবে আপডেট করা হয়েছে!");
+        } else {
+          await addDoc(collection(db, "Products"), productPayload);
+          alert("প্রডাক্ট সফলভাবে যোগ করা হয়েছে!");
+        }
+
+        closeWriteProductModal();
+        await fetchProductsByCategory(window.currentCategory);
+      } catch (err) {
+        alert("ত্রুটি: " + err.message);
+      }
+    }
+
+    window.editProduct = function(prodId) {
+      let prod = window.allProductsList.find(p => p.id === prodId);
+      if (!prod) return;
+
+      document.getElementById('editProductId').value = prod.id;
+      document.getElementById('prodTitle').value = prod.title || '';
+      document.getElementById('prodBrand').value = prod.brand || '';
+      document.getElementById('prodColor').value = prod.color || '';
+      document.getElementById('prodRegularPrice').value = prod.regularPrice || '';
+      document.getElementById('prodOfferPrice').value = prod.offerPrice || '';
+      document.getElementById('prodWeight').value = prod.weight || '';
+      document.getElementById('prodWarranty').value = prod.warranty || '';
+      document.getElementById('prodReturnPolicy').value = prod.returnPolicy || '';
+
+      document.getElementById('productModalHeader').textContent = "✍️ প্রডাক্ট এডিট করুন";
+      document.getElementById('writeProductModal').style.display = 'flex';
+    }
+
+    window.deleteProduct = async function(prodId) {
+      if (!window.isAdmin) return;
+      if (confirm("আপনি কি নিশ্চিতভাবে এই প্রডাক্টটি মুছে ফেলতে চান?")) {
+        try {
+          await deleteDoc(doc(db, "Products", prodId));
+          alert("প্রডাক্ট সফলভাবে মুছে ফেলা হয়েছে!");
+          await fetchProductsByCategory(window.currentCategory);
+        } catch (error) {
+          alert("মুছে ফেলতে সমস্যা হয়েছে: " + error.message);
+        }
+      }
+    }
+
+    window.openProductDetailModal = function(prod) {
+      document.getElementById('productDetailTitle').textContent = prod.title || 'প্রোডাক্ট বিবরণ';
+      
+      let tableHtml = `<table>
+        <tr><td colspan="2" class="gsm-section-header">Product Specification</td></tr>
+        <tr><td style="width:35%; font-weight:bold;">প্রডাক্ট এর নাম (Title)</td><td>${prod.title || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">ব্র্যান্ড (Brand)</td><td>${prod.brand || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">কালার (Color)</td><td>${prod.color || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">রেগুলার প্রাইস</td><td>${prod.regularPrice || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">অফার প্রাইস</td><td style="color: #198754; font-weight: bold;">${prod.offerPrice || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">ওজন (Weight)</td><td>${prod.weight || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">ওয়ারেন্টি (Warranty)</td><td>${prod.warranty || '-'}</td></tr>
+        <tr><td style="font-weight:bold;">রিটার্ন পলিসি</td><td>${prod.returnPolicy || '-'}</td></tr>
+      </table>`;
+
+      document.getElementById('productDetailBody').innerHTML = tableHtml;
+      document.getElementById('productDetailModal').style.display = 'flex';
+    }
+
+    window.closeProductDetailModal = function() {
+      document.getElementById('productDetailModal').style.display = 'none';
+    }
 
     let isSignUpMode = false;
     window.toggleAuthModal = function() {
@@ -609,20 +947,10 @@
       modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
     }
 
-    // প্রাইভেসি পলিসি এবং টার্মস মডাল ওপেন/ক্লোজ ফাংশন
-    window.openPrivacyModal = function() {
-      document.getElementById('privacyModal').style.display = 'flex';
-    }
-    window.closePrivacyModal = function() {
-      document.getElementById('privacyModal').style.display = 'none';
-    }
-
-    window.openTermsModal = function() {
-      document.getElementById('termsModal').style.display = 'flex';
-    }
-    window.closeTermsModal = function() {
-      document.getElementById('termsModal').style.display = 'none';
-    }
+    window.openPrivacyModal = function() { document.getElementById('privacyModal').style.display = 'flex'; }
+    window.closePrivacyModal = function() { document.getElementById('privacyModal').style.display = 'none'; }
+    window.openTermsModal = function() { document.getElementById('termsModal').style.display = 'flex'; }
+    window.closeTermsModal = function() { document.getElementById('termsModal').style.display = 'none'; }
 
     window.switchAuthMode = function() {
       isSignUpMode = !isSignUpMode;
@@ -636,7 +964,6 @@
       e.preventDefault();
       let email = document.getElementById('authEmail').value;
       let password = document.getElementById('authPassword').value;
-
       try {
         if (isSignUpMode) {
           await createUserWithEmailAndPassword(auth, email, password);
@@ -663,7 +990,7 @@
       let address = document.getElementById('perAddress').value;
       try {
         await setDoc(doc(db, "Users", auth.currentUser.uid), { name, address }, { merge: true });
-        alert("পার্সোনাল ইনফরমেশন সফলভাবে ডাটাবেজে সংরক্ষণ করা হয়েছে!");
+        alert("পার্সোনাল ইনফরমেশন সফলভাবে সংরক্ষণ করা হয়েছে!");
         closePersonalModal();
       } catch(err) {
         alert("সংরক্ষণ করতে সমস্যা হয়েছে: " + err.message);
@@ -681,7 +1008,7 @@
       let phone = document.getElementById('phoneNumber').value;
       try {
         await setDoc(doc(db, "Users", auth.currentUser.uid), { phone }, { merge: true });
-        alert("ফোন নম্বর সফলভাবে ডাটাবেজে আপডেট করা হয়েছে!");
+        alert("ফোন নম্বর সফলভাবে আপডেট করা হয়েছে!");
         closePhoneModal();
       } catch(err) {
         alert("আপডেট করতে সমস্যা হয়েছে: " + err.message);
@@ -701,7 +1028,7 @@
         alert("পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!");
         closePasswordModal();
       } catch (error) {
-        alert("ত্রুটি (নিরাপত্তার জন্য পুনরায় লগইন করে চেষ্টা করুন): " + error.message);
+        alert("ত্রুটি: " + error.message);
       }
     }
 
@@ -709,53 +1036,19 @@
     window.toggleLanguage = function() {
       currentLang = (currentLang === 'bn') ? 'en' : 'bn';
       document.getElementById('langIndicator').textContent = (currentLang === 'bn') ? 'বাংলা' : 'English';
-      
-      if(currentLang === 'en') {
-        document.getElementById('htmlRoot').setAttribute('lang', 'en');
-        document.getElementById('pageTitle').textContent = "Nadim Telecom - Home Page";
-        document.getElementById('noticeText').textContent = "⚡ Special Notice: Bkash & Nagad cash-out charges are very low at Nadim Telecom! Call: 01716390762 ⚡";
-        document.getElementById('headerSub').textContent = "Mobile Repairing • Bkash Service • Accessories";
-        document.getElementById('navHome').textContent = "🏠 Home";
-        document.getElementById('navService').textContent = "🛠️ Services & Pricing";
-        document.getElementById('navContact').textContent = "📍 Contact";
-        document.getElementById('internalSearchInput').placeholder = "Search inside site...";
-        document.getElementById('searchBtn').textContent = "🔍 Search";
-        document.getElementById('aboutTitle').textContent = "ℹ️ About Us";
-        document.getElementById('aboutDesc').innerHTML = "Welcome to <strong>Nadim Telecom</strong>! We have been providing reliable mobile repairing, original accessories, and MFS services.";
-        document.getElementById('blogSectionTitle').textContent = "📰 Mobile News & Tech Blog";
-        document.getElementById('loadingText').textContent = "Loading data...";
-        document.getElementById('settingsHeader').textContent = "⚙️ Settings";
-        alert("Language switched to English.");
-      } else {
-        document.getElementById('htmlRoot').setAttribute('lang', 'bn');
-        document.getElementById('pageTitle').textContent = "Nadim Telecom - হোম পেজ";
-        document.getElementById('noticeText').textContent = "⚡ বিশেষ ঘোষণা: নাদিম টেলিকমে বিকাশ ও নগদে ক্যাশ-আউট চার্জ একদম সাশ্রয়ী! যেকোনো প্রয়োজনে কল করুন: 01716390762 ⚡";
-        document.getElementById('headerSub').textContent = "মোবাইল রিপেয়ারিং • বিকাশ সেবা • অ্যাক্সেসরিজ";
-        document.getElementById('navHome').textContent = "🏠 হোম পেজ";
-        document.getElementById('navService').textContent = "🛠️ সার্ভিস ও মূল্য";
-        document.getElementById('navContact').textContent = "📍 যোগাযোগ";
-        document.getElementById('internalSearchInput').placeholder = "সাইটের ভেতর খুঁজুন...";
-        document.getElementById('searchBtn').textContent = "🔍 খুঁজুন";
-        document.getElementById('aboutTitle').textContent = "ℹ️ আমাদের সম্পর্কে";
-        document.getElementById('aboutDesc').innerHTML = "<strong>নাদিম টেলিকম</strong>-এ আপনাদের স্বাগতম! আমরা বিশ্বস্ততার সাথে দীর্ঘদিন ধরে মোবাইল রিপেয়ারিং, অরিজিনাল এক্সেসরিজ বিক্রয় এবং বিকাশ ও নগদের মতো মোবাইল ফিন্যান্সিয়াল সেবা প্রদান করে আসছে।";
-        document.getElementById('blogSectionTitle').textContent = "📰 মোবাইল নিউজ ও টেক ব্লগ";
-        document.getElementById('loadingText').textContent = "তথ্য লোড হচ্ছে...";
-        document.getElementById('settingsHeader').textContent = "⚙️ Settings (সেটিংস)";
-        alert("ভাষা বাংলায় পরিবর্তন করা হয়েছে।");
-      }
+      alert("ভাষা পরিবর্তন করা হয়েছে।");
     }
 
     window.confirmDeleteAccount = async function() {
       if(!auth.currentUser) { alert("দয়া করে আগে সাইন-ইন করুন!"); toggleAuthModal(); return; }
-      let confirmDel = confirm("আপনি কি আপনার একাউন্ট চিরতরে মুছে ফেলতে চান? এটি রিভার্স করা যাবে না!");
+      let confirmDel = confirm("আপনি কি আপনার একাউন্ট চিরতরে মুছে ফেলতে চান?");
       if (confirmDel) {
         try {
-          const user = auth.currentUser;
-          await deleteUser(user);
-          alert("আপনার একাউন্ট সফলভাবে চিরতরে মুছে ফেলা হয়েছে।");
+          await deleteUser(auth.currentUser);
+          alert("একাউন্ট মুছে ফেলা হয়েছে।");
           location.reload();
         } catch (error) {
-          alert("একাউন্ট ডিলিট করতে সমস্যা হয়েছে (পুনরায় লগইন করে আবার চেষ্টা করুন): " + error.message);
+          alert("ত্রুটি: " + error.message);
         }
       }
     }
@@ -781,17 +1074,8 @@
             });
 
             renderBlogCards(window.allPostsList);
-
-            const hash = window.location.hash;
-            if (hash && hash.startsWith('#post-')) {
-              const postId = hash.replace('#post-', '');
-              if (window.allDataStore[postId]) {
-                openBlogModal(postId);
-              }
-            }
         } catch (error) {
-            console.error("ব্লগ লোড করতে সমস্যা:", error);
-            document.getElementById("firestore-blogs-container").innerHTML = "<p style='font-size: 0.85rem; color: red;'>ডেটা লোড করতে সমস্যা হয়েছে।</p>";
+            console.error("ব্লগ লোড সমস্যা:", error);
         }
     }
 
@@ -840,7 +1124,6 @@
             renderBlogCards(window.allPostsList);
             return;
         }
-
         const filtered = window.allPostsList.filter(post => 
             (post.title && post.title.toLowerCase().includes(queryText))
         );
@@ -848,10 +1131,7 @@
     }
 
     window.openWriteModal = function() {
-      if (!window.isAdmin) {
-        alert("দুঃখিত, শুধুমাত্র অ্যাডমিন নতুন পোস্ট যোগ করতে পারবেন!");
-        return;
-      }
+      if (!window.isAdmin) { alert("শুধুমাত্র অ্যাডমিন নতুন পোস্ট যোগ করতে পারবেন!"); return; }
       document.getElementById('editBlogId').value = '';
       document.getElementById('newBlogForm').reset();
       document.getElementById('specDate').value = getCurrentFormattedDateTime();
@@ -859,9 +1139,7 @@
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
 
-    window.closeWriteModal = function() {
-      document.getElementById('writeBlogModal').style.display = 'none';
-    }
+    window.closeWriteModal = function() { document.getElementById('writeBlogModal').style.display = 'none'; }
 
     window.publishNewBlog = async function(e) {
       e.preventDefault();
@@ -913,46 +1191,37 @@
       let generatedHtmlTable = `<table>
         <tr><td colspan="2" class="gsm-section-header">Network</td></tr>
         <tr><td style="width:35%; font-weight:bold;">Technology</td><td>${technology || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Launch</td></tr>
         <tr><td style="font-weight:bold;">Announced</td><td>${announced || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Status</td><td>${status || '-'}</td></tr>
-
         <tr><td colspan="2" class="gsm-section-header">Body</td></tr>
         <tr><td style="font-weight:bold;">Dimensions</td><td>${dimensions || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Weight</td><td>${weight || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Build</td><td>${build || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Sim</td><td>${sim || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Display</td></tr>
         <tr><td style="font-weight:bold;">Type</td><td>${displayType || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Size</td><td>${size || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Resolution</td><td>${resolution || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Protection</td><td>${protection || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Platform</td></tr>
         <tr><td style="font-weight:bold;">OS</td><td>${os || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Chipset</td><td>${chipset || '-'}</td></tr>
         <tr><td style="font-weight:bold;">CPU</td><td>${cpu || '-'}</td></tr>
         <tr><td style="font-weight:bold;">GPU</td><td>${gpu || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Memory</td></tr>
         <tr><td style="font-weight:bold;">Card Slot</td><td>${cardSlot || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Internal</td><td>${internal || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Main Camera</td></tr>
         <tr><td style="font-weight:bold;">Triple</td><td>${triple || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Features</td><td>${camFeatures || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Video</td><td>${camVideo || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Selfie Camera</td></tr>
         <tr><td style="font-weight:bold;">Single</td><td>${selfieSingle || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Video</td><td>${selfieVideo || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Sound</td></tr>
         <tr><td style="font-weight:bold;">Loudspeaker</td><td>${loudspeaker || '-'}</td></tr>
         <tr><td style="font-weight:bold;">3.5mm jack</td><td>${jack || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Comms</td></tr>
         <tr><td style="font-weight:bold;">WLAN</td><td>${wlan || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Bluetooth</td><td>${bluetooth || '-'}</td></tr>
@@ -960,14 +1229,11 @@
         <tr><td style="font-weight:bold;">Radio</td><td>${radio || '-'}</td></tr>
         <tr><td style="font-weight:bold;">NFC</td><td>${nfc || '-'}</td></tr>
         <tr><td style="font-weight:bold;">USB</td><td>${usb || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Features</td></tr>
         <tr><td style="font-weight:bold;">Sensor</td><td>${sensor || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Battery</td></tr>
         <tr><td style="font-weight:bold;">Type</td><td>${batteryType || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Charging</td><td>${charging || '-'}</td></tr>
-        
         <tr><td colspan="2" class="gsm-section-header">Misc</td></tr>
         <tr><td style="font-weight:bold;">Colors</td><td>${colors || '-'}</td></tr>
         <tr><td style="font-weight:bold;">Models</td><td>${models || '-'}</td></tr>
@@ -989,17 +1255,11 @@
             body: formData
           });
           let result = await response.json();
-          if (result.success) {
-            imageUrl = result.data.url;
-          }
+          if (result.success) imageUrl = result.data.url;
         }
 
         let dataPayload = {
-          title: title,
-          content: generatedHtmlTable,
-          date: dateVal,
-          imageUrl: imageUrl,
-          createdAt: new Date().toISOString()
+          title, content: generatedHtmlTable, date: dateVal, imageUrl, createdAt: new Date().toISOString()
         };
 
         if (editId) {
@@ -1020,11 +1280,9 @@
     window.editItem = function(itemKey) {
       let item = window.allDataStore[itemKey];
       if (!item) return;
-
       document.getElementById('editBlogId').value = itemKey;
       document.getElementById('specTitle').value = item.title || '';
       document.getElementById('specDate').value = item.date || getCurrentFormattedDateTime();
-      
       document.getElementById('modalBlogHeader').textContent = "✍️ স্পেসিফিকেশন এডিট করুন";
       document.getElementById('writeBlogModal').style.display = 'flex';
     }
@@ -1037,7 +1295,7 @@
           alert("সফলভাবে মুছে ফেলা হয়েছে!");
           fetchFirestoreBlogs();
         } catch (error) {
-          alert("মুছে ফেলতে সমস্যা হয়েছে: " + error.message);
+          alert("ত্রুটি: " + error.message);
         }
       }
     }
@@ -1052,56 +1310,21 @@
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
         bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         modal.style.display = 'flex';
-
         window.location.hash = `post-${itemKey}`;
-        updateShareLinks(targetItem.title);
       }
     }
 
     window.closeBlogModal = function() { 
       document.getElementById('blogModal').style.display = 'none'; 
-      if (history.pushState) {
-        history.pushState("", document.title, window.location.pathname + window.location.search);
-      } else {
-        window.location.hash = '';
-      }
-    }
-
-    function updateShareLinks(postTitle) {
-      const currentUrl = encodeURIComponent(window.location.href);
-      const titleText = encodeURIComponent(postTitle || document.title);
-
-      document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
-      document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${titleText}`;
-      document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${titleText}%20-%20${currentUrl}`;
-    }
-
-    window.shareViaDevice = function() {
-      if (navigator.share) {
-        navigator.share({
-          title: document.title,
-          text: 'এই পোস্টটি পড়ে দেখতে পারেন:',
-          url: window.location.href,
-        })
-        .catch((error) => console.log('শেয়ার করতে সমস্যা হয়েছে:', error));
-      } else {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          alert('লিংকটি ক্লিপবোর্ডে কপি করা হয়েছে!');
-        });
-      }
+      window.location.hash = '';
     }
 
     window.changeTableStyle = function(type, value) {
       const modalBody = document.getElementById('modalBody');
       if (!modalBody) return;
-
-      if (type === 'fontSize') {
-        modalBody.style.setProperty('--table-font-size', value);
-      } else if (type === 'lineHeight') {
-        modalBody.style.setProperty('--table-line-height', value);
-      } else if (type === 'headerColor') {
-        document.documentElement.style.setProperty('--table-header-color', value);
-      }
+      if (type === 'fontSize') modalBody.style.setProperty('--table-font-size', value);
+      else if (type === 'lineHeight') modalBody.style.setProperty('--table-line-height', value);
+      else if (type === 'headerColor') document.documentElement.style.setProperty('--table-header-color', value);
     }
 
     window.toggleSettingsModal = function() {
@@ -1127,7 +1350,7 @@
         alert("সফলভাবে লগআউট করা হয়েছে।");
         location.reload();
       } catch (error) {
-        alert("লগআউট করতে সমস্যা হয়েছে: " + error.message);
+        alert("ত্রুটি: " + error.message);
       }
     }
 
