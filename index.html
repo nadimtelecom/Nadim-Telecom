@@ -51,7 +51,6 @@
     .notice-bar { background-color: #ffcc00; color: #000; padding: 8px; font-size: 0.85rem; font-weight: bold; overflow: hidden; white-space: nowrap; }
     .notice-bar marquee { width: 100%; }
 
-    /* থ্রি-লাইন মেনু বাটন (বাম পাশে) */
     .menu-icon-btn {
       position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.2); border: none; color: white;
@@ -61,7 +60,6 @@
     }
     .menu-icon-btn:hover { background: rgba(255, 255, 255, 0.4); }
 
-    /* সেটিংস বাটন (ডান পাশে) */
     .settings-icon-btn {
       position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
       background: rgba(255, 255, 255, 0.2); border: none; color: white;
@@ -96,7 +94,7 @@
     .nav-menu a:hover { background-color: #157347; }
     .nav-menu a.active { background-color: #0f5132; }
 
-    #settingsModal, #authModal, #blogModal, #writeBlogModal, #personalModal, #phoneModal, #passwordModal, #privacyModal, #termsModal, #sidebarModal, #accessoryModal, #writeProductModal, #productDetailModal, #imageZoomModal {
+    #settingsModal, #authModal, #blogModal, #writeBlogModal, #personalModal, #phoneModal, #passwordModal, #privacyModal, #termsModal, #sidebarModal, #accessoryModal, #writeProductModal, #productDetailModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
     }
@@ -106,7 +104,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
     }
 
-    /* পাশাপাশি স্ক্রোল করার স্লাইডার স্টাইল */
+    /* স্লাইডার কন্টেইনার ও ছবি যাতে অর্ধেক না দেখায় তার ব্যবস্থা */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
@@ -129,7 +127,7 @@
       border-radius: 10px;
     }
     .nadim-slider-container img {
-      height: 250px;
+      max-height: 280px;
       width: auto;
       max-width: 100%;
       object-fit: contain;
@@ -138,7 +136,7 @@
       flex-shrink: 0;
       scroll-snap-align: start;
       border: 1px solid var(--border-color);
-      background-color: #000;
+      background-color: #fff;
       cursor: pointer;
       transition: transform 0.3s ease;
     }
@@ -146,55 +144,60 @@
       transform: scale(1.02);
     }
 
-    /* জুম মোডাল এবং ছোট, মানানসই কালো ক্রস বাটন */
+    /* ইমেজ জুম মডাল এবং একদম ছোট, কর্নারে কালো ক্রস বাটন */
     #imageZoomModal {
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 10000;
       display: none;
-      justify-content: center;
-      align-items: center;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 20000;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      box-sizing: border-box;
     }
     .zoom-content-wrapper {
       position: relative;
-      max-width: 90%;
+      max-width: 100%;
       max-height: 90vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     #zoomedImage {
-      max-width: 100%;
+      max-width: 90vw;
       max-height: 85vh;
-      border-radius: 8px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+      width: auto;
+      height: auto;
       object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+      background-color: #fff;
     }
     .zoom-close-btn {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(0, 0, 0, 0.7);
+      top: 6px;
+      right: 6px;
+      background: #000;
       color: #fff;
-      width: 28px;
-      height: 28px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       font-weight: bold;
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      z-index: 20001;
       transition: background 0.2s;
-      z-index: 10001;
     }
     .zoom-close-btn:hover {
-      background: rgba(0, 0, 0, 0.9);
+      background: #333;
     }
 
     .settings-list { list-style: none; padding: 0; margin: 0; }
@@ -747,9 +750,9 @@
     </div>
   </div>
 
-  <!-- ছবিতে ক্লিক করলে বড় করে দেখানোর জন্য জুম মডাল ও ছোট কালো ক্রস বাটন -->
-  <div id="imageZoomModal">
-    <div class="zoom-content-wrapper">
+  <!-- ছবিতে ক্লিক করলে জুম করার জন্য মোডাল এবং একেবারে কর্নারে ছোট কালো ক্রস বাটন -->
+  <div id="imageZoomModal" onclick="closeImageZoom()">
+    <div class="zoom-content-wrapper" onclick="event.stopPropagation()">
       <div class="zoom-close-btn" onclick="closeImageZoom()">&times;</div>
       <img id="zoomedImage" src="" alt="Zoomed Image">
     </div>
