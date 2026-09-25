@@ -11,17 +11,18 @@
     body { font-family: 'Hind Siliguri', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); }
     header { background: linear-gradient(135deg, #0066cc, #004080); color: white; text-align: center; padding: 20px; }
     .nav-menu { background: rgba(0,0,0,0.15); padding: 8px; text-align: center; font-size: 0.9rem; font-weight: bold; display: flex; justify-content: center; gap: 15px; }
-    .nav-menu a { color: white; text-decoration: none; padding: 4px 8px; border-radius: 4px; }
-    .nav-menu a.active { background: rgba(255,255,255,0.2); }
+    .nav-menu a { color: white; text-decoration: none; padding: 4px 10px; border-radius: 4px; }
+    .nav-menu a.active { background: #198754; color: white; }
     .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
     .card { background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-    .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; }
+    .section-title { color: #0066cc; font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .form-select, .form-input, .form-textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; outline: none; background: var(--card-bg); color: var(--text-color); font-family: 'Hind Siliguri', sans-serif; box-sizing: border-box; }
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: bold; border: none; cursor: pointer; width: 100%; background-color: #198754; color: white; }
     .service-list { list-style: none; padding: 0; margin: 0; }
     .service-list li { padding: 8px 0; border-bottom: 1px dashed var(--border-color); display: flex; justify-content: space-between; font-size: 0.9rem; }
     .service-list li::before { content: "✔"; color: #198754; font-weight: bold; margin-right: 8px; }
     footer { background-color: #0056b3; color: white; text-align: center; padding: 12px; font-size: 0.8rem; margin-top: 30px; }
+    .collapsible-content { display: none; margin-top: 12px; }
   </style>
 </head>
 <body>
@@ -71,34 +72,40 @@
       <div id="mfsResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #fdf2f8; border-radius: 6px; text-align: center; font-weight: bold; color: #e2136e; font-size: 0.85rem;"></div>
     </div>
 
-    <!-- নতুন যুক্ত করা সার্ভিস ডিসপিউট / অভিযোগ ফর্ম প্রোগ্রাম -->
+    <!-- টগল বা ক্লিক করার মাধ্যমে ওপেন/ক্লোজ হওয়ার অভিযোগ ফর্ম -->
     <div class="card">
-      <div class="section-title"><span>⚠️ সার্ভিস বা অভিযোগ ফর্ম (Dispute / Grievance)</span></div>
-      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">আপনার ভূমিকা</label>
-      <select id="disputeRole" class="form-select">
-        <option value="Customer">গ্রাহক (Customer)</option>
-        <option value="Dealer">ডিলার (Dealer)</option>
-      </select>
+      <div class="section-title" onclick="toggleDisputeForm()">
+        <span>⚠️ সার্ভিস বা অভিযোগ ফর্ম (Dispute / Grievance)</span>
+        <i id="toggleIcon" class="fas fa-chevron-down" style="font-size: 0.9rem;"></i>
+      </div>
+      
+      <div id="disputeFormContent" class="collapsible-content">
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">আপনার ভূমিকা</label>
+        <select id="disputeRole" class="form-select">
+          <option value="Customer">গ্রাহক (Customer)</option>
+          <option value="Dealer">ডিলার (Dealer)</option>
+        </select>
 
-      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">আপনার নাম</label>
-      <input type="text" id="disputeName" placeholder="আপনার নাম লিখুন" class="form-input">
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">আপনার নাম</label>
+        <input type="text" id="disputeName" placeholder="আপনার নাম লিখুন" class="form-input">
 
-      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">ফোন নম্বর</label>
-      <input type="text" id="disputePhone" placeholder="01XXXXXXXXX" class="form-input">
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">ফোন নম্বর</label>
+        <input type="text" id="disputePhone" placeholder="01XXXXXXXXX" class="form-input">
 
-      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">সমস্যার কারণ</label>
-      <select id="disputeReason" class="form-select">
-        <option value="Defective Service">ত্রুটিপূর্ণ সার্ভিস বা কাজ</option>
-        <option value="High Pricing">অতিরিক্ত মূল্য রাখা হয়েছে</option>
-        <option value="Delayed Delivery">সময়মতো ডেলিভারি দেওয়া হয়নি</option>
-        <option value="Other">অন্যান্য সমস্যা</option>
-      </select>
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">সমস্যার কারণ</label>
+        <select id="disputeReason" class="form-select">
+          <option value="Defective Service">ত্রুটিপূর্ণ সার্ভিস বা কাজ</option>
+          <option value="High Pricing">অতিরিক্ত মূল্য রাখা হয়েছে</option>
+          <option value="Delayed Delivery">সময়মতো ডেলিভারি দেওয়া হয়নি</option>
+          <option value="Other">অন্যান্য সমস্যা</option>
+        </select>
 
-      <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">বিস্তারিত বিবরণ</label>
-      <textarea id="disputeDesc" rows="3" placeholder="আপনার সমস্যাটি বিস্তারিত লিখুন..." class="form-textarea"></textarea>
+        <label style="font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 4px;">বিস্তারিত বিবরণ</label>
+        <textarea id="disputeDesc" rows="3" placeholder="আপনার সমস্যাটি বিস্তারিত লিখুন..." class="form-textarea"></textarea>
 
-      <button type="button" onclick="submitDispute()" class="btn">অভিযোগ জমা দিন</button>
-      <div id="disputeResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #e6f4ea; border-radius: 6px; text-align: center; font-weight: bold; color: #137333; font-size: 0.85rem;"></div>
+        <button type="button" onclick="submitDispute()" class="btn">অভিযোগ জমা দিন</button>
+        <div id="disputeResult" style="display: none; margin-top: 10px; padding: 8px; background-color: #e6f4ea; border-radius: 6px; text-align: center; font-weight: bold; color: #137333; font-size: 0.85rem;"></div>
+      </div>
     </div>
   </div>
 
@@ -125,6 +132,18 @@
       let charge = (amount / 1000) * 14.50;
       resultDiv.style.display = 'block';
       resultDiv.innerHTML = `আনুমানিক ক্যাশ-আউট চার্জ: প্রায় ${charge.toFixed(2)}৳`;
+    }
+
+    function toggleDisputeForm() {
+      let content = document.getElementById('disputeFormContent');
+      let icon = document.getElementById('toggleIcon');
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+        icon.className = 'fas fa-chevron-down';
+      } else {
+        content.style.display = 'block';
+        icon.className = 'fas fa-chevron-up';
+      }
     }
 
     function submitDispute() {
