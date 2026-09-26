@@ -96,12 +96,14 @@
 
     #settingsModal, #authModal, #blogModal, #writeBlogModal, #personalModal, #phoneModal, #passwordModal, #privacyModal, #termsModal, #sidebarModal, #accessoryModal, #writeProductModal, #productDetailModal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box;
+      background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;
     }
+    
+    /* ফুল ডিসপ্লে বা কন্টেইনার ফিক্স করা হয়েছে */
     .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content, .sub-modal-content, .policy-modal-content, .sidebar-modal-content, .accessory-modal-content {
-      background: var(--card-bg); color: var(--text-color); width: 100%; max-width: 800px;
-      padding: 20px; border-radius: 12px; position: relative; max-height: 85vh; overflow-y: auto;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
+      background: var(--card-bg); color: var(--text-color); width: 100% !important; max-width: 100% !important; height: 100% !important; max-height: 100vh !important;
+      padding: 15px; border-radius: 0 !important; position: relative; overflow-y: auto;
+      box-shadow: none !important; box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
     }
 
     /* সাধারণ ক্লোজ বাটন */
@@ -111,13 +113,13 @@
       right: 12px;
       background: #000;
       color: #fff;
-      width: 22px;
-      height: 22px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       font-weight: bold;
       cursor: pointer;
       border: 1px solid rgba(255, 255, 255, 0.6);
@@ -155,7 +157,7 @@
       flex-shrink: 0;
       scroll-snap-align: start;
       border: 1px solid var(--border-color);
-      background-color: var(--card-bg); /* পেছনের পেজ দেখা যাওয়া বন্ধ করতে ব্যাকগ্রাউন্ড কার্ড কালার করা হয়েছে */
+      background-color: var(--card-bg);
       cursor: pointer;
       transition: transform 0.2s ease;
     }
@@ -218,9 +220,9 @@
 
     .settings-list { list-style: none; padding: 0; margin: 0; }
     .settings-list li {
-      padding: 10px 8px; border-bottom: 1px solid var(--border-color);
+      padding: 12px 10px; border-bottom: 1px solid var(--border-color);
       display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.9rem; cursor: pointer; transition: background 0.2s;
+      font-size: 0.95rem; cursor: pointer; transition: background 0.2s;
     }
     .settings-list li:hover { background-color: rgba(0,102,204,0.05); border-radius: 6px; }
     .settings-list li:last-child { border-bottom: none; }
