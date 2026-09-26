@@ -126,7 +126,7 @@
     }
     .custom-close-btn:hover { background: #444; }
 
-    /* আপডেট করা স্লাইডার কন্টেইনার এবং ইমেজ স্টাইল */
+    /* স্লাইডার কন্টেইনার এবং ছবি নিখুঁত রাখার জন্য আপডেট করা কোড */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
@@ -137,37 +137,25 @@
       scrollbar-width: thin;
       scrollbar-color: #0066cc #f1f1f1;
     }
-
-    .nadim-slider-container::-webkit-scrollbar {
-      height: 8px;
-    }
-    .nadim-slider-container::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-    .nadim-slider-container::-webkit-scrollbar-thumb {
-      background: #0066cc;
-      border-radius: 10px;
-    }
-
+    .nadim-slider-container::-webkit-scrollbar { height: 8px; }
+    .nadim-slider-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+    .nadim-slider-container::-webkit-scrollbar-thumb { background: #0066cc; border-radius: 10px; }
+    
     .nadim-slider-container img {
-      height: 220px;
+      height: 200px;
       width: auto;
-      max-width: none; /* ছবির আসল সাইজ ও অনুপাত বজায় রাখতে */
-      object-fit: cover; /* ছবি যেন বক্সে সম্পূর্ণ সুন্দরভাবে ফিট হয় */
-      border-radius: 10px;
+      max-width: 100%;
+      object-fit: contain; /* ছবি যেন কোনোভাবেই না কেটে পুরোটা দেখায় */
+      border-radius: 8px;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
       scroll-snap-align: start;
       border: 1px solid var(--border-color);
-      background-color: #fff;
+      background-color: #f8f9fa; /* ছবির পেছনের খালি জায়গায় সুন্দর ব্যাকগ্রাউন্ড থাকবে */
       cursor: pointer;
       transition: transform 0.3s ease;
     }
-
-    .nadim-slider-container img:hover {
-      transform: scale(1.02);
-    }
+    .nadim-slider-container img:hover { transform: scale(1.02); }
 
     /* জুম মোডাল এবং ছবির ঠিক কোণায় ক্রস বাটন ফিক্স */
     #imageZoomModal {
