@@ -126,16 +126,24 @@
     }
     .custom-close-btn:hover { background: #444; }
 
-    /* স্লাইডার কন্টেইনার এবং ছবি নিখুঁত রাখার জন্য আপডেট করা কোড */
+    /* স্লাইডার র‍্যাপার এবং অ্যারো বাটন স্টাইল */
+    .slider-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
       gap: 12px;
       padding: 10px 5px;
-      margin-bottom: 15px;
+      scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
       scrollbar-width: thin;
       scrollbar-color: #0066cc #f1f1f1;
+      width: 100%;
     }
     .nadim-slider-container::-webkit-scrollbar { height: 8px; }
     .nadim-slider-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
@@ -145,17 +153,40 @@
       height: 200px;
       width: auto;
       max-width: 100%;
-      object-fit: contain; /* ছবি যেন কোনোভাবেই না কেটে পুরোটা দেখায় */
+      object-fit: contain;
       border-radius: 8px;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
       scroll-snap-align: start;
       border: 1px solid var(--border-color);
-      background-color: #f8f9fa; /* ছবির পেছনের খালি জায়গায় সুন্দর ব্যাকগ্রাউন্ড থাকবে */
+      background-color: #f8f9fa;
       cursor: pointer;
       transition: transform 0.3s ease;
     }
     .nadim-slider-container img:hover { transform: scale(1.02); }
+
+    /* স্লাইড করার তীর বাটন */
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 102, 204, 0.85);
+      color: white;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background 0.2s;
+    }
+    .slider-arrow:hover { background: #004080; }
+    .slider-arrow.left { left: -5px; }
+    .slider-arrow.right { right: -5px; }
 
     /* জুম মোডাল এবং ছবির ঠিক কোণায় ক্রস বাটন ফিক্স */
     #imageZoomModal {
@@ -387,7 +418,12 @@
       <div class="custom-close-btn" onclick="closeProductDetailModal()">&times;</div>
       <h3 id="productDetailTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
       
-      <div id="productGallerySlider" class="nadim-slider-container"></div>
+      <div class="slider-wrapper">
+        <button class="slider-arrow left" onclick="scrollSlider('productGallerySlider', -200)"><i class="fas fa-chevron-left"></i></button>
+        <div id="productGallerySlider" class="nadim-slider-container"></div>
+        <button class="slider-arrow right" onclick="scrollSlider('productGallerySlider', 200)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
       <div id="productDetailBody" style="margin-top: 10px;"></div>
       
       <div style="margin-top: 15px; text-align: right;">
@@ -702,8 +738,12 @@
       <div class="custom-close-btn" onclick="closeBlogModal()">&times;</div>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
       
-      <!-- ব্লগ একাধিক ছবির স্লাইডার কন্টেইনার -->
-      <div id="blogGallerySlider" class="nadim-slider-container"></div>
+      <!-- ব্লগ একাধিক ছবির স্লাইডার কন্টেইনার এবং তীর চিহ্ন -->
+      <div class="slider-wrapper">
+        <button class="slider-arrow left" onclick="scrollSlider('blogGallerySlider', -200)"><i class="fas fa-chevron-left"></i></button>
+        <div id="blogGallerySlider" class="nadim-slider-container"></div>
+        <button class="slider-arrow right" onclick="scrollSlider('blogGallerySlider', 200)"><i class="fas fa-chevron-right"></i></button>
+      </div>
 
       <div class="table-customizer" style="margin-top: 10px;">
         <div style="font-weight: bold; margin-bottom: 4px; color: #0066cc;">🛠️ টেবিল কাস্টমাইজেশন টুলবার:</div>
@@ -793,6 +833,14 @@
 
     const ADMIN_EMAIL = "nadimkhan5050@gmail.com";
     window.isAdmin = false;
+
+    // স্লাইডারে ক্লিক করে ডানে-বামে সরানোর জাভাস্ক্রিপ্ট ফাংশন
+    window.scrollSlider = function(containerId, distance) {
+      const container = document.getElementById(containerId);
+      if (container) {
+        container.scrollBy({ left: distance, behavior: 'smooth' });
+      }
+    };
 
     onAuthStateChanged(auth, async (user) => {
       const authMenuText = document.getElementById("authMenuText");
