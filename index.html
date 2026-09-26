@@ -126,17 +126,19 @@
     }
     .custom-close-btn:hover { background: #444; }
 
-    /* স্লাইডার কন্টেইনার এবং ছবির চারপাশের ফাঁকা জায়গা দূর করার ফিক্সড স্টাইল */
+    /* স্লাইডার কন্টেইনার এবং ব্যাকগ্রাউন্ড পেজ দেখা যাওয়া বন্ধ করার স্টাইল */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
       gap: 12px;
-      padding: 0; 
+      padding: 5px; 
       margin-bottom: 15px;
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
       scrollbar-width: thin;
       scrollbar-color: #0066cc #f1f1f1;
+      background-color: var(--card-bg);
+      border-radius: 8px;
     }
 
     .nadim-slider-container::-webkit-scrollbar { height: 8px; }
@@ -147,13 +149,13 @@
       height: 360px;
       width: auto;
       max-width: 100%;
-      object-fit: cover; /* ফাঁকা জায়গা দূর করে ডিসপ্লে পূর্ণ করবে */
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       flex-shrink: 0;
       scroll-snap-align: start;
-      border: none;
-      background-color: transparent;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg); /* পেছনের পেজ দেখা যাওয়া বন্ধ করতে ব্যাকগ্রাউন্ড কার্ড কালার করা হয়েছে */
       cursor: pointer;
       transition: transform 0.2s ease;
     }
