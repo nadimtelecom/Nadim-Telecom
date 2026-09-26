@@ -104,7 +104,6 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
     }
 
-    /* স্লাইডার কন্টেইনার ও ছবি যাতে অর্ধেক না দেখায় তার ব্যবস্থা */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
@@ -127,7 +126,7 @@
       border-radius: 10px;
     }
     .nadim-slider-container img {
-      max-height: 280px;
+      height: 250px;
       width: auto;
       max-width: 100%;
       object-fit: contain;
@@ -144,7 +143,7 @@
       transform: scale(1.02);
     }
 
-    /* ইমেজ জুম মডাল এবং একদম ছোট, কর্নারে কালো ক্রস বাটন */
+    /* ফিক্সড জুম মোডাল এবং একেবারে ছবির ডান কোণায় নিখুঁত ছোট ক্রস বাটন */
     #imageZoomModal {
       display: none;
       position: fixed;
@@ -156,18 +155,19 @@
       z-index: 20000;
       justify-content: center;
       align-items: center;
-      padding: 15px;
+      padding: 10px;
       box-sizing: border-box;
     }
     .zoom-content-wrapper {
       position: relative;
-      max-width: 100%;
+      max-width: 95vw;
       max-height: 90vh;
-      display: flex;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
     }
     #zoomedImage {
+      display: block;
       max-width: 90vw;
       max-height: 85vh;
       width: auto;
@@ -179,20 +179,20 @@
     }
     .zoom-close-btn {
       position: absolute;
-      top: 6px;
-      right: 6px;
+      top: 8px;
+      right: 8px;
       background: #000;
       color: #fff;
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: bold;
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.7);
       z-index: 20001;
       transition: background 0.2s;
     }
@@ -750,7 +750,7 @@
     </div>
   </div>
 
-  <!-- ছবিতে ক্লিক করলে জুম করার জন্য মোডাল এবং একেবারে কর্নারে ছোট কালো ক্রস বাটন -->
+  <!-- নিখুঁত জুম মোডাল: ছোট কালো ক্রস বাটন একদম ছবির ডান কোনার ভেতরে -->
   <div id="imageZoomModal" onclick="closeImageZoom()">
     <div class="zoom-content-wrapper" onclick="event.stopPropagation()">
       <div class="zoom-close-btn" onclick="closeImageZoom()">&times;</div>
