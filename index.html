@@ -126,12 +126,12 @@
     }
     .custom-close-btn:hover { background: #444; }
 
-    /* স্লাইডার কন্টেইনার এবং ছবির সাইজ বড় করার স্টাইল */
+    /* স্লাইডার কন্টেইনার এবং ছবির চারপাশের ফাঁকা জায়গা দূর করার ফিক্সড স্টাইল */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
-      gap: 15px;
-      padding: 10px 5px;
+      gap: 12px;
+      padding: 0; 
       margin-bottom: 15px;
       scroll-behavior: smooth;
       scroll-snap-type: x mandatory;
@@ -144,16 +144,16 @@
     .nadim-slider-container::-webkit-scrollbar-thumb { background: #0066cc; border-radius: 10px; }
 
     .nadim-slider-container img {
-      height: 360px; /* ছবির সাইজ আগের তুলনায় বাড়িয়ে বড় করা হলো যাতে পারফেক্ট দেখায় */
+      height: 360px;
       width: auto;
       max-width: 100%;
-      object-fit: contain; 
+      object-fit: cover; /* ফাঁকা জায়গা দূর করে ডিসপ্লে পূর্ণ করবে */
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
       scroll-snap-align: start;
-      border: 1px solid var(--border-color);
-      background-color: #f8f9fa;
+      border: none;
+      background-color: transparent;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
