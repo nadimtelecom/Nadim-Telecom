@@ -1480,17 +1480,17 @@
       
       if(targetItem) {
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
-        bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি።';
+        bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
         
-        // --- ডায়নামিক শেয়ার লিংক সেটআপ ---
-        let shareUrl = window.location.href.split('#')[0] + '#post-' + itemKey;
+        // সঠিক পোস্টের জন্য ডায়নামিক লিংক তৈরি
+        let baseUrl = window.location.href.split('?')[0].split('#')[0];
+        let shareUrl = `${baseUrl}?post=${itemKey}`;
         let shareTitle = encodeURIComponent(targetItem.title || 'Nadim Telecom Post');
         let encodedUrl = encodeURIComponent(shareUrl);
 
         document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
         document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${shareTitle}`;
         document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${shareTitle}%20-%20${encodedUrl}`;
-        // ---------------------------------
 
         sliderContainer.innerHTML = "";
         let imgs = (Array.isArray(targetItem.imageUrls) && targetItem.imageUrls.length > 0) ? targetItem.imageUrls : [targetItem.imageUrl || 'https://via.placeholder.com/220'];
@@ -1503,16 +1503,15 @@
         });
 
         modal.style.display = 'flex';
-        window.location.hash = `post-${itemKey}`;
+        window.history.replaceState(null, '', `?post=${itemKey}`);
       }
     }
 
     window.closeBlogModal = function() { 
       document.getElementById('blogModal').style.display = 'none'; 
-      window.location.hash = '';
+      window.history.replaceState(null, '', window.location.pathname);
     }
 
-    // --- Device শেয়ার ফাংশন যুক্ত করা হলো ---
     window.shareViaDevice = async function() {
       if (navigator.share) {
         try {
@@ -1564,8 +1563,22 @@
       }
     }
 
-    window.addEventListener('load', function() {
-      fetchFirestoreBlogs();
+    window.addEventListener('load', async function() {
+      await fetchFirestoreBlogs();
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      const postId = urlParams.get('post');
+      if (postId && window.allDataStore[postId]) {
+        openBlogModal(postId);
+      } else {
+        const hash = window.location.hash;
+        if (hash.startsWith('#post-')) {
+          const key = hash.replace('#post-', '');
+          if (window.allDataStore[key]) {
+            openBlogModal(key);
+          }
+        }
+      }
     });
   </script>
 
