@@ -126,7 +126,7 @@
     }
     .custom-close-btn:hover { background: #444; }
 
-    /* নিখুঁত স্লাইডার কন্টেইনার এবং ছবি স্টাইল (তীর চিহ্ন ছাড়া, আঙুল দিয়ে স্ক্রোল করার সুবিধা সহ) */
+    /* নিখুঁত স্লাইডার কন্টেইনার এবং ছবি স্টাইল */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
@@ -144,14 +144,14 @@
     .nadim-slider-container::-webkit-scrollbar-thumb { background: #0066cc; border-radius: 10px; }
 
     .nadim-slider-container img {
-      height: 240px;
+      height: 200px; /* উচ্চতা পারফেক্ট করা হয়েছে যাতে কোনো ছবি না কাটে */
       width: auto;
-      max-width: 100%;
-      object-fit: contain; /* ছবি কোনোভাবেই কাটবে না, পুরোটা দেখাবে */
+      max-width: 90%;
+      object-fit: contain; 
       border-radius: 8px;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
-      scroll-snap-align: start;
+      scroll-snap-align: center; /* স্লাইড করার সময় মাঝখানে সুন্দরভাবে সেট হবে */
       border: 1px solid var(--border-color);
       background-color: #f8f9fa;
       cursor: pointer;
@@ -705,7 +705,7 @@
       <div class="custom-close-btn" onclick="closeBlogModal()">&times;</div>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
       
-      <!-- ব্লগ একাধিক ছবির স্লাইডার কন্টেইনার (কোনো তীর চিহ্ন নেই, আঙুল দিয়ে খুব সহজে স্ক্রোল করা যাবে) -->
+      <!-- ব্লগ একাধিক ছবির স্লাইডার কন্টেইনার -->
       <div id="blogGallerySlider" class="nadim-slider-container"></div>
 
       <div class="table-customizer" style="margin-top: 10px;">
