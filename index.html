@@ -104,10 +104,35 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.3); box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
     }
 
+    /* সাধারণ ক্লোজ বাটন */
+    .custom-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: #000;
+      color: #fff;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      z-index: 100;
+      transition: background 0.2s;
+    }
+    .custom-close-btn:hover {
+      background: #444;
+    }
+
+    /* স্লাইডার কন্টেইনার এবং ছবি যাতে অর্ধেক না কেটে সম্পূর্ণ দেখায় */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
-      gap: 12px;
+      gap: 15px;
       padding: 10px 5px;
       margin-bottom: 15px;
       scroll-snap-type: x mandatory;
@@ -126,9 +151,9 @@
       border-radius: 10px;
     }
     .nadim-slider-container img {
-      height: 250px;
+      height: 220px;
       width: auto;
-      max-width: 100%;
+      max-width: 260px;
       object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
@@ -143,7 +168,7 @@
       transform: scale(1.02);
     }
 
-    /* ফিক্সড জুম মোডাল এবং একেবারে ছবির ডান কোণায় নিখুঁত ছোট ক্রস বাটন */
+    /* জুম মোডাল এবং ছবির কর্নারে ক্রস বাটন ফিক্স */
     #imageZoomModal {
       display: none;
       position: fixed;
@@ -151,53 +176,53 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.9);
       z-index: 20000;
       justify-content: center;
       align-items: center;
-      padding: 10px;
+      padding: 15px;
       box-sizing: border-box;
     }
     .zoom-content-wrapper {
       position: relative;
+      display: inline-block;
       max-width: 95vw;
       max-height: 90vh;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
+      text-align: center;
     }
     #zoomedImage {
       display: block;
       max-width: 90vw;
-      max-height: 85vh;
+      max-height: 82vh;
       width: auto;
       height: auto;
       object-fit: contain;
       border-radius: 8px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+      box-shadow: 0 5px 25px rgba(0,0,0,0.7);
       background-color: #fff;
     }
+    /* জুম মোডালের ক্রস বাটন একদম ছবির ভেতরের ডান কোনায় ফিক্সড */
     .zoom-close-btn {
       position: absolute;
-      top: 8px;
-      right: 8px;
+      top: 6px;
+      right: 6px;
       background: #000;
       color: #fff;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       font-weight: bold;
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      z-index: 20001;
-      transition: background 0.2s;
+      border: 2px solid #fff;
+      z-index: 20005;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
     .zoom-close-btn:hover {
-      background: #333;
+      background: #444;
     }
 
     .settings-list { list-style: none; padding: 0; margin: 0; }
@@ -337,7 +362,7 @@
   <!-- থ্রি-লাইন সাইডবার / মেনু পপ-আপ মডাল -->
   <div id="sidebarModal">
     <div class="sidebar-modal-content">
-      <span onclick="toggleSidebarModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="toggleSidebarModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📂 মেনু ও ক্যাটাগরি</h3>
       
       <ul class="settings-list">
@@ -365,7 +390,7 @@
   <!-- অ্যাক্সেসরিজ প্রোডাক্ট লিস্ট পপ-আপ মডাল -->
   <div id="accessoryModal">
     <div class="accessory-modal-content">
-      <span onclick="closeAccessoryModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closeAccessoryModal()">&times;</div>
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 8px; margin-bottom: 12px;">
         <h3 id="accessoryModalTitle" style="color:#0066cc; margin:0; font-size:1.1rem;"></h3>
         <button id="adminAddProductBtn" onclick="openWriteProductModal()" class="btn-write-now" style="display:none;">➕ Add Product</button>
@@ -382,7 +407,7 @@
   <!-- প্রডাক্ট ডিটেইলস টেবিল দেখার মডাল -->
   <div id="productDetailModal">
     <div class="blog-modal-content">
-      <span onclick="closeProductDetailModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closeProductDetailModal()">&times;</div>
       <h3 id="productDetailTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
       
       <!-- ImgBB মাল্টিপল ইমেজ স্ক্রোল স্লাইডার কন্টেইনার -->
@@ -398,7 +423,7 @@
   <!-- নতুন প্রডাক্ট এড করার ফর্ম মডাল (Admin) -->
   <div id="writeProductModal">
     <div class="write-modal-content">
-      <span onclick="closeWriteProductModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closeWriteProductModal()">&times;</div>
       <h3 id="productModalHeader" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">➕ নতুন প্রডাক্ট যোগ করুন</h3>
       
       <form id="newProductForm" onsubmit="publishNewProduct(event)">
@@ -457,7 +482,7 @@
   <!-- প্রাইভেসি পলিসি মডাল -->
   <div id="privacyModal">
     <div class="policy-modal-content">
-      <span onclick="closePrivacyModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closePrivacyModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">🛡️ Privacy Policy (গোপনীয়তা নীতি)</h3>
       <p><strong>সর্বশেষ আপডেট:</strong> সেপ্টেম্বর ২০২৬</p>
       <p>নদীম টেলিকম ("আমরা", "আমাদের") আপনার গোপনীয়তাকে অত্যন্ত গুরুত্ব দেয়। এই গোপনীয়তা নীতিতে আমরা বর্ণনা করেছি যে আমাদের ওয়েবসাইট ব্যবহার করার সময় আমরা কী ধরনের তথ্য সংগ্রহ করি এবং তা কীভাবে ব্যবহার করি।</p>
@@ -470,7 +495,7 @@
   <!-- টার্মস এন্ড কন্ডিশন্স মডাল -->
   <div id="termsModal">
     <div class="policy-modal-content">
-      <span onclick="closeTermsModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closeTermsModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📄 Terms & Conditions (শর্তাবলী)</h3>
       <p><strong>সর্বশেষ আপডেট:</strong> সেপ্টেম্বর ২০২৬</p>
       <p>নদীম টেলিকম-এর ওয়েবসাইটে আপনাকে স্বাগতম। আমাদের ওয়েবসাইট ব্যবহার করার মাধ্যমে আপনি নিচের শর্তাবলীতে সম্মত হচ্ছেন।</p>
@@ -483,7 +508,7 @@
   <!-- সেটিংস পপ-আপ মডাল -->
   <div id="settingsModal">
     <div class="settings-modal-content">
-      <span onclick="toggleSettingsModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="toggleSettingsModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;" id="settingsHeader">⚙️ Settings (সেটিংস)</h3>
       
       <ul class="settings-list" style="margin-top: 10px;">
@@ -506,7 +531,7 @@
   <!-- পারসোনাল ইনফরমেশন মডাল -->
   <div id="personalModal">
     <div class="sub-modal-content">
-      <span onclick="closePersonalModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closePersonalModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">👤 Personal Information</h3>
       <form onsubmit="savePersonal(event)">
         <label style="font-size:0.8rem; font-weight:bold;">আপনার নাম:</label>
@@ -521,7 +546,7 @@
   <!-- ফোন নম্বর মডাল -->
   <div id="phoneModal">
     <div class="sub-modal-content">
-      <span onclick="closePhoneModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closePhoneModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📞 Phone Numbers</h3>
       <form onsubmit="savePhone(event)">
         <label style="font-size:0.8rem; font-weight:bold;">মোবাইল নম্বর:</label>
@@ -534,7 +559,7 @@
   <!-- পাসওয়ার্ড পরিবর্তন মডাল -->
   <div id="passwordModal">
     <div class="sub-modal-content">
-      <span onclick="closePasswordModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closePasswordModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">🔑 Change Password</h3>
       <form onsubmit="changePasswordAction(event)">
         <label style="font-size:0.8rem; font-weight:bold;">নতুন পাসওয়ার্ড:</label>
@@ -547,7 +572,7 @@
   <!-- সাইন-ইন / সাইন-আপ পপ-আপ মডাল -->
   <div id="authModal">
     <div class="auth-modal-content">
-      <span onclick="toggleAuthModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="toggleAuthModal()">&times;</div>
       <h3 id="authModalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; text-align:center;">🔐 ইউজার সাইন-ইন / সাইন-আপ</h3>
       
       <form id="authForm" onsubmit="handleAuthSubmit(event)">
@@ -570,7 +595,7 @@
   <!-- নতুন মোবাইল স্পেসিফিকেশন ফর্ম মডাল (টেক ব্লগ) -->
   <div id="writeBlogModal">
     <div class="write-modal-content">
-      <span onclick="closeWriteModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closeWriteModal()">&times;</div>
       <h3 id="modalBlogHeader" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">✍️ নতুন মোবাইল স্পেসিফিকেশন ফর্ম</h3>
       
       <form id="newBlogForm" onsubmit="publishNewBlog(event)">
@@ -698,7 +723,7 @@
   <!-- ব্লগ ডিটেইলস ও টেবিল দেখার পপ-আপ মডাল -->
   <div id="blogModal">
     <div class="blog-modal-content">
-      <span onclick="closeBlogModal()" style="position:absolute; top:10px; right:15px; font-size:1.4rem; cursor:pointer; color:var(--text-color);">&times;</span>
+      <div class="custom-close-btn" onclick="closeBlogModal()">&times;</div>
       <h3 id="modalTitle" style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;"></h3>
       
       <!-- ব্লগ একাধিক ছবির পাশাপাশি স্ক্রোল স্লাইডার কন্টেইনার -->
@@ -750,7 +775,7 @@
     </div>
   </div>
 
-  <!-- নিখুঁত জুম মোডাল: ছোট কালো ক্রস বাটন একদম ছবির ডান কোনার ভেতরে -->
+  <!-- নিখুঁত জুম মোডাল: ছবি সম্পূর্ণ দেখাবে এবং ক্রস বাটন একদম ছবির ভেতরের ডান কোনায় থাকবে -->
   <div id="imageZoomModal" onclick="closeImageZoom()">
     <div class="zoom-content-wrapper" onclick="event.stopPropagation()">
       <div class="zoom-close-btn" onclick="closeImageZoom()">&times;</div>
