@@ -99,14 +99,12 @@
       background: rgba(0,0,0,0.6); z-index: 9999; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;
     }
     
-    /* ফুল ডিসপ্লে বা কন্টেইনার ফিক্স করা হয়েছে */
     .settings-modal-content, .auth-modal-content, .blog-modal-content, .write-modal-content, .sub-modal-content, .policy-modal-content, .sidebar-modal-content, .accessory-modal-content {
       background: var(--card-bg); color: var(--text-color); width: 100% !important; max-width: 100% !important; height: 100% !important; max-height: 100vh !important;
       padding: 15px; border-radius: 0 !important; position: relative; overflow-y: auto;
       box-shadow: none !important; box-sizing: border-box; line-height: 1.6; font-size: 0.9rem;
     }
 
-    /* সাধারণ ক্লোজ বাটন */
     .custom-close-btn {
       position: absolute;
       top: 10px;
@@ -128,7 +126,6 @@
     }
     .custom-close-btn:hover { background: #444; }
 
-    /* স্লাইডার কন্টেইনার এবং ব্যাকগ্রাউন্ড পেজ দেখা যাওয়া বন্ধ করার স্টাইল */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
@@ -164,7 +161,6 @@
 
     .nadim-slider-container img:hover { transform: scale(1.01); }
 
-    /* জুম মোডাল এবং ছবির ঠিক কোণায় ক্রস বাটন ফিক্স */
     #imageZoomModal {
       display: none;
       position: fixed;
@@ -467,9 +463,19 @@
     <div class="policy-modal-content">
       <div class="custom-close-btn" onclick="closePrivacyModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">🛡️ Privacy Policy (গোপনীয়তা নীতি)</h3>
-      <p><strong>সর্বশেষ আপডেট:</strong> সেপ্টেম্বর ২০২৬</p>
-      <p>নদীম টেলিকম ("আমরা", "আমাদের") আপনার গোপনীয়তাকে অত্যন্ত গুরুত্ব দেয়।</p>
-      <div style="margin-top: 15px; text-align: right;">
+      <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>সর্বশেষ আপডেট:</strong> সেপ্টেম্বর ২০২৬</p>
+      <p style="font-size: 0.9rem; line-height: 1.6;"><strong>নদীম টেলিকম</strong> ("আমরা", "আমাদের") আপনার গোপনীয়তাকে অত্যন্ত গুরুত্ব দেয়। আমাদের ওয়েবসাইট ব্যবহারের সময় আপনি যে তথ্যগুলো প্রদান করেন, তার সুরক্ষায় আমরা প্রতিজ্ঞাবদ্ধ।</p>
+      
+      <h4 style="color: #0066cc; font-size: 0.95rem; margin: 10px 0 4px 0;">১. আমরা কী ধরনের তথ্য সংগ্রহ করি:</h4>
+      <p style="font-size: 0.85rem; line-height: 1.5; margin: 0 0 8px 0;">যখন আপনি আমাদের ওয়েবসাইটে সাইন-ইন করেন বা অ্যাকাউন্ট তৈরি করেন, তখন আমরা আপনার নাম, ইমেইল ঠিকানা, ফোন নম্বর এবং যোগাযোগের ঠিকানা সংগ্রহ করতে পারি।</p>
+      
+      <h4 style="color: #0066cc; font-size: 0.95rem; margin: 10px 0 4px 0;">২. তথ্যের ব্যবহার:</h4>
+      <p style="font-size: 0.85rem; line-height: 1.5; margin: 0 0 8px 0;">সংগৃহীত তথ্যগুলো আপনার অর্ডার প্রক্রিয়াকরণ, সেবা প্রদান, কাস্টমার সাপোর্ট এবং ওয়েবসাইটের মানোন্নয়নের কাজে ব্যবহার করা হয়।</p>
+      
+      <h4 style="color: #0066cc; font-size: 0.95rem; margin: 10px 0 4px 0;">৩. তথ্য সুরক্ষা:</h4>
+      <p style="font-size: 0.85rem; line-height: 1.5; margin: 0 0 8px 0;">আপনার ব্যক্তিগত তথ্যের গোপনীয়তা রক্ষায় আমরা আধুনিক নিরাপত্তা ব্যবস্থা ব্যবহার করি এবং তৃতীয় কোনো পক্ষের কাছে আপনার তথ্য বিক্রি বা শেয়ার করি না।</p>
+
+      <div style="margin-top: 20px; text-align: right;">
         <button onclick="closePrivacyModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px;">বন্ধ করুন</button>
       </div>
     </div>
@@ -480,9 +486,19 @@
     <div class="policy-modal-content">
       <div class="custom-close-btn" onclick="closeTermsModal()">&times;</div>
       <h3 style="color:#0066cc; margin-top:0; font-size:1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 8px;">📄 Terms & Conditions (শর্তাবলী)</h3>
-      <p><strong>সর্বশেষ আপডেট:</strong> সেপ্টেম্বর ২০২৬</p>
-      <p>নদীম টেলিকম-এর ওয়েবসাইটে আপনাকে স্বাগতম।</p>
-      <div style="margin-top: 15px; text-align: right;">
+      <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>সর্বশেষ আপডেট:</strong> সেপ্টেম্বর ২০২৬</p>
+      <p style="font-size: 0.9rem; line-height: 1.6;">নদীম টেলিকম-এর ওয়েবসাইটে আপনাকে স্বাগতম। আমাদের ওয়েবসাইট ভিজিট করার মাধ্যমে বা এখান থেকে কোনো সেবা ও পণ্য নেওয়ার মাধ্যমে আপনি নিচের শর্তাবলীতে সম্মত হচ্ছেন:</p>
+      
+      <h4 style="color: #0066cc; font-size: 0.95rem; margin: 10px 0 4px 0;">১. সেবা ও পণ্য:</h4>
+      <p style="font-size: 0.85rem; line-height: 1.5; margin: 0 0 8px 0;">আমরা মোবাইল রিপেয়ারিং, বিকাশ/নগদ সেবা এবং বিভিন্ন মোবাইল অ্যাক্সেসরিজ বিক্রি করে থাকি। পণ্যের মূল্য ও স্টক পরিবর্তন সাপেক্ষে প্রযোজ্য।</p>
+      
+      <h4 style="color: #0066cc; font-size: 0.95rem; margin: 10px 0 4px 0;">২. ব্যবহারকারীর দায়িত্ব:</h4>
+      <p style="font-size: 0.85rem; line-height: 1.5; margin: 0 0 8px 0;">ওয়েবসাইটের কোনো অপব্যবহার করা যাবে না এবং অ্যাকাউন্ট তৈরির সময় সঠিক তথ্য প্রদান করতে হবে। ইউজার অ্যাকাউন্টের গোপনীয়তা রক্ষার দায়িত্ব আপনার নিজের।</p>
+      
+      <h4 style="color: #0066cc; font-size: 0.95rem; margin: 10px 0 4px 0;">৩. পরিবর্তন ও পরিবর্ধন:</h4>
+      <p style="font-size: 0.85rem; line-height: 1.5; margin: 0 0 8px 0;">নদীম টেলিকম কর্তৃপক্ষ যেকোনো সময় পূর্ব নোটিশ ছাড়াই ওয়েবসাইটের শর্তাবলী পরিবর্তন বা আপডেট করার অধিকার সংরক্ষণ করে।</p>
+
+      <div style="margin-top: 20px; text-align: right;">
         <button onclick="closeTermsModal()" class="btn btn-call" style="background-color:#6c757d; width: auto; padding: 6px 12px;">বন্ধ করুন</button>
       </div>
     </div>
