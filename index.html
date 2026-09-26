@@ -126,11 +126,11 @@
     }
     .custom-close-btn:hover { background: #444; }
 
-    /* নিখুঁত স্লাইডার কন্টেইনার এবং ছবি স্টাইল */
+    /* স্লাইডার কন্টেইনার এবং ছবির সাইজ বড় করার স্টাইল */
     .nadim-slider-container {
       display: flex;
       overflow-x: auto;
-      gap: 12px;
+      gap: 15px;
       padding: 10px 5px;
       margin-bottom: 15px;
       scroll-behavior: smooth;
@@ -144,21 +144,21 @@
     .nadim-slider-container::-webkit-scrollbar-thumb { background: #0066cc; border-radius: 10px; }
 
     .nadim-slider-container img {
-      height: 200px; /* উচ্চতা পারফেক্ট করা হয়েছে যাতে কোনো ছবি না কাটে */
+      height: 360px; /* ছবির সাইজ আগের তুলনায় বাড়িয়ে বড় করা হলো যাতে পারফেক্ট দেখায় */
       width: auto;
-      max-width: 90%;
+      max-width: 100%;
       object-fit: contain; 
       border-radius: 8px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
-      scroll-snap-align: center; /* স্লাইড করার সময় মাঝখানে সুন্দরভাবে সেট হবে */
+      scroll-snap-align: start;
       border: 1px solid var(--border-color);
       background-color: #f8f9fa;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
 
-    .nadim-slider-container img:hover { transform: scale(1.02); }
+    .nadim-slider-container img:hover { transform: scale(1.01); }
 
     /* জুম মোডাল এবং ছবির ঠিক কোণায় ক্রস বাটন ফিক্স */
     #imageZoomModal {
