@@ -1480,8 +1480,18 @@
       
       if(targetItem) {
         titleElem.textContent = targetItem.title || 'শিরোনাম নেই';
-        bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি।';
+        bodyElem.innerHTML = targetItem.content || 'কোনো বিবরণ পাওয়া যায়নি።';
         
+        // --- ডায়নামিক শেয়ার লিংক সেটআপ ---
+        let shareUrl = window.location.href.split('#')[0] + '#post-' + itemKey;
+        let shareTitle = encodeURIComponent(targetItem.title || 'Nadim Telecom Post');
+        let encodedUrl = encodeURIComponent(shareUrl);
+
+        document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+        document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${shareTitle}`;
+        document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${shareTitle}%20-%20${encodedUrl}`;
+        // ---------------------------------
+
         sliderContainer.innerHTML = "";
         let imgs = (Array.isArray(targetItem.imageUrls) && targetItem.imageUrls.length > 0) ? targetItem.imageUrls : [targetItem.imageUrl || 'https://via.placeholder.com/220'];
         imgs.forEach(url => {
@@ -1500,6 +1510,23 @@
     window.closeBlogModal = function() { 
       document.getElementById('blogModal').style.display = 'none'; 
       window.location.hash = '';
+    }
+
+    // --- Device শেয়ার ফাংশন যুক্ত করা হলো ---
+    window.shareViaDevice = async function() {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: document.getElementById('modalTitle').textContent,
+            text: 'নদীম টেলিকম থেকে এই পোস্টটি দেখুন:',
+            url: window.location.href
+          });
+        } catch (err) {
+          console.log('শেয়ার করা বাতিল করা হয়েছে');
+        }
+      } else {
+        alert('আপনার ব্রাউজারটি ডিভাইস শেয়ারিং সমর্থন করে না।');
+      }
     }
 
     window.changeTableStyle = function(type, value) {
